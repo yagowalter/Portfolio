@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfólio | Cloud Developer</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Remix Icon -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#" class="logo">Yago<span style="color: var(--primary-color)">Walter</span></a>
+
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#projects">Projetos</a>
+        <a href="#qualifications">Qualificações</a>
+        <a href="#certificates">Certificados</a>
+        <a href="#contact">Contato</a>
+      </nav>
+
+      <button id="theme-toggle" class="theme-btn" aria-label="Alternar Tema">
+        <i class="fas fa-sun"></i>
+      </button>
+
+      <button class="mobile-menu-btn" aria-label="Menu">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section id="home" class="hero section-padding">
+      <!-- Left Sidebar: Follow On -->
+      <div class="hero-side-left">
+        <span class="side-text">Follow On</span>
+        <div class="side-line"></div>
+        <div class="social-icons-col">
+          <a href="https://github.com/yago" target="_blank" class="social-icon" aria-label="GitHub" rel="noopener">
+            <i class="ri-github-fill"></i>
+          </a>
+          <a href="https://linkedin.com/in/yago" target="_blank" class="social-icon" aria-label="LinkedIn" rel="noopener">
+            <i class="ri-linkedin-fill"></i>
+          </a>
+          <a href="https://instagram.com/yago" target="_blank" class="social-icon" aria-label="Instagram" rel="noopener">
+            <i class="ri-instagram-fill"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right Sidebar: Scroll Down -->
+      <div class="hero-side-right" id="scroll-down-btn">
+        <div class="mouse-icon">
+          <div class="mouse-wheel"></div>
+        </div>
+        <div class="side-line" style="height: 40px; margin: 0.5rem 0;"></div>
+        <span class="side-text">Scroll Down</span>
+      </div>
+
+      <div class="container hero-content">
+        <div class="hero-text reveal">
+          <h1>Yago <span style="color: var(--primary-color)">Walter</span></h1>
+          <h2 class="role typing-text">Cloud Engineer &amp; Full Stack Developer</h2>
+          <p class="description">
+            Especialista em construir soluções escaláveis na nuvem e interfaces modernas.
+            Focado em performance, segurança e experiência do usuário.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn btn-primary"><i class="fas fa-download"></i> Download CV</a>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal delay-200">
+          <svg class="cloud-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M17.5 19C19.9853 19 22 16.9853 22 14.5C22 12.132 20.177 10.244 17.819 10.034C17.657 6.657 14.812 4 11.5 4C8.48 4 5.824 6.187 5.228 9.09C2.393 9.559 0.5 12.185 0.5 15C0.5 18.239 3.015 19 5.5 19H17.5Z"
+              fill="url(#cloud-gradient)" />
+            <defs>
+              <linearGradient id="cloud-gradient" x1="0.5" y1="4" x2="22" y2="19" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#38bdf8" />
+                <stop offset="1" stop-color="#818cf8" />
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section-padding">
+      <div class="container">
+        <h2 class="section-title reveal">Projetos Recentes</h2>
+        <p class="section-subtitle reveal delay-100">Clique em um projeto para ver detalhes</p>
+
+        <div class="projects-grid" id="projects-container"></div>
+      </div>
+      <!-- o JS cria o section-footer aqui dentro -->
+    </section>
+
+    <!-- Project Detail Modal -->
+    <div class="project-modal-overlay" id="project-modal">
+      <div class="project-modal">
+        <button class="modal-close" aria-label="Fechar">&times;</button>
+        <img class="modal-image" id="modal-image" src="" alt="Project Image">
+        <div class="modal-content">
+          <h3 class="modal-title" id="modal-title"></h3>
+          <p class="modal-desc" id="modal-desc"></p>
+          <div class="modal-tech" id="modal-tech"></div>
+          <a class="modal-github" id="modal-github" href="#" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-github"></i> Ver no GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Qualifications -->
+    <section id="qualifications" class="section-padding" style="background-color: transparent;">
+      <div class="container">
+        <h2 class="section-title reveal">Habilidades Técnicas</h2>
+
+        <div class="skills-container">
+          <div class="tech-skill-card reveal">
+            <div class="skill-card-header">
+              <i class="fas fa-laptop-code"></i>
+              <h3>Web Design</h3>
+            </div>
+            <div class="skill-list-grid">
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>HTML5 / Semantic</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>CSS3 / Modules</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>JavaScript (ES6+)</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>React.js</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Figma / UI Design</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Git / GitHub</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Responsive Layout</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Tailwind / SASS</span></div>
+            </div>
+          </div>
+
+          <div class="tech-skill-card reveal delay-200">
+            <div class="skill-card-header">
+              <i class="fas fa-cloud"></i>
+              <h3>Cloud Computing</h3>
+            </div>
+            <div class="skill-list-grid">
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Amazon EC2</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Amazon S3</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>AWS Lambda</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>DynamoDB</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>VPC Networking</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>IAM Security</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>CI/CD Pipelines</span></div>
+              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Docker & K8s</span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificates -->
+    <section id="certificates" class="section-padding">
+      <div class="container">
+        <h2 class="section-title reveal">Cursos e Certificações</h2>
+
+        <div class="certificates-grid">
+          <div class="cert-card reveal">
+            <div class="cert-icon"><i class="fas fa-graduation-cap"></i></div>
+            <h3 class="cert-title">Ciência da Computação</h3>
+            <p class="cert-school">Universidade Federal Tech</p>
+            <div class="cert-meta">
+              <a href="#" class="btn-link" style="color: var(--primary-color); font-weight:600; font-size: 0.9rem;">
+                Ver Credencial
+              </a>
+              <span class="cert-date">2020 - 2024</span>
+              <span class="cert-status status-completed">Concluído</span>
+            </div>
+          </div>
+
+          <div class="cert-card reveal delay-100">
+            <div class="cert-icon"><i class="fab fa-aws"></i></div>
+            <h3 class="cert-title">AWS Certified Solutions Architect</h3>
+            <p class="cert-school">Amazon Web Services</p>
+            <div class="cert-meta">
+              <a href="#" class="btn-link" style="color: var(--primary-color); font-weight:600; font-size: 0.9rem;">
+                Ver Credencial
+              </a>
+              <span class="cert-status status-ongoing">Em andamento</span>
+            </div>
+          </div>
+
+          <div class="cert-card reveal delay-200">
+            <div class="cert-icon"><i class="fas fa-certificate"></i></div>
+            <h3 class="cert-title">Cloud Fundamentals</h3>
+            <p class="cert-school">Tech Academy</p>
+            <div class="cert-meta">
+              <a href="#" class="btn-link" style="color: var(--primary-color); font-weight:600; font-size: 0.9rem;">
+                Ver Credencial
+              </a>
+              <span class="cert-status status-completed">Concluído</span>
+            </div>
+          </div>
+
+          <div class="cert-card reveal delay-300">
+            <div class="cert-icon"><i class="fas fa-code"></i></div>
+            <h3 class="cert-title">React Specialist</h3>
+            <p class="cert-school">Frontend Mastery</p>
+            <div class="cert-meta">
+              <a href="#" class="btn-link" style="color: var(--primary-color); font-weight:600; font-size: 0.9rem;">
+                Ver Credencial
+              </a>
+              <span class="cert-status status-ongoing">Em andamento</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-footer">
+        <button id="load-more-certs" class="btn btn-load-more">
+          Ver mais Certificados <i class="ri-add-line" style="font-size: 1em;"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section-padding" style="background-color: var(--bg-color);">
+      <div class="container">
+        <div class="contact-container">
+
+          <div class="contact-left reveal">
+            <div class="contact-group">
+              <h4 class="contact-group-title">Fale direto comigo</h4>
+
+              <div class="contact-info-list">
+                <a href="https://wa.me/5511999999999" target="_blank" class="contact-info-item whatsapp-cta" rel="noopener">
+                  <div class="contact-icon-box"><i class="fab fa-whatsapp"></i></div>
+                  <div class="contact-text">
+                    <h4>WhatsApp</h4>
+                    <p>+55 11 99999-9999</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div class="contact-group">
+              <h4 class="contact-group-title">Onde me encontrar</h4>
+              <div class="contact-social-row">
+                <a href="https://linkedin.com/in/yago" target="_blank" class="contact-social-btn" aria-label="LinkedIn" rel="noopener">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="https://github.com/yago" target="_blank" class="contact-social-btn" aria-label="GitHub" rel="noopener">
+                  <i class="fab fa-github"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-form-card reveal delay-200">
+            <div class="contact-form-header">
+              <h3>Vamos Criar <span style="color: var(--primary-color);">Algo Novo</span> Juntos?</h3>
+              <p>Preencha o formulário abaixo e entrarei em contato o mais breve possível. Respondo em menos de 24h.</p>
+            </div>
+
+            <form class="contact-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <input type="text" placeholder="Nome *" required>
+                </div>
+                <div class="form-group">
+                  <input type="email" placeholder="E-mail *" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <input type="text" placeholder="Assunto *" style="margin-bottom: 1.5rem;" required>
+              </div>
+
+              <div class="form-group">
+                <textarea rows="5" placeholder="Sua Mensagem *" required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Navigation Pill -->
+    <div class="bottom-nav-container">
+      <nav class="bottom-nav">
+        <a href="#home" class="nav-item active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </a>
+        <a href="#projects" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+        </a>
+        <a href="#qualifications" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        </a>
+        <a href="#certificates" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+        </a>
+        <a href="#contact" class="nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+            <polyline points="22,6 12,13 2,6"></polyline>
+          </svg>
+        </a>
+      </nav>
+      <button class="nav-toggle-chevron" aria-label="Toggle Menu">
+        <i class="fas fa-chevron-down"></i>
+      </button>
+    </div>
+
+    <!-- Scroll Up Button -->
+    <button class="scroll-up-btn" aria-label="Voltar ao topo">
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Feito com <span style="color: var(--primary-color);">Antigravity</span> &amp; Criatividade. &copy; 2026 Yago Walter.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>
