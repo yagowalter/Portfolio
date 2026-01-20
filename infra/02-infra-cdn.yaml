@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Fase 2 - CloudFront com Link Padrao AWS
+
+Parameters:
+  BucketName:
+    Type: String
+
+Resources:
+  # OAC: A "chave" que permite ao CloudFront entrar no S3 privado
+  MyOAC:
+    Type: AWS::CloudFront::OriginAccessControl
+    Properties: 
+      OriginAccessControlConfig: 
+        Name: !Sub "OAC-${AWS::StackName}"
+        OriginAccessControlOriginType: s3
+        SigningBehavior: always
+        SigningProtocol: sigv4
+
+  # A Distribuição (CDN)
+  MyDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Origins:
+          - DomainName: !Sub "${BucketName}.s3.${AWS::Region}.amazonaws.com"
+            Id: S3Origin
+            OriginAccessControlId: !GetAtt MyOAC.Id
+            S3OriginConfig:
+              OriginAccessIdentity: "" 
+        Enabled: true
+        DefaultRootObject: index.html
+        DefaultCacheBehavior:
+          TargetOriginId: S3Origin
+          ViewerProtocolPolicy: redirect-to-https
+          ForwardedValues:
+            QueryString: false
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+
+  # Bucket Policy: Diz ao S3 para aceitar apenas essa Distribuição
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref BucketName
+      PolicyDocument:
+        Statement:
+          - Action: s3:GetObject
+            Effect: Allow
+            Resource: !Sub "arn:aws:s3:::${BucketName}/*"
+            Principal:
+              Service: cloudfront.amazonaws.com
+            Condition:
+              StringEquals:
+                AWS:SourceArn: !Sub "arn:aws:cloudfront::${AWS::AccountId}:distribution/${MyDistribution}"
+
+Outputs:
+  SiteURL:
+    Value: !GetAtt MyDistribution.DomainName
+  DistId:
+    Value: !Ref MyDistribution
