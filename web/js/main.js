@@ -403,7 +403,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================
   const phrases = [
     "Cloud Engineer Jr",
-    "Desenvolvedor Web e Mobile"
+    "Mobile & Web Designer"
   ];
 
   const typingEl = document.getElementById("typing");
