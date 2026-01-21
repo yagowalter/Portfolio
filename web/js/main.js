@@ -165,9 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
       <article class="project-card-gallery reveal" data-project-id="${project.id}">
         <div class="card-image">
           ${project.image
-            ? `<img src="${project.image}" alt="${project.title}">`
-            : `<i class="fas fa-folder-open"></i>`
-          }
+        ? `<img src="${project.image}" alt="${project.title}">`
+        : `<i class="fas fa-folder-open"></i>`
+      }
         </div>
         <div class="card-info">
           <p class="card-category">${project.category}</p>
@@ -401,40 +401,52 @@ document.addEventListener('DOMContentLoaded', () => {
   // =========================
   // Typing effect (loop)
   // =========================
-  const typingElement = document.querySelector('.typing-text');
-  if (typingElement) {
-    const text = typingElement.textContent;
-    typingElement.textContent = '';
+  const phrases = [
+    "Cloud Engineer Jr",
+    "Desenvolvedor Web e Mobile"
+  ];
 
-    let charIndex = 0;
-    let isDeleting = false;
+  const typingEl = document.getElementById("typing");
 
-    const typeSpeed = 100;
-    const deleteSpeed = 50;
-    const pauseTime = 2000;
+  let phraseIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
 
-    function type() {
-      const currentText = isDeleting
-        ? text.substring(0, charIndex - 1)
-        : text.substring(0, charIndex + 1);
+  const typingSpeed = 90;
+  const deletingSpeed = 50;
+  const pauseAfterTyping = 1400;
+  const pauseAfterDeleting = 300;
 
-      typingElement.textContent = currentText;
+  function typeLoop() {
+    const currentPhrase = phrases[phraseIndex];
 
-      if (!isDeleting && charIndex === text.length) {
-        setTimeout(() => { isDeleting = true; type(); }, pauseTime);
-        return;
+    if (!isDeleting) {
+      // digitando
+      typingEl.textContent = currentPhrase.slice(0, charIndex + 1);
+      charIndex++;
+
+      if (charIndex === currentPhrase.length) {
+        setTimeout(() => (isDeleting = true), pauseAfterTyping);
       }
+    } else {
+      // apagando letra por letra
+      typingEl.textContent = currentPhrase.slice(0, charIndex - 1);
+      charIndex--;
 
-      if (isDeleting && charIndex === 0) {
+      if (charIndex === 0) {
         isDeleting = false;
-        setTimeout(type, 500);
-        return;
+        phraseIndex = (phraseIndex + 1) % phrases.length;
+        setTimeout(() => { }, pauseAfterDeleting);
       }
-
-      charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
-      setTimeout(type, isDeleting ? deleteSpeed : typeSpeed);
     }
 
-    setTimeout(type, 600);
+    setTimeout(
+      typeLoop,
+      isDeleting ? deletingSpeed : typingSpeed
+    );
   }
+
+  typeLoop();
+
+
 });
