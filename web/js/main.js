@@ -312,15 +312,48 @@ document.addEventListener('DOMContentLoaded', () => {
   // Certificates "Ver mais"
   // =========================
   const loadMoreCertsBtn = document.getElementById('load-more-certs');
+  const certCards = document.querySelectorAll('.cert-card');
+
+  let visibleCerts = 2; // começa mostrando 2
+  const step = 2;       // carrega de 2 em 2
+
+  // esconde tudo depois dos 2 primeiros
+  certCards.forEach((card, index) => {
+    if (index >= visibleCerts) {
+      card.style.display = 'none';
+    }
+  });
+
   if (loadMoreCertsBtn) {
     loadMoreCertsBtn.addEventListener('click', () => {
       loadMoreCertsBtn.textContent = 'Carregando...';
+
       setTimeout(() => {
-        loadMoreCertsBtn.innerHTML = 'Todos os certificados exibidos <i class="fas fa-check"></i>';
-        loadMoreCertsBtn.disabled = true;
-      }, 800);
+        const nextVisible = visibleCerts + step;
+
+        certCards.forEach((card, index) => {
+          if (index < nextVisible) {
+            card.style.display = 'flex'; // ou block, dependendo do seu CSS
+          }
+        });
+
+        visibleCerts = nextVisible;
+
+        // acabou os certificados
+        if (visibleCerts >= certCards.length) {
+          loadMoreCertsBtn.innerHTML =
+            'Todos os certificados exibidos <i class="fas fa-check"></i>';
+          loadMoreCertsBtn.disabled = true;
+          loadMoreCertsBtn.style.opacity = '0.7';
+          loadMoreCertsBtn.style.cursor = 'default';
+        } else {
+          loadMoreCertsBtn.innerHTML =
+            'Ver mais Certificados <i class="ri-add-line"></i>';
+        }
+      }, 400);
     });
   }
+
 
   // =========================
   // Scroll Down Button
@@ -328,7 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const scrollDownBtn = document.getElementById('scroll-down-btn');
   if (scrollDownBtn) {
     scrollDownBtn.addEventListener('click', () => {
-      const projectsSection = document.getElementById('projects');
+      const projectsSection = document.getElementById('contact');
       if (projectsSection) projectsSection.scrollIntoView({ behavior: 'smooth' });
     });
   }
