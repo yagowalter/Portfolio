@@ -780,14 +780,6 @@ section {
   transform: scale(1.1);
 }
 
-.modal-image {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: 16px 16px 0 0;
-  display: block;
-}
-
 .modal-content {
   padding: 2rem;
 }

@@ -81,69 +81,69 @@ document.addEventListener('DOMContentLoaded', () => {
   const projectsData = [
     {
       id: 1,
-      title: "Cloud Tracker",
-      category: "Cloud",
-      image: "",
-      tech: ["AWS", "Python", "React"],
-      shortDesc: "Monitoramento cloud em tempo real.",
+      title: "Progress Tracker",
+      category: "Web App",
+      image: "assets/img/progress-tracker.png",
+      tech: ["AWS", "Cloudfront", "CSS", "JavaScript", "CodePipeline"],
+      shortDesc: "Progresso das atividades na EDN.",
       longDesc:
         "Sistema completo para monitoramento de recursos AWS em tempo real. Inclui dashboard interativo, alertas automatizados via SNS, e integração com CloudWatch para métricas detalhadas. Desenvolvido com arquitetura serverless para escalabilidade.",
-      githubUrl: "https://github.com/yago"
+      githubUrl: "https://github.com/yagowalter/AWS-Projects/tree/main/aws-progress-tracker"
     },
     {
       id: 2,
-      title: "E-commerce Serverless",
+      title: "Portifólio",
       category: "Web App",
-      image: "",
-      tech: ["DynamoDB", "Node.js", "Next.js"],
-      shortDesc: "Plataforma de vendas escalável.",
+      image: "assets/img/portfólio.png",
+      tech: ["Antigravity", "Cloudfront", "CodePipeline"],
+      shortDesc: "Meu portifólio pessoal.",
       longDesc:
         "Plataforma de e-commerce construída com arquitetura serverless na AWS. Utiliza DynamoDB para banco de dados, Lambda para lógica de negócios, e Next.js para o frontend. Suporta alta disponibilidade e escala automaticamente com a demanda.",
-      githubUrl: "https://github.com/yago"
+      githubUrl: "https://github.com/yagowalter/Portifolio"
     },
     {
       id: 3,
-      title: "Finanças App",
-      category: "Mobile",
+      title: "Em breve...",
+      category: "Em breve...",
       image: "",
-      tech: ["React Native", "Firebase"],
-      shortDesc: "Controle de despesas pessoais.",
+      tech: ["Em breve..."],
+      shortDesc: "Em breve...",
       longDesc:
-        "Aplicativo mobile para controle financeiro pessoal. Permite categorização de gastos, visualização de gráficos de despesas por período, e sincronização em tempo real com Firebase. Interface intuitiva e modo offline.",
-      githubUrl: "https://github.com/yago"
+        "Em breve...",
+      githubUrl: "https://github.com/yagowalter"
     },
     {
       id: 4,
-      title: "Bank API",
-      category: "Backend",
+      title: "Em breve...",
+      category: "Em breve...",
       image: "",
-      tech: ["Java", "Spring Boot", "Docker"],
-      shortDesc: "API RESTful para sistema bancário.",
+      tech: ["Em breve..."],
+      shortDesc: "Em breve...",
       longDesc:
-        "API robusta para operações bancárias com autenticação JWT, rate limiting, e documentação Swagger. Implementa padrões de segurança bancária e possui cobertura de testes acima de 80%. Containerizada com Docker para fácil deploy.",
-      githubUrl: "https://github.com/yago"
+        "Em breve...",
+      githubUrl: "https://github.com/yagowalter"
     },
     {
       id: 5,
-      title: "Task Manager",
-      category: "Web App",
+      title: "Em breve...",
+      category: "Em breve...",
       image: "",
-      tech: ["Vue.js", "Node.js", "MongoDB"],
-      shortDesc: "Gerenciador de tarefas colaborativo.",
+      tech: ["Em breve..."],
+      shortDesc: "Em breve...",
       longDesc:
-        "Aplicação web para gerenciamento de tarefas em equipe. Suporta quadros Kanban, atribuição de tarefas, notificações em tempo real via WebSockets, e integração com Slack. Interface responsiva e drag-and-drop.",
-      githubUrl: "https://github.com/yago"
+        "Em breve... web para gerenciamento de tarefas em equipe. Suporta quadros Kanban, atribuição de tarefas, notificações em tempo real via WebSockets, e integração com Slack. Interface responsiva e drag-and-drop.",
+      githubUrl: "https://github.com/yagowalter"
     },
     {
       id: 6,
-      title: "Portfolio Builder",
-      category: "Web App",
+      title: "Em breve...",
+      category: "Em breve...",
       image: "",
-      tech: ["React", "Tailwind", "Vercel"],
-      shortDesc: "Gerador de portfólios pessoais.",
+      tech: ["Em breve..."],
+      shortDesc: "Em breve...",
       longDesc:
-        "Ferramenta para criar portfólios profissionais de forma rápida e fácil. Oferece templates customizáveis, integração com GitHub para importar projetos automaticamente, e deploy com um clique para Vercel.",
-      githubUrl: "https://github.com/yago"
+        "Em breve...",
+      githubUrl: "https://github.com/yagowalter"
     }
   ];
 
