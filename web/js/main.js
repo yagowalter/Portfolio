@@ -87,8 +87,9 @@ document.addEventListener('DOMContentLoaded', () => {
       tech: ["AWS", "Cloudfront", "CSS", "JavaScript", "CodePipeline"],
       shortDesc: "Progresso das atividades na EDN.",
       longDesc:
-        "Sistema completo para monitoramento de recursos AWS em tempo real. Inclui dashboard interativo, alertas automatizados via SNS, e integração com CloudWatch para métricas detalhadas. Desenvolvido com arquitetura serverless para escalabilidade.",
-      githubUrl: "https://github.com/yagowalter/AWS-Projects/tree/main/aws-progress-tracker"
+        "Rastreador de progresso acadêmico e profissional desenvolvido para acompanhar as atividades do programa Escola da Nuvem (EDN). O sistema organiza KCs, labs práticos e competências profissionais em um dashboard visual, permitindo acompanhar evolução, status de conclusão e progresso geral de forma clara e centralizada.",
+      githubUrl: "https://github.com/yagowalter/AWS-Projects/tree/main/aws-progress-tracker",
+      siteUrl: "https://progresso.yagowalter.com.br"
     },
     {
       id: 2,
@@ -99,7 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
       shortDesc: "Meu portifólio pessoal.",
       longDesc:
         "Plataforma de e-commerce construída com arquitetura serverless na AWS. Utiliza DynamoDB para banco de dados, Lambda para lógica de negócios, e Next.js para o frontend. Suporta alta disponibilidade e escala automaticamente com a demanda.",
-      githubUrl: "https://github.com/yagowalter/Portifolio"
+      githubUrl: "https://github.com/yagowalter/Portifolio",
+      siteUrl: "https://progresso.yagowalter.com.br"
     },
     {
       id: 3,
@@ -110,7 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
       shortDesc: "Em breve...",
       longDesc:
         "Em breve...",
-      githubUrl: "https://github.com/yagowalter"
+      githubUrl: "https://github.com/yagowalter",
+      siteUrl: "https://progresso.yagowalter.com.br"
     },
     {
       id: 4,
@@ -121,7 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
       shortDesc: "Em breve...",
       longDesc:
         "Em breve...",
-      githubUrl: "https://github.com/yagowalter"
+      githubUrl: "https://github.com/yagowalter",
+      siteUrl: "https://progresso.yagowalter.com.br"
     },
     {
       id: 5,
@@ -132,7 +136,8 @@ document.addEventListener('DOMContentLoaded', () => {
       shortDesc: "Em breve...",
       longDesc:
         "Em breve... web para gerenciamento de tarefas em equipe. Suporta quadros Kanban, atribuição de tarefas, notificações em tempo real via WebSockets, e integração com Slack. Interface responsiva e drag-and-drop.",
-      githubUrl: "https://github.com/yagowalter"
+      githubUrl: "https://github.com/yagowalter",
+      siteUrl: "https://progresso.yagowalter.com.br"
     },
     {
       id: 6,
@@ -143,7 +148,8 @@ document.addEventListener('DOMContentLoaded', () => {
       shortDesc: "Em breve...",
       longDesc:
         "Em breve...",
-      githubUrl: "https://github.com/yagowalter"
+      githubUrl: "https://github.com/yagowalter",
+      siteUrl: "https://progresso.yagowalter.com.br"
     }
   ];
 
@@ -243,6 +249,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalDesc = document.getElementById('modal-desc');
   const modalTech = document.getElementById('modal-tech');
   const modalGithub = document.getElementById('modal-github');
+  const modalSite = document.getElementById('modal-site');
+
 
   function openProjectModal(projectId) {
     const project = projectsData.find(p => p.id === projectId);
@@ -261,6 +269,15 @@ document.addEventListener('DOMContentLoaded', () => {
     modalDesc.textContent = project.longDesc;
     modalTech.innerHTML = project.tech.map(t => `<span class="tag">${t}</span>`).join('');
     modalGithub.href = project.githubUrl;
+
+    // 🔗 Site (opcional)
+    if (project.siteUrl) {
+      modalSite.href = project.siteUrl;
+      modalSite.style.display = 'inline-flex';
+    } else {
+      modalSite.style.display = 'none';
+    }
+
 
     projectModal.classList.add('active');
     document.body.style.overflow = 'hidden';

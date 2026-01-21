@@ -39,16 +39,17 @@ html {
   scroll-behavior: smooth;
 }
 
-.typing-wrap{
+.typing-wrap {
   display: inline-block;
-  min-width: 0.1ch;          /* ajusta conforme sua maior frase */
+  min-width: 0.1ch;
+  /* ajusta conforme sua maior frase */
 }
 
-#typing{
+#typing {
   display: inline;
 }
 
-.cursor{
+.cursor {
   display: inline-block;
   width: 1ch;
   margin-left: 2px;
@@ -56,8 +57,10 @@ html {
   animation: blink 1s steps(1) infinite;
 }
 
-@keyframes blink{
-  50% { opacity: 0; }
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
 }
 
 
@@ -831,6 +834,71 @@ section {
 .modal-github i {
   font-size: 1.3rem;
 }
+
+/* =========================
+   MODAL LINKS (GitHub + Site)
+   ========================= */
+
+.modal-links {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  flex-wrap: wrap;
+}
+
+/* Reforça o estilo do link do GitHub (caso você queira padronizar os dois) */
+.modal-github,
+.modal-site {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+/* Hover consistente */
+.modal-github:hover,
+.modal-site:hover {
+  color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+/* Ícones no mesmo tamanho, bonitinhos */
+.modal-github i,
+.modal-site i {
+  font-size: 1.3rem;
+}
+
+/* Se você esconder via JS quando não tiver siteUrl */
+#modal-site[style*="display: none"] {
+  display: none !important;
+}
+
+/* Mobile: links ocupam linha toda se apertar */
+@media (max-width: 480px) {
+  .modal-links {
+    gap: 0.75rem;
+  }
+
+  .modal-github,
+  .modal-site {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  [data-theme="light"] .modal-github,
+  [data-theme="light"] .modal-site {
+    background: rgba(15, 23, 42, 0.03);
+  }
+}
+
 
 /* =========================
    SKILLS
