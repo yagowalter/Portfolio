@@ -41,7 +41,7 @@ html {
 
 .typing-wrap{
   display: inline-block;
-  min-width: 1ch;          /* ajusta conforme sua maior frase */
+  min-width: 0.1ch;          /* ajusta conforme sua maior frase */
 }
 
 #typing{
