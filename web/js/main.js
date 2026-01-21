@@ -99,9 +99,9 @@ document.addEventListener('DOMContentLoaded', () => {
       tech: ["Antigravity", "Cloudfront", "CodePipeline"],
       shortDesc: "Meu portifólio pessoal.",
       longDesc:
-        "Plataforma de e-commerce construída com arquitetura serverless na AWS. Utiliza DynamoDB para banco de dados, Lambda para lógica de negócios, e Next.js para o frontend. Suporta alta disponibilidade e escala automaticamente com a demanda.",
+        "Portfólio pessoal desenvolvido com Antigravity, utilizando prompts precisos para criar uma interface moderna e responsiva. Hospedado na AWS com CloudFront, domínio gerenciado pelo Route 53 e deploy automatizado via CodePipeline.",
       githubUrl: "https://github.com/yagowalter/Portifolio",
-      siteUrl: "https://progresso.yagowalter.com.br"
+
     },
     {
       id: 3,
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
       longDesc:
         "Em breve...",
       githubUrl: "https://github.com/yagowalter",
-      siteUrl: "https://progresso.yagowalter.com.br"
+
     },
     {
       id: 4,
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
       longDesc:
         "Em breve...",
       githubUrl: "https://github.com/yagowalter",
-      siteUrl: "https://progresso.yagowalter.com.br"
+
     },
     {
       id: 5,
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
       longDesc:
         "Em breve... web para gerenciamento de tarefas em equipe. Suporta quadros Kanban, atribuição de tarefas, notificações em tempo real via WebSockets, e integração com Slack. Interface responsiva e drag-and-drop.",
       githubUrl: "https://github.com/yagowalter",
-      siteUrl: "https://progresso.yagowalter.com.br"
+
     },
     {
       id: 6,
@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
       longDesc:
         "Em breve...",
       githubUrl: "https://github.com/yagowalter",
-      siteUrl: "https://progresso.yagowalter.com.br"
+
     }
   ];
 

@@ -842,8 +842,7 @@ section {
 .modal-links {
   display: flex;
   align-items: center;
-  gap: 5rem;
-  flex-wrap: wrap;
+  column-gap: 2rem;
 }
 
 /* Reforça o estilo do link do GitHub (caso você queira padronizar os dois) */
