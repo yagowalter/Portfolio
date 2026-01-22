@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 2,
-      title: "Portifólio",
+      title: "Portfólio",
       category: "Web App",
       image: "assets/img/portfólio.png",
       tech: ["Antigravity", "Cloudfront", "CodePipeline"],
