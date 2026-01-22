@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
       tech: ["-"],
       shortDesc: "-",
       longDesc:
-        "- web para gerenciamento de tarefas em equipe. Suporta quadros Kanban, atribuição de tarefas, notificações em tempo real via WebSockets, e integração com Slack. Interface responsiva e drag-and-drop.",
+        "-",
       githubUrl: "https://github.com/yagowalter",
 
     },
