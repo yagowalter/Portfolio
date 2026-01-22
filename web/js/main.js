@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 3,
-      title: "-",
+      title: "Em breve..",
       category: "-",
       image: "",
       tech: ["-"],
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 4,
-      title: "-",
+      title: "Em breve..",
       category: "-",
       image: "",
       tech: ["-"],
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 5,
-      title: "-",
+      title: "Em breve..",
       category: "-",
       image: "",
       tech: ["-"],
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 6,
-      title: "-",
+      title: "Em breve..",
       category: "-",
       image: "",
       tech: ["-"],
