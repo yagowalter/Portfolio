@@ -105,49 +105,49 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 3,
-      title: "Em breve...",
-      category: "Em breve...",
+      title: "-",
+      category: "-",
       image: "",
-      tech: ["Em breve..."],
-      shortDesc: "Em breve...",
+      tech: ["-"],
+      shortDesc: "-",
       longDesc:
-        "Em breve...",
+        "-",
       githubUrl: "https://github.com/yagowalter",
 
     },
     {
       id: 4,
-      title: "Em breve...",
-      category: "Em breve...",
+      title: "-",
+      category: "-",
       image: "",
-      tech: ["Em breve..."],
-      shortDesc: "Em breve...",
+      tech: ["-"],
+      shortDesc: "-",
       longDesc:
-        "Em breve...",
+        "-",
       githubUrl: "https://github.com/yagowalter",
 
     },
     {
       id: 5,
-      title: "Em breve...",
-      category: "Em breve...",
+      title: "-",
+      category: "-",
       image: "",
-      tech: ["Em breve..."],
-      shortDesc: "Em breve...",
+      tech: ["-"],
+      shortDesc: "-",
       longDesc:
-        "Em breve... web para gerenciamento de tarefas em equipe. Suporta quadros Kanban, atribuição de tarefas, notificações em tempo real via WebSockets, e integração com Slack. Interface responsiva e drag-and-drop.",
+        "- web para gerenciamento de tarefas em equipe. Suporta quadros Kanban, atribuição de tarefas, notificações em tempo real via WebSockets, e integração com Slack. Interface responsiva e drag-and-drop.",
       githubUrl: "https://github.com/yagowalter",
 
     },
     {
       id: 6,
-      title: "Em breve...",
-      category: "Em breve...",
+      title: "-",
+      category: "-",
       image: "",
-      tech: ["Em breve..."],
-      shortDesc: "Em breve...",
+      tech: ["-"],
+      shortDesc: "-",
       longDesc:
-        "Em breve...",
+        "-",
       githubUrl: "https://github.com/yagowalter",
 
     }
