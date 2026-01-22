@@ -97,10 +97,10 @@ document.addEventListener('DOMContentLoaded', () => {
       category: "Web App",
       image: "assets/img/portfólio.png",
       tech: ["Antigravity", "Cloudfront", "CodePipeline"],
-      shortDesc: "Meu portifólio pessoal.",
+      shortDesc: "Meu portfólio pessoal.",
       longDesc:
         "Portfólio pessoal desenvolvido com Antigravity, utilizando prompts precisos para criar uma interface moderna e responsiva. Hospedado na AWS com CloudFront, domínio gerenciado pelo Route 53 e deploy automatizado via CodePipeline.",
-      githubUrl: "https://github.com/yagowalter/Portifolio",
+      githubUrl: "https://github.com/yagowalter/Portfolio",
 
     },
     {
