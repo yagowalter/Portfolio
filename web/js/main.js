@@ -499,4 +499,54 @@ document.addEventListener('DOMContentLoaded', () => {
   typeLoop();
 
 
+// =========================
+// Experience Timeline (line grows on scroll + cards reveal)
+// =========================
+const timeline = document.getElementById('experience-timeline');
+
+if (timeline) {
+  // Reveal cards
+  const timelineCards = timeline.querySelectorAll('.timeline-card');
+  const tlObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('in-view');
+    });
+  }, { threshold: 0.25 });
+
+  timelineCards.forEach(card => tlObserver.observe(card));
+
+  // Line progress
+  let ticking = false;
+
+  const clamp01 = (n) => Math.max(0, Math.min(1, n));
+
+  const updateTimelineProgress = () => {
+    ticking = false;
+
+    const rect = timeline.getBoundingClientRect();
+    const vh = window.innerHeight || document.documentElement.clientHeight;
+
+    // começa a preencher quando a timeline entra ~20% do viewport
+    const start = vh * 0.2;
+    const total = Math.max(1, rect.height - vh * 0.35);
+
+    const passed = start - rect.top;
+    const progress = clamp01(passed / total);
+
+    timeline.style.setProperty('--line-progress', progress.toFixed(4));
+  };
+
+  const onScrollOrResize = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateTimelineProgress);
+  };
+
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize);
+
+  // primeira atualização
+  updateTimelineProgress();
+}
+
 });
