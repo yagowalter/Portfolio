@@ -1013,10 +1013,41 @@ section {
   border-color: var(--secondary-color);
 }
 
-.cert-icon {
-  font-size: 2.5rem;
+/* container padrão do topo (serve pra <i> e pra <img>) */
+.cert-icon{
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+
+  /* o visual do “badge” */
+  background: rgba(129, 140, 248, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ícones */
+.cert-icon i{
+  font-size: 2rem;
   color: var(--secondary-color);
 }
+
+/* logos/imagens */
+.cert-icon img.cert-logo{
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  display: block;
+
+  /* sem fundo, sem borda, sem padding (nada de matrioska) */
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  filter: none;
+}
+
+
 
 .cert-title {
   font-size: 1.25rem;
