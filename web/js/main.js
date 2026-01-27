@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 3,
-      title: "Em breve..",
-      category: "-",
+      title: "HemoPlanner",
+      category: "Mobile App",
       image: "",
       tech: ["-"],
       shortDesc: "-",
