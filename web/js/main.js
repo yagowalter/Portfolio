@@ -499,54 +499,75 @@ document.addEventListener('DOMContentLoaded', () => {
   typeLoop();
 
 
-// =========================
-// Experience Timeline (line grows on scroll + cards reveal)
-// =========================
-const timeline = document.getElementById('experience-timeline');
+  // =========================
+  // Experience Timeline (line grows on scroll + cards reveal)
+  // =========================
+  const timeline = document.getElementById('experience-timeline');
 
-if (timeline) {
-  // Reveal cards
-  const timelineCards = timeline.querySelectorAll('.timeline-card');
-  const tlObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) entry.target.classList.add('in-view');
-    });
-  }, { threshold: 0.25 });
+  if (timeline) {
+    // Reveal cards
+    const timelineCards = timeline.querySelectorAll('.timeline-card');
+    const tlObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
+      });
+    }, { threshold: 0.25 });
 
-  timelineCards.forEach(card => tlObserver.observe(card));
+    timelineCards.forEach(card => tlObserver.observe(card));
 
-  // Line progress
-  let ticking = false;
+    // Line progress
+    let ticking = false;
 
-  const clamp01 = (n) => Math.max(0, Math.min(1, n));
+    const clamp01 = (n) => Math.max(0, Math.min(1, n));
 
-  const updateTimelineProgress = () => {
-    ticking = false;
+    const updateTimelineProgress = () => {
+      ticking = false;
 
-    const rect = timeline.getBoundingClientRect();
-    const vh = window.innerHeight || document.documentElement.clientHeight;
+      const rect = timeline.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
 
-    // começa a preencher quando a timeline entra ~20% do viewport
-    const start = vh * 0.2;
-    const total = Math.max(1, rect.height - vh * 0.35);
+      // começa a preencher quando a timeline entra ~20% do viewport
+      const start = vh * 0.2;
+      const total = Math.max(1, rect.height - vh * 0.35);
 
-    const passed = start - rect.top;
-    const progress = clamp01(passed / total);
+      const passed = start - rect.top;
+      const progress = clamp01(passed / total);
 
-    timeline.style.setProperty('--line-progress', progress.toFixed(4));
-  };
+      timeline.style.setProperty('--line-progress', progress.toFixed(4));
+    };
 
-  const onScrollOrResize = () => {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(updateTimelineProgress);
-  };
+    const onScrollOrResize = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateTimelineProgress);
+    };
 
-  window.addEventListener('scroll', onScrollOrResize, { passive: true });
-  window.addEventListener('resize', onScrollOrResize);
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize);
 
-  // primeira atualização
-  updateTimelineProgress();
-}
+    // primeira atualização
+    updateTimelineProgress();
+  }
 
 });
+
+
+/*  =============================================================
+   Scroll reveal JS
+    ============================================================= */
+
+ScrollReveal({
+  reset: true,
+  distance: '60px',
+  duration: 2500,
+  delay: 400
+});
+
+
+
+ScrollReveal().reveal('.hero-side-right', { delay: 300, origin: 'top' });
+ScrollReveal().reveal('.hero-side-left', { delay: 600, origin: 'bottom' });
+ScrollReveal().reveal('.description', { delay: 300, origin: 'top' });
+ScrollReveal().reveal('.role', { delay: 500, origin: 'top' });
+ScrollReveal().reveal('.hero-text', { delay: 700, origin: 'top' });
+ScrollReveal().reveal('.section-padding', { delay: 300, origin: 'bottom' });
