@@ -579,7 +579,7 @@ window.addEventListener("scroll", () => {
     }
 
     clearTimeout(navTimeout)
-    navTimeout = setTimeout(scrollStopped, 2500);
+    navTimeout = setTimeout(scrollStopped, 3500);
   }
 
   if(window.scrollY > 10){
@@ -591,7 +591,7 @@ window.addEventListener("scroll", () => {
     }
 
     clearTimeout(navTimeout)
-    navTimeout = setTimeout(scrollStopped, 2500);
+    navTimeout = setTimeout(scrollStopped, 3500);
   }
 })
 
