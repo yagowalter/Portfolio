@@ -44,139 +44,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // IntersectionObserver setup (before renderProjects)
+  /* =========================
+    projetos modal
+  ========================= */
 
-  // Projects Data
-  const projectsData = [
-    {
-      id: 1,
-      title: "Progress Tracker",
-      category: "Web App",
-      image: "assets/img/progress-tracker.png",
-      tech: ["AWS", "Cloudfront", "CSS", "JavaScript", "CodePipeline"],
-      longDesc:
-        "Rastreador de progresso acadêmico e profissional desenvolvido para acompanhar as atividades do programa Escola da Nuvem (EDN). O sistema organiza KCs, labs práticos e competências profissionais em um dashboard visual, permitindo acompanhar evolução, status de conclusão e progresso geral de forma clara e centralizada.",
-      githubUrl: "https://github.com/yagowalter/AWS-Projects/tree/main/aws-progress-tracker",
-      siteUrl: "https://progresso.yagowalter.com.br"
-    },
-    {
-      id: 2,
-      title: "Portfólio",
-      category: "Web App",
-      image: "assets/img/portfólio.png",
-      tech: ["Antigravity", "Cloudfront", "CodePipeline"],
-      longDesc:
-        "Portfólio pessoal desenvolvido com Antigravity, utilizando prompts precisos para criar uma interface moderna e responsiva. Hospedado na AWS com CloudFront, domínio gerenciado pelo Route 53 e deploy automatizado via CodePipeline.",
-      githubUrl: "https://github.com/yagowalter/Portfolio",
+  //open/close portfolio modals
+  const portfolioCardsWithModals = document.querySelectorAll(".portfolio-container .card-with-modal");
 
-    },
-    {
-      id: 3,
-      title: "Em breve",
-      category: "Mobile App",
-      image: "",
-      tech: ["-"],
-      longDesc:
-        "-",
-      githubUrl: "https://github.com/yagowalter",
+  portfolioCardsWithModals.forEach((portfolioCardsWithModals) => {
+    const portfolioCard = portfolioCardsWithModals.querySelector(".portfolio-card");
+    const portfolioBackdrop = portfolioCardsWithModals.querySelector(".portfolio-modal-backdrop");
+    const portfolioModal = portfolioCardsWithModals.querySelector(".portfolio-modal");
+    const modalCloseBtn = portfolioCardsWithModals.querySelector(".modal-close-btn");
+    
 
-    },
-  ];
+    portfolioCard.addEventListener("click" , () =>{
+      portfolioBackdrop.style.display = "flex";
 
-  // Projects Render + Load More
-  const projectsContainer = document.getElementById('projects-container');
-  function renderProjects() {
-    if (!projectsContainer) return;
+      setTimeout(() => {
+        portfolioBackdrop.classList.add("active");
+      },300);
 
-    projectsContainer.innerHTML = projectsData.map(project => `
-      <article class="project-card-gallery" data-project-id="${project.id}">
-        <div class="card-image">
-          ${project.image
-        ? `<img src="${project.image}" alt="${project.title}">`
-        : `<i class="fas fa-folder-open"></i>`
-      }
-        </div>
-        <div class="card-info">
-          <p class="card-category">${project.category}</p>
-          <h3 class="card-title">${project.title}</h3>
-        </div>
-      </article>
-    `).join('');
-
-    // Eventos
-    document.querySelectorAll('.project-card-gallery').forEach(card => {
-      card.addEventListener('click', () => {
-        openProjectModal(parseInt(card.dataset.projectId, 10));
-      });
-    });
-  }
-
-
-  // Modal
-  const projectModal = document.getElementById('project-modal');
-  const modalClose = document.querySelector('.modal-close');
-  const modalImage = document.getElementById('modal-image');
-  const modalTitle = document.getElementById('modal-title');
-  const modalDesc = document.getElementById('modal-desc');
-  const modalTech = document.getElementById('modal-tech');
-  const modalGithub = document.getElementById('modal-github');
-  const modalSite = document.getElementById('modal-site');
-
-
-  function openProjectModal(projectId) {
-    const project = projectsData.find(p => p.id === projectId);
-    if (!project || !projectModal) return;
-
-    if (project.image) {
-      modalImage.src = project.image;
-      modalImage.style.display = 'block';
-    } else {
-      modalImage.src =
-        'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="700" height="400" viewBox="0 0 700 400"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%231e293b"/><stop offset="100%" style="stop-color:%23334155"/></linearGradient></defs><rect fill="url(%23g)" width="700" height="400"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="%2364748b" font-size="48" font-family="sans-serif">📁</text></svg>';
-      modalImage.style.display = 'block';
-    }
-
-    modalTitle.textContent = project.title;
-    modalDesc.textContent = project.longDesc;
-    modalTech.innerHTML = project.tech.map(t => `<span class="tag">${t}</span>`).join('');
-    modalGithub.href = project.githubUrl;
-
-    // 🔗 Site (opcional)
-    if (project.siteUrl) {
-      modalSite.href = project.siteUrl;
-      modalSite.style.display = 'inline-flex';
-    } else {
-      modalSite.style.display = 'none';
-    }
-
-
-    projectModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeProjectModal() {
-    if (!projectModal) return;
-    projectModal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-
-  if (modalClose) modalClose.addEventListener('click', closeProjectModal);
-
-  if (projectModal) {
-    projectModal.addEventListener('click', (e) => {
-      if (e.target === projectModal) closeProjectModal();
+      setTimeout(()=>{
+        portfolioModal.classList.add("active");
+      },300);
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && projectModal.classList.contains('active')) {
-        closeProjectModal();
-      }
+    modalCloseBtn.addEventListener("click", ()=> {
+      setTimeout(()=>{
+        portfolioBackdrop.style.display = "none";
+      }, 500);
+
+      setTimeout(()=> {
+        portfolioBackdrop.classList.remove("active");
+        portfolioModal.classList.remove("active");
+      },100);
     });
-  }
+  });
 
-  // Init Projects
-  renderProjects();
 
+  
   // Certificates Carousel Logic
   const track = document.querySelector('.certificates-track');
   const prevBtn = document.querySelector('.carousel-nav.prev');

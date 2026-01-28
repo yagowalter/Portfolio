@@ -15,8 +15,6 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
 
-
-
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -25,7 +23,6 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css" />
-
 
 </head>
 
@@ -52,17 +49,17 @@
     </div>
   </header>
 
-
-
   <div class="bottom-nav-container">
     <div class="bottom-nav">
       <div class="bottom-nav-inner">
         <i class="ri-arrow-left-down-line menu-hide-btn"></i>
         <ul class="menu">
           <li class="menu-item"><a href="#home" class="current"><i class="ri-home-5-line"></i><span>Home</span></a></li>
-          <li class="menu-item"><a href="#projects"><i class="ri-briefcase-4-line"></i><span>Projetos</span></a></li>
-          <li class="menu-item"><a href="#qualifications"><i class="ri-code-s-slash-line"></i><span>Stack</span></a></li>
-          <li class="menu-item"><a href="#experience"><i class="ri-git-repository-line"></i><span>Experiência</span></a></li>
+          <li class="menu-item"><a href="#projects"><i class="ri-briefcase-line"></i><span>Projetos</span></a></li>
+          <li class="menu-item"><a href="#qualifications"><i class="ri-code-s-slash-line"></i><span>Stack</span></a>
+          </li>
+          <li class="menu-item"><a href="#experience"><i class="ri-git-repository-line"></i><span>Experiência</span></a>
+          </li>
           <li class="menu-item"><a href="#certificates"><i class="ri-medal-line"></i><span>Certificados</span></a></li>
           <li class="menu-item"><a href="#contact"><i class="ri-chat-1-line"></i><span>Contato</span></a></li>
         </ul>
@@ -141,36 +138,86 @@
       </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects" class="section-padding">
-      <div class="container">
-        <h2 class="section-title">Projetos Recentes</h2>
-        <div class="projects-grid" id="projects-container"></div>
+    <!-- Projects -->
+    <section class="yago-section nav-menu-section" id="portfolio">
+      <div class="yago-container yago-sub-container">
+        <div class="yago-wrapper">
+          <div class="section-title">
+            <h3>Portfolio</h3>
+            <P>Meus Projetos Criativos</P>
+          </div>
+          <div class="section-content">
+            <div class="portfolio-container">
+
+              <div class="card-with-modal">
+                <div class="portfolio-card">
+                  <div class="card-img">
+                    <img src="assets/img/progress-tracker.png" alt="Progress Tracker App">
+                  </div>
+                  <div class="card-info">
+                    <span>Web Design</span>
+                    <h4>Dynamic</h4>
+                    <i class="ri-arrow-right-up-line card-btn"></i>
+                  </div>
+                </div>
+
+                <div class="portfolio-modal-backdrop">
+                  <div class="portfolio-modal">
+                    <a class="modal-close-btn"><i class="ri-close-line"></i></a>
+                    <div class="modal-content">
+                      <div class="modal-img">
+                        <img src="assets/img/progress-tracker.png" alt="">
+                      </div>
+                      <h4 class="modal-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos, placeat
+                        quas? </h4>
+                      <p class="description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit quos veritatis reprehenderit
+                        impedit dolorem maxime nobis magnam magni recusandae quod. Libero, dolorem aut odio cupiditate
+                        ratione velit quas consequatur voluptates?
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit quos veritatis reprehenderit
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-with-modal">
+                <div class="portfolio-card">
+                  <div class="card-img">
+                    <img src="assets/img/portfólio.png" alt="Progress Tracker App">
+                  </div>
+                  <div class="card-info">
+                    <span>Portfolio Pessoal</span>
+                    <h4>Dynamic</h4>
+                    <i class="ri-arrow-right-up-line card-btn"></i>
+                  </div>
+                </div>
+                <div class="portfolio-modal-backdrop">
+                  <div class="portfolio-modal">
+                    <a class="modal-close-btn"><i class="ri-close-line"></i></a>
+                    <div class="modal-content">
+                      <div class="modal-img">
+                        <img src="assets/img/progress-tracker.png" alt="">
+                      </div>
+                      <h4 class="modal-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos, placeat
+                        quas? </h4>
+                      <p class="description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit quos veritatis reprehenderit
+                        impedit dolorem maxime nobis magnam magni recusandae quod. Libero, dolorem aut odio cupiditate
+                        ratione velit quas consequatur voluptates?
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit quos veritatis reprehenderit
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Project Detail Modal -->
-    <div class="project-modal-overlay" id="project-modal">
-      <div class="project-modal">
-        <button class="modal-close" aria-label="Fechar">&times;</button>
-        <img class="modal-image" id="modal-image" src="assets/img/progress-tracker.png" alt="Project Image">
-        <div class="modal-content">
-          <h3 class="modal-title" id="modal-title"></h3>
-          <p class="modal-desc" id="modal-desc"></p>
-          <div class="modal-tech" id="modal-tech"></div>
-          <div class="modal-links">
-            <a class="modal-github" id="modal-github" href="#" target="_blank" rel="noopener noreferrer">
-              <i class="fab fa-github"></i> Ver no GitHub
-            </a>
-
-            <a class="modal-site" id="modal-site" href="#" target="_blank" rel="noopener noreferrer">
-              <i class="ri-external-link-fill"></i> Ver Site
-            </a>
-          </div>
-
-        </div>
-      </div>
-    </div>
 
     <!-- Qualifications -->
     <section id="qualifications" class="section-padding bg-transparent">
