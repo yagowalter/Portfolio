@@ -1907,7 +1907,17 @@ body.light-theme .timeline-title {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
+  bottom: -75px;
+  opacity: 0;
+  transition: .5s ease, .3s ease;
+  transition-property: bottom, opacity;
+}
+
+.bottom-nav.active{
   bottom: 50px;
+  opacity: 1;
+  transition: .5s ease, .3s ease;
+  transition-property: bottom, opacity;
 }
 
 .bottom-nav-inner {
@@ -1983,12 +1993,14 @@ body.light-theme .timeline-title {
 }
 
 .bottom-nav .menu-hide-btn {
-  z-index: 8;
+  z-index: var(--z-fixed);
   position: absolute;
   top: -5px;
   right: 0;
-  color: var(--bg-color);
-  font-size: 1.52rem;
+  width: 28px;
+  height: 28px;
+  color: var(--dark-color);
+  font-size: 1.1rem;
   background: var(--primary-color);
   padding: 2px;
   border-radius: 50%;
@@ -1996,6 +2008,13 @@ body.light-theme .timeline-title {
   transition: .3s ease;
   pointer-events: none;
   opacity: 0;
+  display: grid;
+  place-items: center;
+}
+
+.menu-hide-btn.active{
+  pointer-events: all;
+  opacity: 1;
 }
 
 .bottom-nav .menu-hide-btn:hover {
@@ -2022,9 +2041,18 @@ body.light-theme .timeline-title {
   opacity: 0;
   border-radius: 5px;
   cursor: pointer;
+  transition: .5s ease, .3s ease;
+  transition-property: bottom, opacity;
   overflow: hidden;
   animation: wiggle 2s linear infinite;
   animation-delay: 1s;
+}
+
+.menu-show-btn.active{
+  bottom: 50px;
+  opacity: 1;
+  transition: .5s ease, .3s ease;
+  transition-property: bottom, opacity;
 }
 
 @keyframes wiggle {

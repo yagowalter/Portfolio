@@ -523,4 +523,91 @@ window.addEventListener("scroll", () => {
   scrollIndicatorBar.style.height = scrollValue + "%";
 });
 
+/* botton nav menu */
+
+/* bottom nav menu (scrollspy decente) */
+window.addEventListener("scroll", () => {
+  const sections = document.querySelectorAll("main section[id]");
+  const mid = window.scrollY + window.innerHeight * 0.45; // “meio” da viewport (ajustável)
+
+  let activeId = null;
+
+  sections.forEach((section) => {
+    const top = section.offsetTop;
+    const bottom = top + section.offsetHeight;
+
+    if (mid >= top && mid < bottom) {
+      activeId = section.id;
+    }
+  });
+
+  if (!activeId) return;
+
+  // remove de todos
+  document.querySelectorAll(".bottom-nav .menu a.current")
+    .forEach(a => a.classList.remove("current"));
+
+  // adiciona no ativo
+  const activeLink = document.querySelector(`.bottom-nav .menu a[href="#${activeId}"]`);
+  activeLink?.classList.add("current");
+}, { passive: true });
+
+
+// show bottom nav menu on home
+
+window.addEventListener("DOMContentLoaded", () => {
+  const bottomNav = document.querySelector(".bottom-nav");
+
+  bottomNav.classList.toggle("active", window.scrollY < 10);
+});
+
+// show/hide menu on scroll
+const bottomNav = document.querySelector(".bottom-nav");
+const menuHideBtn = document.querySelector(".menu-hide-btn");
+const menuShowBtn = document.querySelector(".menu-show-btn");
+var navTimeout;
+
+window.addEventListener("scroll", () => {
+  bottomNav.classList.add("active");
+  menuShowBtn.classList.remove("active");
+
+  if(window.scrollY < 10){
+    menuHideBtn.classList.remove("active");
+
+    function scrollStopped(){
+      bottomNav.classList.add("active");
+    }
+
+    clearTimeout(navTimeout)
+    navTimeout = setTimeout(scrollStopped, 2500);
+  }
+
+  if(window.scrollY > 10){
+    menuHideBtn.classList.add("active");
+
+    function scrollStopped(){
+      bottomNav.classList.remove("active");
+      menuShowBtn.classList.add("active");
+    }
+
+    clearTimeout(navTimeout)
+    navTimeout = setTimeout(scrollStopped, 2500);
+  }
+})
+
+// hide bottom nav on click
+
+menuHideBtn.addEventListener("click", () => {
+  bottomNav.classList.toggle("active");
+  menuHideBtn.classList.toggle("active");
+  menuShowBtn.classList.toggle("active");
+});
+
+//show bottom nav on click
+menuShowBtn.addEventListener("click", () => {
+  bottomNav.classList.toggle("active");
+  menuHideBtn.classList.add("active");
+  menuShowBtn.classList.toggle("active");
+});
+
 
