@@ -242,23 +242,28 @@ html {
 
 /* Firefox */
 * {
-  scrollbar-width: auto; /* nada de thin */
-  scrollbar-color: var(--scrollbar-thumb) transparent; /* track invisível */
+  scrollbar-width: auto;
+  /* nada de thin */
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+  /* track invisível */
 }
 
 /* Chrome/Edge/Safari */
 *::-webkit-scrollbar {
-  width: 18px; /* grossa */
+  width: 18px;
+  /* grossa */
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent; /* some com a calha */
+  background: transparent;
+  /* some com a calha */
 }
 
 *::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb);
   border-radius: 999px;
-  border: 0;                /* <- remove o “miolo”/margem que criava o print 2 */
+  border: 0;
+  /* <- remove o “miolo”/margem que criava o print 2 */
 }
 
 *::-webkit-scrollbar-thumb:hover {
@@ -1217,7 +1222,7 @@ section {
    ========================= */
 .certificates-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
 }
 
@@ -1316,6 +1321,12 @@ section {
 .status-ongoing {
   background-color: rgba(234, 179, 8, 0.1);
   color: #eab308;
+}
+
+@media (max-width: 768px) {
+  .certificates-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Hide credential link if status is ongoing (nota: :has pode falhar em alguns browsers antigos) */
@@ -1611,7 +1622,8 @@ section {
 
 .timeline-item.left {
   justify-content: flex-end;
-  text-align: right;
+  text-align: left;
+  /* Changed from right to left for better readability */
   padding-left: 0;
   padding-right: 2.75rem;
 }
@@ -1711,17 +1723,86 @@ section {
 .timeline-card {
   background: var(--glass-bg);
   border: 1px solid var(--card-border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  /* Slightly more rounded */
+  padding: 2rem;
+  /* Increased padding */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
   flex-grow: 1;
   opacity: 0;
   transform: translateX(20px);
-  transition: all 0.8s ease 0.3s;
-  /* Much slower enter */
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
   position: relative;
+  overflow: hidden;
+}
+
+.timeline-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+  opacity: 0.8;
+}
+
+.timeline-card:hover {
+  transform: translateY(-5px) !important;
+  border-color: var(--primary-color);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-title {
+  font-size: 1.35rem;
+  /* Slightly larger */
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #fff, var(--primary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: -0.5px;
+}
+
+body.light-theme .timeline-title {
+  background: linear-gradient(to right, var(--dark-color), var(--primary-color));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.timeline-company {
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 1.25rem;
+  display: block;
+}
+
+.timeline-list {
+  padding-left: 0;
+  list-style: none;
+}
+
+.timeline-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.timeline-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: bold;
 }
 
 .timeline-item.left .timeline-card {
@@ -2100,46 +2181,46 @@ section {
 /* ========================
   to top btn
   ========================= */
-  .to-top-btn {
-    z-index: var(--z-fixed);
-    position: fixed;
-    background: hsl(var(--hue) 54% 74% / .2);
-    height: 100px;
-    width: 2px;
-    bottom: 25px;
-    right: -30px;
-    cursor: pointer;
-    transition: all .3s ease;
-  }
+.to-top-btn {
+  z-index: var(--z-fixed);
+  position: fixed;
+  background: hsl(var(--hue) 54% 74% / .2);
+  height: 100px;
+  width: 2px;
+  bottom: 25px;
+  right: -30px;
+  cursor: pointer;
+  transition: all .3s ease;
+}
 
-  .to-top-btn a{
-    color: var(--color-01);
-    transition: .3s;
-  }
+.to-top-btn a {
+  color: var(--color-01);
+  transition: .3s;
+}
 
-  .to-top-btn a:hover{
-    color: var(--hover-color);
-  }
+.to-top-btn a:hover {
+  color: var(--hover-color);
+}
 
-  .to-top-btn a span{
-    position: absolute;
-    left: 0;
-    bottom: 155px;
-    transform: rotateZ(90deg);
-    transform-origin: left;
-    font-size: .85rem;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
+.to-top-btn a span {
+  position: absolute;
+  left: 0;
+  bottom: 155px;
+  transform: rotateZ(90deg);
+  transform-origin: left;
+  font-size: .85rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
 
-  .to-top-btn.active{
-    right: 30px;
-  }
+.to-top-btn.active {
+  right: 30px;
+}
 
-  .to-top-btn .scroll-indicator-bar{
-    position: absolute;
-    background: var(--color-01);
-    width: 2px;
-    height: auto;
-    opacity: .5;
-  }
+.to-top-btn .scroll-indicator-bar {
+  position: absolute;
+  background: var(--color-01);
+  width: 2px;
+  height: auto;
+  opacity: .5;
+}

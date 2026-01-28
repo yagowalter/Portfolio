@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.classList.remove("light-theme");
     }
     localStorage.setItem("theme", theme);
-    syncHeaderHeight();
   }
 
   // Initialize
@@ -24,8 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTheme(isLight ? "dark" : "light");
   });
 
-  syncHeaderHeight();
-  window.addEventListener("resize", syncHeaderHeight);
+
   const mobileBtn = document.querySelector('.mobile-menu-btn');
   const navLinks = document.querySelector('.nav-links');
 
@@ -326,44 +324,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Bottom Nav (Chevron + ScrollSpy)
   const bottomNavContainer = document.querySelector('.bottom-nav-container');
-  const navToggleChevron = document.querySelector('.nav-toggle-chevron');
-  const navItems = document.querySelectorAll('.nav-item');
-  const sections = document.querySelectorAll('section');
+  const menuShowBtn = document.querySelector('.menu-show-btn');
+  const menuHideBtn = document.querySelector('.menu-hide-btn');
 
-  if (bottomNavContainer && navToggleChevron) {
-    navToggleChevron.addEventListener('click', () => {
-      bottomNavContainer.classList.toggle('closed');
+  if (bottomNavContainer && menuShowBtn && menuHideBtn) {
+    menuHideBtn.addEventListener('click', () => {
+      bottomNavContainer.classList.add('closed');
     });
 
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (window.scrollY >= (sectionTop - sectionHeight / 3)) {
-          current = section.getAttribute('id');
-        }
-      });
-
-      navItems.forEach(item => {
-        item.classList.remove('active');
-        if (item.getAttribute('href')?.includes(current)) item.classList.add('active');
-      });
-    });
-
-    navItems.forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.preventDefault();
-        const targetId = item.getAttribute('href')?.substring(1);
-        const targetSection = targetId ? document.getElementById(targetId) : null;
-        if (targetSection) {
-          window.scrollTo({ top: targetSection.offsetTop - 80, behavior: 'smooth' });
-        }
-      });
+    menuShowBtn.addEventListener('click', () => {
+      bottomNavContainer.classList.remove('closed');
     });
   }
+
 
   // Hide Bottom Nav when footer appears
   const footer = document.querySelector('.yago-footer');
@@ -391,12 +365,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Hero Sidebars hide/show
   const sidebars = document.querySelectorAll('.hero-side-left, .hero-side-right');
   if (sidebars.length > 0) {
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 400) sidebars.forEach(s => s.classList.add('hidden-sidebar'));
-      else sidebars.forEach(s => s.classList.remove('hidden-sidebar'));
+      if (window.scrollY > 200) {
+        sidebars.forEach(s => s.classList.add('hidden-sidebar'));
+      } else {
+        sidebars.forEach(s => s.classList.remove('hidden-sidebar'));
+      }
     });
   }
 
@@ -537,7 +513,7 @@ window.addEventListener("scroll", () => {
 
   //scroll indicator bar
   const scrollIndicatorBar = document.querySelector(".scroll-indicator-bar");
-  
+
   const pageScroll = document.body.scrollTop || document.documentElement.scrollTop;
   const height =
     document.documentElement.scrollHeight -
