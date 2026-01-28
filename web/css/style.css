@@ -32,6 +32,7 @@
   --scrollbar-thumb: hsl(var(--hue) var(--sat) var(--light));
   --scrollbar-thumb-hover: hsl(var(--hue) var(--sat) var(--light) -7%);
 
+
   /* ======= Font and typography ======= */
   --body-font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --mono-font-family: "JetBrains Mono", monospace;
@@ -351,19 +352,21 @@ section {
   margin-right: auto;
 }
 
-/* .yago-header {
+.yago-header {
   z-index: var(--z-fixed);
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
-  padding: 18px 0;
-  background: var(--body-color);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: background 0.3s ease;
+  padding: 30px 0;
+  transition: .3s ease;
 }
+
+.yago-header.shrink {
+  background: var(--body-color);
+  padding: 12px 0;
+}
+
 
 .yago-header .inner {
   width: 100%;
@@ -430,9 +433,33 @@ section {
 
 .lets-talk-icon:hover {
   color: var(--hover-color);
-} */
+}
 
+.theme-btn {
+  position: relative;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  width: 27px;
+  cursor: pointer;
+}
 
+.theme-btn i {
+  position: absolute;
+  color: var(--color-01);
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.theme-btn i:hover {
+  color: var(--hover-color);
+  transform: rotate(-15deg);
+}
+
+.theme-btn .moon-icon {
+  display: none;
+}
 
 /* =========================
    TITLES / BUTTONS
@@ -482,13 +509,6 @@ section {
 .btn-primary {
   background-color: var(--primary-color);
   color: white;
-}
-
-.section-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 3rem;
-  width: 100%;
 }
 
 .btn-load-more {
@@ -2126,26 +2146,33 @@ body.light-theme .timeline-title {
   Footer
   ===================================== */
 
-/* =========================
-   FOOTER (arrumado)
-   ========================= */
-
-
-
-
+  
 .yago-footer {
   background: var(--footer-bg);
-  border-top: 1px solid var(--card-border);
-  padding: 48px 0 140px;
-  /* 140px pra não brigar com sua bottom-nav fixa */
+  padding-top: 100px;
+  padding-bottom: 165px;
 }
 
-.yago-footer .inner {
+.yago-footer .yago-container .inner {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 18px;
-  text-align: center;
+  flex-direction: column;
+  row-gap: 40px;
+}
+
+.footer-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  column-gap: 22px;
+  row-gap: 22px;
+}
+
+.yago-footer .copy-right{
+  color: var(--color-04);
+  font-size: var(--small-font-size);
+  margin-top: 10px;
 }
 
 /* Logo */
@@ -2158,35 +2185,6 @@ body.light-theme .timeline-title {
 .yago-logo a span {
   color: var(--primary-color);
 }
-
-/* Menu do footer */
-.footer-menu {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 14px 22px;
-  padding: 0;
-  margin: 0;
-}
-
-.footer-menu a {
-  color: var(--text-muted);
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: color .25s ease;
-}
-
-.footer-menu a:hover {
-  color: var(--primary-color);
-}
-
-/* Copyright */
-.copy-right {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  margin: 0;
-}
-
 
 ::-webkit-scrollbar {
   width: 30px;
@@ -2272,4 +2270,27 @@ body.light-theme .timeline-title {
   width: 2px;
   height: auto;
   opacity: .5;
+}
+
+
+
+/* FOOTER MENU estilo "ABOUT RESUME SERVICE" */
+.yago-footer .footer-menu {
+  gap: 18px 26px;
+}
+
+.yago-footer .footer-menu a {
+  font-family: "Inter", var(--body-font-family);
+  font-size: var(--tiny-font-size) - .07rem;
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  color: var(--color-01);
+  padding: 3px 12px;        
+  border-radius: 999px;
+  transition: color .2s ease, opacity .2s ease;
+}
+
+.yago-footer .footer-menu a:hover {
+  color: var(--color-03);
+  background: var(--color-01);
 }

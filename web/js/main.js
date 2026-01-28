@@ -611,3 +611,11 @@ menuShowBtn.addEventListener("click", () => {
 });
 
 
+/* ==========================
+  shrink header on scroll
+========================== */
+window.addEventListener("scroll", () => {
+  const yagoHeader = document.querySelector(".yago-header");
+
+  yagoHeader.classList.toggle("shrink" , window.scrollY > 0);
+})
