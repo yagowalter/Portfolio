@@ -1,42 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Marca que JS rodou (pra reveal não esconder tudo sem necessidade)
-  document.documentElement.classList.add('js');
 
-  // =========================
-  // Theme Toggle
-  // =========================
-  const themeToggle = document.getElementById('theme-toggle');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+  // Theme Toggle Logic
+  const themeToggleBtn = document.querySelector(".theme-toggle-btn");
+  const savedTheme = localStorage.getItem("theme");
 
-  const currentTheme = localStorage.getItem('theme');
-  if (currentTheme) {
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    updateIcon(currentTheme);
-  } else if (prefersDark.matches) {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    updateIcon('dark');
+  function applyTheme(theme) {
+    if (theme === "light") {
+      document.body.classList.add("light-theme");
+    } else {
+      document.body.classList.remove("light-theme");
+    }
+    localStorage.setItem("theme", theme);
+    syncHeaderHeight();
   }
 
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      const targetTheme = isLight ? 'dark' : 'light';
-
-      document.documentElement.setAttribute('data-theme', targetTheme);
-      localStorage.setItem('theme', targetTheme);
-      updateIcon(targetTheme);
-    });
+  // Initialize
+  if (savedTheme) {
+    applyTheme(savedTheme);
   }
 
-  function updateIcon(theme) {
-    const icon = themeToggle ? themeToggle.querySelector('i') : null;
-    if (!icon) return;
-    icon.className = (theme === 'dark') ? 'fas fa-sun' : 'fas fa-moon';
-  }
+  themeToggleBtn?.addEventListener("click", () => {
+    const isLight = document.body.classList.contains("light-theme");
+    applyTheme(isLight ? "dark" : "light");
+  });
 
-  // =========================
-  // Mobile Menu
-  // =========================
+  syncHeaderHeight();
+  window.addEventListener("resize", syncHeaderHeight);
   const mobileBtn = document.querySelector('.mobile-menu-btn');
   const navLinks = document.querySelector('.nav-links');
 
@@ -57,27 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // =========================
-  // IntersectionObserver (CRUCIAL: antes de renderProjects)
-  // =========================
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('reveal-visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
-  });
+  // IntersectionObserver setup (before renderProjects)
 
-  // Observa elementos .reveal já existentes no HTML
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // =========================
   // Projects Data
-  // =========================
   const projectsData = [
     {
       id: 1,
@@ -153,9 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  // =========================
   // Projects Render + Load More
-  // =========================
   const projectsContainer = document.getElementById('projects-container');
   let currentProjectPage = 1;
   const projectsPerPage = 3;
@@ -168,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const visibleProjects = projectsData.slice(startIndex, endIndex);
 
     const newProjectsHTML = visibleProjects.map(project => `
-      <article class="project-card-gallery reveal" data-project-id="${project.id}">
+      <article class="project-card-gallery" data-project-id="${project.id}">
         <div class="card-image">
           ${project.image
         ? `<img src="${project.image}" alt="${project.title}">`
@@ -188,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
       projectsContainer.insertAdjacentHTML('beforeend', newProjectsHTML);
     }
 
-    // Eventos + observar novos cards
+    // Eventos
     document.querySelectorAll('.project-card-gallery').forEach(card => {
       if (card.dataset.listener !== "1") {
         card.addEventListener('click', () => {
@@ -196,7 +165,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         card.dataset.listener = "1";
       }
-      observer.observe(card);
     });
 
     renderMoreButton();
@@ -239,9 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sectionFooter.appendChild(button);
   }
 
-  // =========================
   // Modal
-  // =========================
   const projectModal = document.getElementById('project-modal');
   const modalClose = document.querySelector('.modal-close');
   const modalImage = document.getElementById('modal-image');
@@ -303,14 +269,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // =========================
   // Init Projects
-  // =========================
   renderProjects(1);
 
-  // =========================
   // Certificates "Ver mais"
-  // =========================
   const loadMoreCertsBtn = document.getElementById('load-more-certs');
   const certCards = document.querySelectorAll('.cert-card');
 
@@ -320,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // esconde tudo depois dos 2 primeiros
   certCards.forEach((card, index) => {
     if (index >= visibleCerts) {
-      card.style.display = 'none';
+      card.classList.add('hidden-force');
     }
   });
 
@@ -333,7 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         certCards.forEach((card, index) => {
           if (index < nextVisible) {
-            card.style.display = 'flex'; // ou block, dependendo do seu CSS
+            card.classList.remove('hidden-force');
           }
         });
 
@@ -355,20 +317,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // =========================
   // Scroll Down Button
-  // =========================
   const scrollDownBtn = document.getElementById('scroll-down-btn');
   if (scrollDownBtn) {
     scrollDownBtn.addEventListener('click', () => {
-      const projectsSection = document.getElementById('contact');
+      const projectsSection = document.getElementById('footer');
       if (projectsSection) projectsSection.scrollIntoView({ behavior: 'smooth' });
     });
   }
 
-  // =========================
   // Bottom Nav (Chevron + ScrollSpy)
-  // =========================
   const bottomNavContainer = document.querySelector('.bottom-nav-container');
   const navToggleChevron = document.querySelector('.nav-toggle-chevron');
   const navItems = document.querySelectorAll('.nav-item');
@@ -407,10 +365,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // =========================
   // Hide Bottom Nav when footer appears
-  // =========================
-  const footer = document.querySelector('.footer');
+  const footer = document.querySelector('.yago-footer');
   if (footer && bottomNavContainer) {
     const footerObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -422,9 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
     footerObserver.observe(footer);
   }
 
-  // =========================
   // Scroll Up Button
-  // =========================
   const scrollUpBtn = document.querySelector('.scroll-up-btn');
   if (scrollUpBtn) {
     window.addEventListener('scroll', () => {
@@ -437,9 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // =========================
   // Hero Sidebars hide/show
-  // =========================
   const sidebars = document.querySelectorAll('.hero-side-left, .hero-side-right');
   if (sidebars.length > 0) {
     window.addEventListener('scroll', () => {
@@ -448,9 +400,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // =========================
   // Typing effect (loop)
-  // =========================
   const phrases = [
     "Cloud Engineer Jr",
     "Mobile & Web Designer"
@@ -499,9 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
   typeLoop();
 
 
-  // =========================
   // Experience Timeline (line grows on scroll + cards reveal)
-  // =========================
   const timeline = document.getElementById('experience-timeline');
 
   if (timeline) {
@@ -526,14 +474,42 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = timeline.getBoundingClientRect();
       const vh = window.innerHeight || document.documentElement.clientHeight;
 
-      // começa a preencher quando a timeline entra ~20% do viewport
-      const start = vh * 0.2;
-      const total = Math.max(1, rect.height - vh * 0.35);
+      // Start filling when the timeline container enters 80% of the viewport (from the top)
+      // This means the line starts filling almost immediately as it enters teh screen bottom
+      const start = vh * 0.8;
 
+      // Calculate how much of the timeline has been scrolled past relative to the viewport trigger point
       const passed = start - rect.top;
-      const progress = clamp01(passed / total);
 
+      // Total scrollable height of the timeline logic
+      const total = rect.height; // Using full height for simpler calculation relative to line length
+
+      // Progress percentage (0 to 1)
+      let progress = passed / total;
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Update the height of the fill line
       timeline.style.setProperty('--line-progress', progress.toFixed(4));
+
+      // Calculate the absolute pixel position of the "tip" of the fill line relative to the timeline container top
+      const currentFillHeight = progress * rect.height;
+
+      // --- Timeline Items Activation Logic ---
+      const timelineItems = timeline.querySelectorAll('.timeline-item');
+
+      timelineItems.forEach(item => {
+        // Calculate item's dot position relative to the timeline container
+        // We assume the dot is centered vertically in the item or at the top. 
+        // Based on CSS .timeline-dot has top: 0, so it's at the very top of each item relative container.
+        const itemTop = item.offsetTop;
+
+        // Add a small offset (e.g. 10px) so it activates just as the line hits the dot center
+        if (currentFillHeight >= itemTop + 5) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
     };
 
     const onScrollOrResize = () => {
@@ -552,22 +528,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-/*  =============================================================
-   Scroll reveal JS
-    ============================================================= */
+/* to top btn */
 
-ScrollReveal({
-  reset: true,
-  distance: '60px',
-  duration: 2500,
-  delay: 400
+window.addEventListener("scroll", () => {
+  const toTopBtn = document.querySelector(".to-top-btn");
+
+  toTopBtn.classList.toggle("active", window.scrollY > 0);
+
+  //scroll indicator bar
+  const scrollIndicatorBar = document.querySelector(".scroll-indicator-bar");
+  
+  const pageScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const height =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+  const scrollValue = (pageScroll / height) * 100;
+
+  scrollIndicatorBar.style.height = scrollValue + "%";
 });
 
 
-
-ScrollReveal().reveal('.hero-side-right', { delay: 300, origin: 'top' });
-ScrollReveal().reveal('.hero-side-left', { delay: 600, origin: 'bottom' });
-ScrollReveal().reveal('.description', { delay: 300, origin: 'top' });
-ScrollReveal().reveal('.role', { delay: 500, origin: 'top' });
-ScrollReveal().reveal('.hero-text', { delay: 700, origin: 'top' });
-ScrollReveal().reveal('.section-padding', { delay: 300, origin: 'bottom' });
