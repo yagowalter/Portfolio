@@ -571,10 +571,9 @@ window.addEventListener("scroll", () => {
   bottomNav.classList.add("active");
   menuShowBtn.classList.remove("active");
 
-  if(window.scrollY < 10){
+  if (window.scrollY < 10) {
     menuHideBtn.classList.remove("active");
-
-    function scrollStopped(){
+    function scrollStopped() {
       bottomNav.classList.add("active");
     }
 
@@ -582,10 +581,10 @@ window.addEventListener("scroll", () => {
     navTimeout = setTimeout(scrollStopped, 3500);
   }
 
-  if(window.scrollY > 10){
+  if (window.scrollY > 10) {
     menuHideBtn.classList.add("active");
 
-    function scrollStopped(){
+    function scrollStopped() {
       bottomNav.classList.remove("active");
       menuShowBtn.classList.add("active");
     }
@@ -612,10 +611,10 @@ menuShowBtn.addEventListener("click", () => {
 
 
 /* ==========================
-  shrink header on scroll
+  shrink header on scrollgi
 ========================== */
 window.addEventListener("scroll", () => {
   const yagoHeader = document.querySelector(".yago-header");
 
-  yagoHeader.classList.toggle("shrink" , window.scrollY > 0);
-})
+  yagoHeader.classList.toggle("shrink", window.scrollY > 0);
+});
