@@ -2294,3 +2294,9 @@ body.light-theme .timeline-title {
   color: var(--color-03);
   background: var(--color-01);
 }
+
+.section-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2.5rem;
+}
