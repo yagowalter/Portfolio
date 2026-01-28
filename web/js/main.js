@@ -54,7 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
       category: "Web App",
       image: "assets/img/progress-tracker.png",
       tech: ["AWS", "Cloudfront", "CSS", "JavaScript", "CodePipeline"],
-      shortDesc: "Progresso das atividades na EDN.",
       longDesc:
         "Rastreador de progresso acadêmico e profissional desenvolvido para acompanhar as atividades do programa Escola da Nuvem (EDN). O sistema organiza KCs, labs práticos e competências profissionais em um dashboard visual, permitindo acompanhar evolução, status de conclusão e progresso geral de forma clara e centralizada.",
       githubUrl: "https://github.com/yagowalter/AWS-Projects/tree/main/aws-progress-tracker",
@@ -66,7 +65,6 @@ document.addEventListener('DOMContentLoaded', () => {
       category: "Web App",
       image: "assets/img/portfólio.png",
       tech: ["Antigravity", "Cloudfront", "CodePipeline"],
-      shortDesc: "Meu portfólio pessoal.",
       longDesc:
         "Portfólio pessoal desenvolvido com Antigravity, utilizando prompts precisos para criar uma interface moderna e responsiva. Hospedado na AWS com CloudFront, domínio gerenciado pelo Route 53 e deploy automatizado via CodePipeline.",
       githubUrl: "https://github.com/yagowalter/Portfolio",
@@ -74,67 +72,23 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 3,
-      title: "HemoPlanner",
+      title: "Em breve",
       category: "Mobile App",
       image: "",
       tech: ["-"],
-      shortDesc: "-",
       longDesc:
         "-",
       githubUrl: "https://github.com/yagowalter",
 
     },
-    {
-      id: 4,
-      title: "Em breve..",
-      category: "-",
-      image: "",
-      tech: ["-"],
-      shortDesc: "-",
-      longDesc:
-        "-",
-      githubUrl: "https://github.com/yagowalter",
-
-    },
-    {
-      id: 5,
-      title: "Em breve..",
-      category: "-",
-      image: "",
-      tech: ["-"],
-      shortDesc: "-",
-      longDesc:
-        "-",
-      githubUrl: "https://github.com/yagowalter",
-
-    },
-    {
-      id: 6,
-      title: "Em breve..",
-      category: "-",
-      image: "",
-      tech: ["-"],
-      shortDesc: "-",
-      longDesc:
-        "-",
-      githubUrl: "https://github.com/yagowalter",
-
-    }
   ];
 
   // Projects Render + Load More
   const projectsContainer = document.getElementById('projects-container');
-  let currentProjectPage = 1;
-  const projectsPerPage = 3;
-
-  function renderProjects(page = 1) {
+  function renderProjects() {
     if (!projectsContainer) return;
 
-    const startIndex = (page - 1) * projectsPerPage;
-    const endIndex = startIndex + projectsPerPage;
-    const visibleProjects = projectsData.slice(startIndex, endIndex);
-
-    const newProjectsHTML = visibleProjects.map(project => `
+    projectsContainer.innerHTML = projectsData.map(project => `
       <article class="project-card-gallery" data-project-id="${project.id}">
         <div class="card-image">
           ${project.image
@@ -149,61 +103,14 @@ document.addEventListener('DOMContentLoaded', () => {
       </article>
     `).join('');
 
-    if (page === 1) {
-      projectsContainer.innerHTML = newProjectsHTML;
-    } else {
-      projectsContainer.insertAdjacentHTML('beforeend', newProjectsHTML);
-    }
-
     // Eventos
     document.querySelectorAll('.project-card-gallery').forEach(card => {
-      if (card.dataset.listener !== "1") {
-        card.addEventListener('click', () => {
-          openProjectModal(parseInt(card.dataset.projectId, 10));
-        });
-        card.dataset.listener = "1";
-      }
-    });
-
-    renderMoreButton();
-  }
-
-  function renderMoreButton() {
-    const totalPages = Math.ceil(projectsData.length / projectsPerPage);
-    const projectsSection = document.getElementById('projects');
-    if (!projectsSection) return;
-
-    let sectionFooter = projectsSection.querySelector('.section-footer');
-
-    if (!sectionFooter) {
-      sectionFooter = document.createElement('div');
-      sectionFooter.className = 'section-footer';
-      projectsSection.querySelector('.container')?.appendChild(sectionFooter);
-    }
-
-    const existingBtn = sectionFooter.querySelector('.load-more-projects-btn');
-    if (existingBtn) existingBtn.remove();
-
-    const button = document.createElement('button');
-    button.id = 'load-more-projects';
-    button.className = 'btn btn-load-more load-more-projects-btn';
-
-    if (currentProjectPage < totalPages) {
-      button.innerHTML = 'Ver Mais <i class="ri-add-line" style="font-size: 1em;"></i>';
-      button.disabled = false;
-      button.addEventListener('click', () => {
-        currentProjectPage++;
-        renderProjects(currentProjectPage);
+      card.addEventListener('click', () => {
+        openProjectModal(parseInt(card.dataset.projectId, 10));
       });
-    } else {
-      button.innerHTML = 'Todos exibidos <i class="ri-check-line" style="font-size: 1em;"></i>';
-      button.disabled = true;
-      button.style.opacity = '0.7';
-      button.style.cursor = 'default';
-    }
-
-    sectionFooter.appendChild(button);
+    });
   }
+
 
   // Modal
   const projectModal = document.getElementById('project-modal');
@@ -268,50 +175,61 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // Init Projects
-  renderProjects(1);
+  renderProjects();
 
-  // Certificates "Ver mais"
-  const loadMoreCertsBtn = document.getElementById('load-more-certs');
-  const certCards = document.querySelectorAll('.cert-card');
+  // Certificates Carousel Logic
+  const track = document.querySelector('.certificates-track');
+  const prevBtn = document.querySelector('.carousel-nav.prev');
+  const nextBtn = document.querySelector('.carousel-nav.next');
+  const cards = document.querySelectorAll('.cert-card');
 
-  let visibleCerts = 2; // começa mostrando 2
-  const step = 2;       // carrega de 2 em 2
+  if (track && prevBtn && nextBtn && cards.length > 0) {
+    let currentIndex = 0;
 
-  // esconde tudo depois dos 2 primeiros
-  certCards.forEach((card, index) => {
-    if (index >= visibleCerts) {
-      card.classList.add('hidden-force');
+    function getCardsPerView() {
+      if (window.innerWidth <= 640) return 1;
+      if (window.innerWidth <= 1024) return 2;
+      return 3;
     }
-  });
 
-  if (loadMoreCertsBtn) {
-    loadMoreCertsBtn.addEventListener('click', () => {
-      loadMoreCertsBtn.textContent = 'Carregando...';
+    function updateCarousel() {
+      const cardWidth = cards[0].offsetWidth;
+      const gap = 1.5 * 16; // 1.5rem gap
+      const moveDistance = currentIndex * (cardWidth + gap);
+      track.style.transform = `translateX(-${moveDistance}px)`;
 
-      setTimeout(() => {
-        const nextVisible = visibleCerts + step;
+      // Update button states
+      const maxIndex = Math.max(0, cards.length - getCardsPerView());
+      prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+      prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+      nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+      nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
+    }
 
-        certCards.forEach((card, index) => {
-          if (index < nextVisible) {
-            card.classList.remove('hidden-force');
-          }
-        });
-
-        visibleCerts = nextVisible;
-
-        // acabou os certificados
-        if (visibleCerts >= certCards.length) {
-          loadMoreCertsBtn.innerHTML =
-            'Todos os certificados exibidos <i class="fas fa-check"></i>';
-          loadMoreCertsBtn.disabled = true;
-          loadMoreCertsBtn.style.opacity = '0.7';
-          loadMoreCertsBtn.style.cursor = 'default';
-        } else {
-          loadMoreCertsBtn.innerHTML =
-            'Ver mais Certificados <i class="ri-add-line"></i>';
-        }
-      }, 400);
+    nextBtn.addEventListener('click', () => {
+      const maxIndex = Math.max(0, cards.length - getCardsPerView());
+      if (currentIndex < maxIndex) {
+        currentIndex++;
+        updateCarousel();
+      }
     });
+
+    prevBtn.addEventListener('click', () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateCarousel();
+      }
+    });
+
+    // Resize handling
+    window.addEventListener('resize', () => {
+      const maxIndex = Math.max(0, cards.length - getCardsPerView());
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+      updateCarousel();
+    });
+
+    // Initial state
+    setTimeout(updateCarousel, 100);
   }
 
 

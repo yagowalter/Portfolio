@@ -32,25 +32,25 @@
 <body>
 
   <!-- HEADER-->
- <header class="yago-header">
-  <div class="yago-container">
-    <div class="inner">
-      <div class="yago-logo">
-        <a href="#"><span>YW</span></a>
-      </div>
-      <div class="header-btns">
-        <div class="yago-main-btn border-btn lets-talk-btn">
-          <a href="#contact">Vamos conversar</a>
+  <header class="yago-header">
+    <div class="yago-container">
+      <div class="inner">
+        <div class="yago-logo">
+          <a href="#"><span>YW</span></a>
         </div>
-        <a href="#contact" class="lets-talk-icon"><i class="ri-chat-1-fill"></i></a>
-        <div class="theme-btn">
-          <i class="ri-sun-fill sun-icon"></i>
-          <i class="ri-moon-fill moon-icon"></i>
+        <div class="header-btns">
+          <div class="yago-main-btn border-btn lets-talk-btn">
+            <a href="#contact">Vamos conversar</a>
+          </div>
+          <a href="#contact" class="lets-talk-icon"><i class="ri-chat-1-fill"></i></a>
+          <div class="theme-btn">
+            <i class="ri-sun-fill sun-icon"></i>
+            <i class="ri-moon-fill moon-icon"></i>
+          </div>
         </div>
       </div>
     </div>
-  </div>
- </header>
+  </header>
 
 
 
@@ -59,13 +59,11 @@
       <div class="bottom-nav-inner">
         <i class="ri-arrow-left-down-line menu-hide-btn"></i>
         <ul class="menu">
-          <li class="menu-item"><a href="#home" class="current"><i class="ri-home-4-line"></i><span>Home</span></a></li>
+          <li class="menu-item"><a href="#home" class="current"><i class="ri-home-5-line"></i><span>Home</span></a></li>
           <li class="menu-item"><a href="#projects"><i class="ri-briefcase-4-line"></i><span>Projetos</span></a></li>
-          <li class="menu-item"><a href="#qualifications"><i class="ri-code-box-line"></i><span>Qualificações</span></a>
-          </li>
-          <li class="menu-item"><a href="#experience"><i class="ri-sparkling-line"></i><span>Experiência</span></a></li>
-          <li class="menu-item"><a href="#certificates"><i
-                class="ri-verified-badge-line"></i><span>Certificados</span></a></li>
+          <li class="menu-item"><a href="#qualifications"><i class="ri-code-s-slash-line"></i><span>Stack</span></a></li>
+          <li class="menu-item"><a href="#experience"><i class="ri-git-repository-line"></i><span>Experiência</span></a></li>
+          <li class="menu-item"><a href="#certificates"><i class="ri-medal-line"></i><span>Certificados</span></a></li>
           <li class="menu-item"><a href="#contact"><i class="ri-chat-1-line"></i><span>Contato</span></a></li>
         </ul>
       </div>
@@ -149,7 +147,6 @@
         <h2 class="section-title">Projetos Recentes</h2>
         <div class="projects-grid" id="projects-container"></div>
       </div>
-      <!-- o JS cria o section-footer aqui dentro -->
     </section>
 
     <!-- Project Detail Modal -->
@@ -178,7 +175,7 @@
     <!-- Qualifications -->
     <section id="qualifications" class="section-padding bg-transparent">
       <div class="container">
-        <h2 class="section-title">Habilidades Técnicas</h2>
+        <h2 class="section-title">Tecnologias & Ferramentas</h2>
 
         <div class="skills-container">
           <div class="tech-skill-card reveal">
@@ -306,110 +303,115 @@
       <div class="container">
         <h2 class="section-title reveal">Cursos e Certificações</h2>
 
-        <div class="certificates-grid">
-          <div class="cert-card reveal">
-            <div class="cert-icon"><i class="fas fa-graduation-cap"></i></div>
-            <h3 class="cert-title">Bacharel em Ciência da Computação</h3>
-            <p class="cert-school">Centro Universitário de João Pessoa</p>
-            <div class="cert-meta">
-              <a href="assets/pdf/diploma.pdf" class="btn-link cert-link" target="_blank">
-                Ver Credencial
-              </a>
-              <span class="cert-date">2019 - 2023</span>
-              <span class="cert-status status-completed">Concluído</span>
+        <div class="certs-carousel-wrapper">
+          <button class="carousel-nav prev" aria-label="Anterior"><i class="ri-arrow-left-s-line"></i></button>
+
+          <div class="certificates-carousel">
+            <div class="certificates-track">
+              <!-- BCC -->
+              <div class="cert-card reveal">
+                <div class="cert-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="cert-body">
+                  <h3 class="cert-title">Ciência da Computação</h3>
+                  <p class="cert-school">Centro Universitário de João Pessoa</p>
+                </div>
+                <div class="cert-meta">
+                  <a href="assets/pdf/diploma.pdf" class="btn-link cert-link" target="_blank">
+                    Ver Credencial
+                  </a>
+                  <span class="cert-status status-completed">Concluído</span>
+                </div>
+              </div>
+
+              <!-- AWS Re/Start -->
+              <div class="cert-card reveal">
+                <div class="cert-icon">
+                  <img class="cert-logo" src="assets/img/edn.png" alt="Escola da Nuvem">
+                </div>
+                <div class="cert-body">
+                  <h3 class="cert-title">AWS Re/Start</h3>
+                  <p class="cert-school">Escola da Nuvem</p>
+                </div>
+                <div class="cert-meta">
+                  <span class="cert-status status-ongoing">Em andamento</span>
+                </div>
+              </div>
+
+              <!-- AWS Cloud Essentials -->
+              <div class="cert-card reveal">
+                <div class="cert-icon"><i class="fab fa-aws"></i></div>
+                <div class="cert-body">
+                  <h3 class="cert-title">Cloud Essentials</h3>
+                  <p class="cert-school">Amazon Web Services</p>
+                </div>
+                <div class="cert-meta">
+                  <span class="cert-status status-ongoing">Em andamento</span>
+                </div>
+              </div>
+
+              <!-- Git & Github -->
+              <div class="cert-card reveal">
+                <div class="cert-icon"><img class="cert-logo" src="assets/img/git.png" alt="Jornada do Dev"></div>
+                <div class="cert-body">
+                  <h3 class="cert-title">Git e Github</h3>
+                  <p class="cert-school">Jornada do Dev</p>
+                </div>
+                <div class="cert-meta">
+                  <span class="cert-status status-ongoing">Em andamento</span>
+                </div>
+              </div>
+
+              <!-- DevMedia Programação -->
+              <div class="cert-card reveal">
+                <div class="cert-icon">
+                  <img class="cert-logo" src="assets/img/devmedia.png" alt="DevMedia">
+                </div>
+                <div class="cert-body">
+                  <h3 class="cert-title">Autoridade: Programação</h3>
+                  <p class="cert-school">DevMedia</p>
+                </div>
+                <div class="cert-meta">
+                  <a href="assets/pdf/programação devmedia.pdf" target="_blank" class="btn-link cert-link">
+                    Ver Credencial
+                  </a>
+                  <span class="cert-status status-completed">Concluído</span>
+                </div>
+              </div>
+
+              <!-- DevMedia Flutter -->
+              <div class="cert-card reveal">
+                <div class="cert-icon"><img class="cert-logo" src="assets/img/devmedia.png" alt="DevMedia"></div>
+                <div class="cert-body">
+                  <h3 class="cert-title">Autoridade: Flutter</h3>
+                  <p class="cert-school">DevMedia</p>
+                </div>
+                <div class="cert-meta">
+                  <a href="assets/pdf/flutter devmedia.pdf" target="_blank" class="btn-link cert-link">
+                    Ver Credencial
+                  </a>
+                  <span class="cert-status status-completed">Concluído</span>
+                </div>
+              </div>
+
+              <!-- Udemy Flutter -->
+              <div class="cert-card reveal">
+                <div class="cert-icon"><img class="cert-logo" src="assets/img/udemy.png" alt="Udemy"></div>
+                <div class="cert-body">
+                  <h3 class="cert-title">Criação de Apps Flutter</h3>
+                  <p class="cert-school">Udemy</p>
+                </div>
+                <div class="cert-meta">
+                  <a href="assets/pdf/flutter.pdf" target="_blank" class="btn-link cert-link">
+                    Ver Credencial
+                  </a>
+                  <span class="cert-status status-completed">Concluído</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="cert-card reveal">
-            <div class="cert-icon">
-              <img class="cert-logo" src="assets/img/edn.png" alt="Escola da Nuvem">
-            </div>
-            <h3 class="cert-title">AWS Re/Start</h3>
-            <p class="cert-school">Escola da Nuvem</p>
-            <div class="cert-meta">
-              <a href="assets/pdf/" class="btn-link" target="_blank"
-                style="color: var(--primary-color); font-weight:600; font-size: 0.9rem;">
-                Ver Credencial
-              </a>
-              <span class="cert-status status-ongoing">Em andamento</span>
-            </div>
-          </div>
-
-          <div class="cert-card reveal delay-200">
-            <div class="cert-icon"><i class="fab fa-aws"></i></div>
-            <h3 class="cert-title">Cloud Essentials - Knowledge Badge Readiness Path</h3>
-            <p class="cert-school">Amazon Web Services</p>
-            <div class="cert-meta">
-              <a href="#" class="btn-link" target="_blank"
-                style="color: var(--primary-color); font-weight:600; font-size: 0.9rem;">
-                Ver Credencial
-              </a>
-              <span class="cert-status status-ongoing">Em andamento</span>
-            </div>
-          </div>
-
-          <div class="cert-card reveal delay-200">
-            <div class="cert-icon"><img class="cert-logo" src="assets/img/git.png" alt="Jornada do Dev"></div>
-            <h3 class="cert-title">Git e Github</h3>
-            <p class="cert-school">Jornada do Dev</p>
-            <div class="cert-meta">
-              <a href="#" class="btn-link" target="_blank"
-                style="color: var(--primary-color); font-weight:600; font-size: 0.9rem;">
-                Ver Credencial
-              </a>
-              <span class="cert-status status-ongoing">Em andamento</span>
-            </div>
-          </div>
-
-          <div class="cert-card reveal delay-300">
-            <div class="cert-icon">
-              <img class="cert-logo" src="assets/img/devmedia.png" alt="DevMedia">
-            </div>
-            <h3 class="cert-title">Certificado de Autoridade: Programação</h3>
-            <p class="cert-school">DevMedia</p>
-            <div class="cert-meta">
-              <a href="assets/pdf/programação devmedia.pdf" target="_blank" class="btn-link"
-                style="color: var(--primary-color); font-weight:600; font-size: 0.9rem;">
-                Ver Credencial
-              </a>
-              <span class="cert-date">16h • 2022</span>
-              <span class="cert-status status-completed">Concluído</span>
-            </div>
-          </div>
-
-          <div class="cert-card reveal delay-300">
-            <div class="cert-icon"><img class="cert-logo" src="assets/img/devmedia.png" alt="DevMedia"></div>
-            <h3 class="cert-title">Certificado de Autoridade: Flutter</h3>
-            <p class="cert-school">DevMedia</p>
-            <div class="cert-meta">
-              <a href="assets/pdf/flutter devmedia.pdf" target="_blank" class="btn-link"
-                style="color: var(--primary-color); font-weight:600; font-size: 0.9rem;">
-                Ver Credencial
-              </a>
-              <span class="cert-date">31h • 2022</span>
-              <span class="cert-status status-completed">Concluído</span>
-            </div>
-          </div>
-
-          <div class="cert-card reveal delay-300">
-            <div class="cert-icon"><img class="cert-logo" src="assets/img/udemy.png" alt="Udemy"></div>
-            <h3 class="cert-title">Criação de Apps Android/iOS/Web com Flutter</h3>
-            <p class="cert-school">Udemy</p>
-            <div class="cert-meta">
-              <a href="assets/pdf/flutter.pdf" target="_blank" class="btn-link cert-link">
-                Ver Credencial
-              </a>
-              <span class="cert-date">65h • 2023</span>
-              <span class="cert-status status-completed">Concluído</span>
-            </div>
-          </div>
+          <button class="carousel-nav next" aria-label="Próximo"><i class="ri-arrow-right-s-line"></i></button>
         </div>
-      </div>
-
-      <div class="section-footer">
-        <button id="load-more-certs" class="btn btn-load-more">
-          Ver mais Certificados <i class="ri-add-line" style="font-size: 1em;"></i>
-        </button>
       </div>
     </section>
 
