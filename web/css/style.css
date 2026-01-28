@@ -704,17 +704,38 @@ section {
 }
 
 /* Sidebars */
-.hero-side-left,
+.hero-side-left {
+  position: absolute;
+  left: -5px;
+  color: var(--color-01);
+  display: grid;
+  justify-items: center;
+  row-gap: 3px;
+}
+
 .hero-side-right {
-  position: fixed;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.8rem;
-  z-index: var(--z-low);
-  transition: opacity 0.4s ease, visibility 0.4s ease;
+  animation: up-down 1.5s linear infinite;
+  animation-delay: 1.85s;
+  position: absolute;
+  right: -5px;
+  color: var(--color-01);
+  display: grid;
+  justify-items: center;
+  row-gap: 3px;
+}
+
+@keyframes up-down {
+  0% {
+    transform: translateY(8px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+
+  100% {
+    transform: translateY(8px);
+  }
 }
 
 .hero-side-left.hidden-sidebar,
@@ -1913,7 +1934,7 @@ body.light-theme .timeline-title {
   transition-property: bottom, opacity;
 }
 
-.bottom-nav.active{
+.bottom-nav.active {
   bottom: 50px;
   opacity: 1;
   transition: .5s ease, .3s ease;
@@ -2012,7 +2033,7 @@ body.light-theme .timeline-title {
   place-items: center;
 }
 
-.menu-hide-btn.active{
+.menu-hide-btn.active {
   pointer-events: all;
   opacity: 1;
 }
@@ -2048,7 +2069,7 @@ body.light-theme .timeline-title {
   animation-delay: 1s;
 }
 
-.menu-show-btn.active{
+.menu-show-btn.active {
   bottom: 50px;
   opacity: 1;
   transition: .5s ease, .3s ease;
