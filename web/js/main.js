@@ -479,3 +479,60 @@ stackCardWithModals.forEach((stackCardWithModals) => {
     }, 100);
   });
 });
+
+/* =========================
+   Footer Tech Modal (mesmo padrão)
+   ========================= */
+(() => {
+  const backdrop = document.querySelector(".footer-tech-backdrop");
+  const modal = document.querySelector(".footer-tech-modal");
+  const openBtn = document.querySelector(".footer-tech-trigger");
+  const closeBtn = document.querySelector(".footer-tech-close");
+
+  if (!backdrop || !modal || !openBtn || !closeBtn) return;
+
+  const openModal = () => {
+    // 1) mostra o backdrop (igual projetos/stack)
+    backdrop.style.display = "flex";
+    // força reflow para animar opacity
+    backdrop.getBoundingClientRect();
+    backdrop.classList.add("active");
+    backdrop.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+
+    // 2) delay para o modal dar scale depois (efeito “bonito”)
+    setTimeout(() => {
+      modal.classList.add("active");
+      closeBtn.focus();
+    }, 120);
+  };
+
+  const closeModal = () => {
+    // 1) tira o modal (scale down)
+    modal.classList.remove("active");
+    backdrop.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+
+    // 2) delay para sumir backdrop depois (igual padrão)
+    setTimeout(() => {
+      backdrop.classList.remove("active");
+      backdrop.style.display = "none";
+      openBtn.focus();
+    }, 250);
+  };
+
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+
+  // fecha clicando fora do modal
+  backdrop.addEventListener("click", (e) => {
+    if (e.target === backdrop) closeModal();
+  });
+
+  // ESC fecha
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && backdrop.classList.contains("active")) {
+      closeModal();
+    }
+  });
+})();

@@ -657,7 +657,7 @@
                       <span>E-mail</span>
                       <h4>contato@yagowalter.com.br</h4>
                       <a href="mailto:yago.walter_7@hotmail.com" target="_blank">
-                      Enviar <i class="ri-arrow-right-up-line"></i></a>
+                        Enviar <i class="ri-arrow-right-up-line"></i></a>
                     </div>
                   </li>
 
@@ -669,7 +669,7 @@
                       <span>WhatsApp</span>
                       <h4>(83) 99952-5308</h4>
                       <a href="https://wa.me//+5583999525308?text=Olá,%20boa%20tarde!" target="_blank">
-                      Enviar <i class="ri-arrow-right-up-line"></i></a>
+                        Enviar <i class="ri-arrow-right-up-line"></i></a>
                     </div>
                   </li>
 
@@ -702,7 +702,8 @@
                   </div>
                   <div class="input-group send-message">
                     <button class="btn btn-primary submit-btn" name="submit" type="submit">Enviar</button>
-                    <div class="contact-form-alert"><span>Sua mensagem foi enviada!</span><i class="ri-checkbox-circle-fill"></i> </div>
+                    <div class="contact-form-alert"><span>Sua mensagem foi enviada!</span><i
+                        class="ri-checkbox-circle-fill"></i> </div>
                   </div>
                 </form>
               </div>
@@ -737,9 +738,59 @@
           <li class="footer-menu-item"><a href="#contact">Contato</a></li>
         </ul>
         <p class="copy-right">© 2026 Yago Walter</p>
+        <div class="footer-tech-line">
+          <button class="footer-tech-trigger" type="button" aria-haspopup="dialog" aria-controls="footer-tech-modal">
+            <i class="ri-information-line"></i>
+            <span>Como este site funciona</span>
+          </button>
+
+          <div class="footer-tech-mini">
+            AWS · CloudFront · S3 · CodePipeline · CloudFormation
+          </div>
+        </div>
+
+
+
       </div>
     </div>
   </footer>
+  <!-- Footer Tech Modal -->
+  <div class="footer-tech-backdrop" aria-hidden="true">
+    <div class="footer-tech-modal" id="footer-tech-modal" role="dialog" aria-modal="true"
+      aria-labelledby="footer-tech-title">
+      <button class="footer-tech-close" type="button" aria-label="Fechar">
+        <i class="ri-close-line"></i>
+      </button>
+
+      <div class="footer-tech-content">
+        <h3 id="footer-tech-title">Como este site funciona</h3>
+
+        <p>
+          Este portfólio é um site estático hospedado na AWS com deploy automatizado e distribuição global.
+        </p>
+
+        <ul class="footer-tech-list">
+          <li><i class="ri-checkbox-circle-fill"></i> <span><b>S3</b> armazena os arquivos do site
+              (HTML/CSS/JS/imagens).</span></li>
+          <li><i class="ri-checkbox-circle-fill"></i> <span><b>CloudFront</b> entrega o site rápido no mundo todo
+              (CDN).</span></li>
+          <li><i class="ri-checkbox-circle-fill"></i> <span><b>CodePipeline</b> faz deploy automático a cada commit no
+              GitHub.</span></li>
+          <li><i class="ri-checkbox-circle-fill"></i> <span><b>CloudFormation</b> define a infra como código.</span>
+          </li>
+          <li><i class="ri-checkbox-circle-fill"></i> <span><b>Route 53</b> gerencia DNS e domínio.</span></li>
+        </ul>
+
+        <div class="footer-tech-tags">
+          <span class="tag">S3</span>
+          <span class="tag">CloudFront</span>
+          <span class="tag">CodePipeline</span>
+          <span class="tag">CloudFormation</span>
+          <span class="tag">Route 53</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="js/main.js"></script>
 </body>
