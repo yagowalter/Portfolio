@@ -55,10 +55,10 @@
         <i class="ri-arrow-left-down-line menu-hide-btn"></i>
         <ul class="menu">
           <li class="menu-item"><a href="#home" class="current"><i class="ri-home-5-line"></i><span>Home</span></a></li>
-          <li class="menu-item"><a href="#projects"><i class="ri-briefcase-line"></i><span>Projetos</span></a></li>
-          <li class="menu-item"><a href="#qualifications"><i class="ri-code-s-slash-line"></i><span>Stack</span></a>
-          </li>
+          <li class="menu-item"><a href="#portfolio"><i class="ri-briefcase-line"></i><span>Projetos</span></a></li>
           <li class="menu-item"><a href="#experience"><i class="ri-git-repository-line"></i><span>Experiência</span></a>
+          </li>
+          <li class="menu-item"><a href="#stack"><i class="ri-code-s-slash-line"></i><span>Stack</span></a>
           </li>
           <li class="menu-item"><a href="#certificates"><i class="ri-medal-line"></i><span>Certificados</span></a></li>
           <li class="menu-item"><a href="#contact"><i class="ri-chat-1-line"></i><span>Contato</span></a></li>
@@ -143,8 +143,8 @@
       <div class="yago-container yago-sub-container">
         <div class="yago-wrapper">
           <div class="section-title">
-            <h3>Portfolio</h3>
-            <P>Meus Projetos Criativos</P>
+            <h3>Projetos</h3>
+            <P class="section-subtitle">Meus Projetos Criativos</P>
           </div>
           <div class="section-content">
             <div class="portfolio-container">
@@ -156,7 +156,7 @@
                   </div>
                   <div class="card-info">
                     <span>Web Design</span>
-                    <h4>Dynamic</h4>
+                    <h4>Progress Tracker EDN</h4>
                     <i class="ri-arrow-right-up-line card-btn"></i>
                   </div>
                 </div>
@@ -170,29 +170,32 @@
                       </div>
                       <h4 class="modal-title">Progress Tracker – Escola da Nuvem (EDN)</h4>
                       <p class="description">
-                        O Progress Tracker da EDN é uma aplicação web desenvolvida para acompanhar de forma clara e
-                        organizada a evolução dos alunos ao longo da formação em cloud computing. O foco do projeto é
-                        transformar um processo que normalmente é confuso e descentralizado em uma experiência visual
-                        simples, objetiva e funcional.
+                        O Progress Tracker da Escola da Nuvem (EDN) é uma aplicação web criada para organizar e
+                        acompanhar o progresso dos alunos nos Labs, Knowledge Checks (KCs) e Competências Profissionais
+                        (CPs) da formação em cloud computing na AWS.
                         <br>
                         <br>
-                        A plataforma permite visualizar o progresso geral do aluno por meio de indicadores percentuais e
-                        listas estruturadas, organizadas em Knowledge Checks (KC’s), Labs práticos e Competências
-                        Profissionais. Cada etapa possui status bem definido, facilitando o acompanhamento contínuo do
-                        aprendizado e ajudando o aluno a entender exatamente onde está e o que ainda precisa ser
-                        concluído.
+                        O site centraliza essas informações em uma interface simples e visual, permitindo que o aluno
+                        saiba rapidamente o que já foi concluído e o que ainda precisa avançar.
                         <br>
                         <br>
-                        O projeto foi pensado com atenção especial à usabilidade, responsividade e clareza visual,
-                        garantindo uma navegação intuitiva tanto em desktop quanto em dispositivos móveis. Além disso, o
-                        layout modular permite fácil expansão futura, como integração com banco de dados, autenticação
-                        de usuários e automação de progresso.
-                        <br>
-                        <br>  
-                        Esse projeto demonstra minha capacidade de criar soluções voltadas para educação, organização de
-                        dados e experiência do usuário, aplicando boas práticas de desenvolvimento front-end e conceitos
-                        alinhados ao ecossistema cloud.
+                        Este é um projeto pessoal, desenvolvido com foco em clareza, usabilidade e automação, utilizando
+                        AWS CloudFront para distribuição, CodePipeline para deploy automatizado e Route 53 para
+                        gerenciamento de domínio. Ele demonstra a aplicação prática de conceitos de front-end e
+                        arquitetura cloud em um cenário real de acompanhamento educacional.
                       </p>
+                      <div class="modal-actions minimal">
+                        <a href="https://progresso.yagowalter.com.br" target="_blank" rel="noopener" class="modal-link">
+                          <i class="ri-external-link-line"></i>
+                          <span>Ver projeto</span>
+                        </a>
+
+                        <a href="https://github.com/yagowalter/AWS-Projects/tree/main/aws-progress-tracker"
+                          target="_blank" rel="noopener" class="modal-link">
+                          <i class="ri-github-fill"></i>
+                          <span>GitHub</span>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -204,8 +207,8 @@
                     <img src="assets/img/portfólio.png" alt="Progress Tracker App">
                   </div>
                   <div class="card-info">
-                    <span>Portfolio Pessoal</span>
-                    <h4>Dynamic</h4>
+                    <span>Web Design</span>
+                    <h4>Portfólio Pessoal</h4>
                     <i class="ri-arrow-right-up-line card-btn"></i>
                   </div>
                 </div>
@@ -216,14 +219,74 @@
                       <div class="modal-img">
                         <img src="assets/img/portfólio.png" alt="">
                       </div>
-                      <h4 class="modal-title">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos, placeat
-                        quas? </h4>
+                      <h4 class="modal-title">Portfólio Pessoal com Deploy Automatizado na AWS</h4>
                       <p class="description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit quos veritatis reprehenderit
-                        impedit dolorem maxime nobis magnam magni recusandae quod. Libero, dolorem aut odio cupiditate
-                        ratione velit quas consequatur voluptates?
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit quos veritatis reprehenderit
+                        Este é o portfólio que você está acessando neste momento, desenvolvido para apresentar meus
+                        projetos, experiências e certificações de forma clara e objetiva. Além do front-end, o foco do
+                        projeto está na infraestrutura em nuvem, utilizando serviços da AWS para garantir performance,
+                        automação e confiabilidade.
+                        <br>
+                        <br>
+                        O site é distribuído via Amazon CloudFront, conta com deploy automatizado utilizando AWS
+                        CodePipeline, gerenciamento de domínio com Route 53 e infraestrutura definida por
+                        CloudFormation, permitindo atualizações rápidas, seguras e reproduzíveis.
+                        <br>
+                        <br>
+                        Mais do que uma vitrine, este portfólio também funciona como um projeto prático de Cloud
+                        Computing, onde aplico conceitos reais de automação, entrega contínua e arquitetura escalável em
+                        um ambiente em produção.
                       </p>
+                      <div class="modal-actions minimal">
+                        <a href="https://github.com/yagowalter/AWS-Projects/tree/main/aws-progress-tracker"
+                          target="_blank" rel="noopener" class="modal-link">
+                          <i class="ri-github-fill"></i>
+                          <span>GitHub</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-with-modal">
+                <div class="portfolio-card">
+                  <div class="card-img">
+                    <img src="assets/img/repo.png" alt="Repositório AWS">
+                  </div>
+                  <div class="card-info">
+                    <span>Repositório</span>
+                    <h4>AWS Projects</h4>
+                    <i class="ri-arrow-right-up-line card-btn"></i>
+                  </div>
+                </div>
+
+                <div class="portfolio-modal-backdrop">
+                  <div class="portfolio-modal">
+                    <a class="modal-close-btn"><i class="ri-close-line"></i></a>
+                    <div class="modal-content">
+                      <div class="modal-img">
+                        <img src="assets/img/repo.png" alt="">
+                      </div>
+                      <h4 class="modal-title">AWS Projects</h4>
+                      <p class="description">
+                        Este repositório reúne meus labs práticos e projetos pessoais, criados durante meus estudos e
+                        experiências em desenvolvimento e cloud computing.
+                        <br>
+                        <br>
+                        Ele funciona como um espaço de experimentação e aprendizado contínuo, onde aplico conceitos de
+                        AWS, automação, versionamento com Git/GitHub e boas práticas de código.
+                        <br>
+                        <br>
+                        Os projetos presentes no repositório refletem minha evolução técnica, desde exercícios práticos
+                        até soluções mais completas, servindo como base para estudo, testes e futuras melhorias.
+                      </p>
+                      <div class="modal-actions minimal">
+                        <a href="https://github.com/yagowalter/AWS-Projects/tree/main" target="_blank" rel="noopener"
+                          class="modal-link">
+                          <i class="ri-external-link-line"></i>
+                          <span>Ver projeto</span>
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -231,58 +294,6 @@
 
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- Qualifications -->
-    <section id="qualifications" class="section-padding bg-transparent">
-      <div class="container">
-        <h2 class="section-title">Tecnologias & Ferramentas</h2>
-
-        <div class="skills-container">
-          <div class="tech-skill-card reveal">
-            <div class="skill-card-header">
-              <i class="fas fa-laptop-code"></i>
-              <h3>Software Development & Support</h3>
-            </div>
-            <div class="skill-list-grid">
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>HTML5</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>CSS3</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>JavaScript</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Troubleshooting</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>UI Implementation (Figma →
-                  Code)</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Git / GitHub</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Technical Support</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Flutter</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Debugging & Logs</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Mobile Development</span></div>
-            </div>
-          </div>
-
-          <div class="tech-skill-card reveal delay-200">
-            <div class="skill-card-header">
-              <i class="fas fa-cloud"></i>
-              <h3>Cloud Computing</h3>
-            </div>
-            <div class="skill-list-grid">
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Amazon EC2</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Amazon S3</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>AWS Lambda</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>DynamoDB</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>VPC</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>IAM</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>CodePipeline</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Cloudfront</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Route 53</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>CloudFormation</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>CloudWatch</span></div>
-              <div class="skill-check-item"><i class="fas fa-check-circle"></i> <span>Cost Explorer</span></div>
-            </div>
-          </div>
-
         </div>
       </div>
     </section>
@@ -358,6 +369,150 @@
             </div>
           </div>
 
+        </div>
+      </div>
+    </section>
+
+    <!--==================Stack========================-->
+    <section id="stack">
+      <div class="yago-section nav-menu-section" id="stack">
+        <div class="yago-container yago-sub-container">
+          <div class="yago-wrapper">
+            <div class="section-title">
+              <h3>Tecnologias & Ferramentas</h3>
+            </div>
+            <div class="section-content">
+              <div class="stack-container">
+
+                <div class="card-with-modal">
+                  <div class="stack-card">
+                    <div class="stack-info">
+                      <i class="ri-pencil-ruler-2-fill stack-icon"></i>
+                      <h4>Desenvolvimento Web & Mobile</h4>
+                      <a class="stack-see-more">Veja mais<i class="ri-arrow-right-up-fill"></i></a>
+                    </div>
+                  </div>
+                  <div class="stack-modal-backdrop">
+                    <div class="stack-modal">
+                      <a class="modal-close-btn"><i class="ri-close-line"></i></a>
+                      <div class="modal-content">
+                        <div class="modal-title">
+                          <h3>Desenvolvimento Web & Mobile</h3>
+                          <p>Interfaces modernas e aplicações mobile com foco em usabilidade, performance e boas
+                            práticas.</p>
+                        </div>
+                        <h4>O que eu desenvolvo</h4>
+                        <div class="my-stacks">
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Web responsivo </p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Apps mobile com Flutter</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>UI/UX e design consistente</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Integração com APIs</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Código organizado e versionado</p>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-with-modal">
+                  <div class="stack-card">
+                    <div class="stack-info">
+                      <i class="ri-customer-service-fill stack-icon"></i>
+                      <h4>Suporte Técnico & Infraestrutura</h4>
+                      <a class="stack-see-more">Veja mais<i class="ri-arrow-right-up-fill"></i></a>
+                    </div>
+                  </div>
+
+                  <div class="stack-modal-backdrop">
+                    <div class="stack-modal">
+                      <a class="modal-close-btn"><i class="ri-close-line"></i></a>
+                      <div class="modal-content">
+                        <div class="modal-title">
+                          <h3>Suporte Técnico & Infraestrutura</h3>
+                          <p>Atuação em suporte técnico e infraestrutura, com foco na resolução de incidentes,
+                            atendimento ao usuário e treinamento de clientes, garantindo o uso correto dos sistemas e a
+                            estabilidade dos ambientes.</p>
+                        </div>
+                        <h4>Principais atividades</h4>
+                        <div class="my-stacks">
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Atendimento multicanal (telefone, WhatsApp e e-mail)</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Suporte remoto com AnyDesk</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Administração básica de cPanel</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Resolução de incidentes e chamados</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Documentação e suporte ao usuário</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Treinamento de clientes</p>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-with-modal">
+                  <div class="stack-card">
+                    <div class="stack-info">
+                      <i class="ri-cloud-fill stack-icon"></i>
+                      <h4>Cloud Computing & AWS</h4>
+                      <a class="stack-see-more">Veja mais<i class="ri-arrow-right-up-fill"></i></a>
+                    </div>
+                  </div>
+                  <div class="stack-modal-backdrop">
+                    <div class="stack-modal">
+                      <a class="modal-close-btn"><i class="ri-close-line"></i></a>
+                      <div class="modal-content">
+                        <div class="modal-title">
+                          <h3>Cloud Computing & AWS</h3>
+                          <p>Estudo e prática em Cloud Computing com foco nos serviços essenciais da AWS, aplicando os
+                            conceitos em projetos pessoais reais, desde o provisionamento até a automação e entrega
+                            contínua.</p>
+                        </div>
+                        <h4>O que estou aplicando na prática</h4>
+                        <div class="my-stacks">
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Hospedagem de sites estáticos utilizando Amazon S3 + CloudFront</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Provisionamento de infraestrutura como código com AWS CloudFormation</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Automação de deploys com AWS CodePipeline integrado ao GitHub</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Gerenciamento de domínios e DNS com Amazon Route 53</p>
+                          </li>
+                          <li><i class="ri-checkbox-circle-fill"></i>
+                            <p>Conceitos de arquitetura em nuvem: escalabilidade, disponibilidade e custo</p>
+                          </li>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -562,9 +717,9 @@
         </div>
         <ul class="footer-menu">
           <li class="footer-menu-item"><a href="#home">Home</a></li>
-          <li class="footer-menu-item"><a href="#projects">Projetos</a></li>
-          <li class="footer-menu-item"><a href="#qualifications">Qualificações</a></li>
+          <li class="footer-menu-item"><a href="#portfolio">Projetos</a></li>
           <li class="footer-menu-item"><a href="#experience">Experiência</a></li>
+          <li class="footer-menu-item"><a href="#stack">Stack</a></li>
           <li class="footer-menu-item"><a href="#certificates">Certificados</a></li>
           <li class="footer-menu-item"><a href="#contact">Contato</a></li>
         </ul>

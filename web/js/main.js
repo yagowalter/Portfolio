@@ -56,34 +56,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const portfolioBackdrop = portfolioCardsWithModals.querySelector(".portfolio-modal-backdrop");
     const portfolioModal = portfolioCardsWithModals.querySelector(".portfolio-modal");
     const modalCloseBtn = portfolioCardsWithModals.querySelector(".modal-close-btn");
-    
 
-    portfolioCard.addEventListener("click" , () =>{
+
+    portfolioCard.addEventListener("click", () => {
       portfolioBackdrop.style.display = "flex";
 
       setTimeout(() => {
         portfolioBackdrop.classList.add("active");
-      },300);
+      }, 300);
 
-      setTimeout(()=>{
+      setTimeout(() => {
         portfolioModal.classList.add("active");
-      },300);
+      }, 300);
     });
 
-    modalCloseBtn.addEventListener("click", ()=> {
-      setTimeout(()=>{
+    modalCloseBtn.addEventListener("click", () => {
+      setTimeout(() => {
         portfolioBackdrop.style.display = "none";
       }, 500);
 
-      setTimeout(()=> {
+      setTimeout(() => {
         portfolioBackdrop.classList.remove("active");
         portfolioModal.classList.remove("active");
-      },100);
+      }, 100);
     });
   });
 
 
-  
+
   // Certificates Carousel Logic
   const track = document.querySelector('.certificates-track');
   const prevBtn = document.querySelector('.carousel-nav.prev');
@@ -442,4 +442,40 @@ window.addEventListener("scroll", () => {
   const yagoHeader = document.querySelector(".yago-header");
 
   yagoHeader.classList.toggle("shrink", window.scrollY > 0);
+});
+
+/* ======================================
+  Stack modal open/close
+  ====================================*/
+
+const stackCardWithModals = document.querySelectorAll(".stack-container .card-with-modal");
+
+stackCardWithModals.forEach((stackCardWithModals) => {
+  const stackCard = stackCardWithModals.querySelector(".stack-card");
+  const stackBackDrop = stackCardWithModals.querySelector(".stack-modal-backdrop");
+  const stackModal = stackCardWithModals.querySelector(".stack-modal");
+  const modalCloseBtn = stackCardWithModals.querySelector(".modal-close-btn");
+
+  stackCard.addEventListener("click", () => {
+    stackBackDrop.style.display = "flex";
+
+    setTimeout(() => {
+      stackBackDrop.classList.add("active");
+    }, 100);
+
+    setTimeout(() => {
+      stackModal.classList.add("active");
+    }, 300);
+  });
+
+  modalCloseBtn.addEventListener("click", () => {
+    setTimeout(() => {
+      stackBackDrop.style.display = "none";
+    }, 500);
+
+    setTimeout(() => {
+      stackBackDrop.classList.remove("active");
+      stackModal.classList.remove("active");
+    }, 100);
+  });
 });
