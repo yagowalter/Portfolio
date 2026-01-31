@@ -38,11 +38,12 @@
   --mono-font-family: "JetBrains Mono", monospace;
 
   /* ======= Font sizes ======= */
-  --h1-font-size: 2.85rem;
-  --h2-font-size: 2.25rem;
-  --h3-font-size: 1.97rem;
-  --h4-font-size: 1.43rem;
-  --h5-font-size: 1.13rem;
+  /* ======= Font sizes (Fluid) ======= */
+  --h1-font-size: clamp(2.2rem, 5vw + 1rem, 3.5rem);
+  --h2-font-size: clamp(1.8rem, 4vw + 1rem, 2.75rem);
+  --h3-font-size: clamp(1.5rem, 3vw + 1rem, 2.25rem);
+  --h4-font-size: clamp(1.2rem, 2vw + 1rem, 1.6rem);
+  --h5-font-size: clamp(1rem, 1vw + 1rem, 1.25rem);
 
   --xlarge-font-size: 1.48rem;
   --large-font-size: 1.23rem;
@@ -50,6 +51,8 @@
   --base-font-size: 1.1rem;
   --small-font-size: 1.07rem;
   --tiny-font-size: .98rem;
+
+  --container-pad: 20px;
 
   /* ======= Font weights ======= */
   --font-light: 300;
@@ -401,11 +404,11 @@ section {
    TITLES / BUTTONS
    ========================= */
 .section-title {
-  margin-top: 5rem;
-  font-size: 2rem;
+  margin-top: clamp(3rem, 10vw, 5rem);
+  font-size: var(--h2-font-size);
   font-weight: 700;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
   background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
   -webkit-background-clip: text;
   background-clip: text;
@@ -1500,16 +1503,15 @@ body.light-theme .modal-link:hover {
   margin-bottom: auto;
 }
 
-@media (max-width: 1024px) {
-  .cert-card {
-    width: calc((100% - 1.5rem) / 2);
-    /* 2 cards */
-  }
-}
-
 @media (max-width: 640px) {
+  .certs-carousel-wrapper {
+    gap: 0.5rem;
+  }
+
   .carousel-nav {
-    display: none;
+    width: 38px;
+    height: 38px;
+    font-size: 1.2rem;
   }
 
   .certificates-carousel {
@@ -1518,23 +1520,30 @@ body.light-theme .modal-link:hover {
   }
 
   .cert-card {
-    width: 85%;
-    /* partial next card visible */
+    width: 100%;
+    /* One card at a time with buttons */
   }
 
   .certificates-track {
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    overflow-x: visible;
+    /* Let JS handle it */
+    scroll-snap-type: none;
   }
+}
 
-  .certificates-track::-webkit-scrollbar {
-    display: none;
-  }
-
+@media (min-width: 641px) and (max-width: 1024px) {
   .cert-card {
-    scroll-snap-align: center;
+    width: calc((100% - 1.5rem) / 2);
   }
+}
+
+.certificates-track {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.certificates-track::-webkit-scrollbar {
+  display: none;
 }
 
 /* =========================
@@ -2316,8 +2325,15 @@ body.light-theme .modal-link:hover {
 .yago-footer {
   margin-top: 50px;
   background: var(--footer-bg);
-  padding-top: 100px;
-  padding-bottom: 165px;
+  padding-top: 60px;
+  padding-bottom: 120px;
+}
+
+@media (min-width: 992px) {
+  .yago-footer {
+    padding-top: 100px;
+    padding-bottom: 165px;
+  }
 }
 
 .yago-footer .yago-container .inner {
@@ -2681,21 +2697,6 @@ body.light-theme .modal-link:hover {
   Responsividade
   ==================================*/
 
-
-@media screen and (max-widgth: 1600px){
-  .cursor {
-    display: none;
-  };
-
-  .yago-container {
-    max-width: 1075px;
-  }
-
-  .hero-visual {
-    width: 385px;
-    height: 385px;
-  }
-}
 
 /* =========================================================
    RESPONSIVO (cola no FINAL do CSS)
