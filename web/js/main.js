@@ -326,9 +326,9 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTimelineProgress();
   }
 
-    /* =========================
-     Contact Form -> API Gateway (Lambda + SES)
-  ========================= */
+  /* =========================
+   Contact Form -> API Gateway (Lambda + SES)
+========================= */
   const contactForm = document.getElementById("yago-contact-form");
   const contactAlert = document.querySelector(".contact-form-alert");
   const submitBtn = contactForm?.querySelector(".submit-btn");
@@ -398,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let data = null;
       try {
         data = await res.json();
-      } catch (_) {}
+      } catch (_) { }
 
       if (!res.ok) {
         const msg = data?.message || data?.error || "Falha ao enviar. Tente novamente.";
@@ -629,3 +629,88 @@ stackCardWithModals.forEach((stackCardWithModals) => {
     }
   });
 })();
+
+
+/* =========================================
+  Scroll reveal JS 
+  ======================================*/
+
+/* =========================
+   ScrollReveal (SAFE MODE)
+========================= */
+
+if (!window.__srInitialized) {
+  window.__srInitialized = true;
+
+  ScrollReveal({
+    reset: false,
+    distance: '60px',
+    duration: 900,
+    delay: 120,
+    easing: 'ease-out'
+  });
+
+  ScrollReveal().reveal('.section-title', {
+    origin: 'top',
+    interval: 300,
+  });
+
+  // HERO
+  ScrollReveal().reveal('.hero-side-left', { origin: 'left', delay: 300 });
+  ScrollReveal().reveal('.hero-side-right', { origin: 'right', delay: 300 });
+  ScrollReveal().reveal('.hero-content', { origin: 'top', delay: 500 });
+
+  // STACK (somente o card visível)
+  ScrollReveal().reveal('#stack .stack-card', {
+    origin: 'bottom',
+    interval: 400
+  });
+
+  // PORTFOLIO (somente o card visível)
+  ScrollReveal().reveal('#portfolio .portfolio-card', {
+    origin: 'right',
+    interval: 400
+  });
+
+  // CERTIFICADOS
+  ScrollReveal().reveal('.cert-card', {
+    origin: 'bottom',
+    interval: 400
+  });
+
+  // CONTACT
+  ScrollReveal().reveal('.contact-item, .contact-social-links li', {
+    origin: 'bottom',
+    interval: 300
+  });
+
+   ScrollReveal().reveal('.contact-info', {
+    origin: 'top',
+    interval: 300,
+  });
+
+  ScrollReveal().reveal('.contact-form-body', {
+    origin: 'right'
+  });
+
+  // FOOTER
+  ScrollReveal().reveal('.footer-menu-item', {
+    origin: 'bottom',
+    interval: 200
+  });
+
+  ScrollReveal().reveal('.footer-tech-line', {
+    origin: 'bottom',
+    interval: 200
+  });
+
+  ScrollReveal().reveal('.footer-tech-mini', {
+    origin: 'bottom',
+    interval: 200
+  });
+
+  ScrollReveal().reveal('.copy-right', {
+    origin: 'bottom',
+    interval: 200
+  });
+}
