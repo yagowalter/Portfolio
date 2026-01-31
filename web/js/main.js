@@ -326,6 +326,99 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTimelineProgress();
   }
 
+    /* =========================
+     Contact Form -> API Gateway (Lambda + SES)
+  ========================= */
+  const contactForm = document.getElementById("yago-contact-form");
+  const contactAlert = document.querySelector(".contact-form-alert");
+  const submitBtn = contactForm?.querySelector(".submit-btn");
+
+  const API_URL = "https://vfb8tr04ke.execute-api.us-east-1.amazonaws.com/contact";
+
+  const showAlert = (text, isError = false) => {
+    if (!contactAlert) return;
+
+    const span = contactAlert.querySelector("span");
+    if (span) span.textContent = text;
+
+    // Se quiser estilizar erro depois via CSS, já deixei um hook:
+    contactAlert.classList.toggle("is-error", isError);
+
+    contactAlert.style.display = "flex";
+    contactAlert.style.opacity = "1";
+
+    // some sozinho depois de uns segundos
+    clearTimeout(showAlert._t);
+    showAlert._t = setTimeout(() => {
+      contactAlert.style.opacity = "0";
+      setTimeout(() => (contactAlert.style.display = "none"), 250);
+    }, isError ? 5000 : 3500);
+  };
+
+  if (contactAlert) {
+    // começa escondido
+    contactAlert.style.display = "none";
+    contactAlert.style.opacity = "0";
+  }
+
+  contactForm?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(contactForm);
+
+    const payload = {
+      name: (formData.get("full-name") || "").toString().trim(),
+      email: (formData.get("email") || "").toString().trim(),
+      subject: (formData.get("subject") || "").toString().trim(),
+      message: (formData.get("message") || "").toString().trim(),
+      source: "portfolio" // opcional, só pra você identificar no backend
+    };
+
+    // validação básica (sem frescura)
+    if (!payload.name || !payload.email || !payload.subject || !payload.message) {
+      showAlert("Preencha todos os campos obrigatórios.", true);
+      return;
+    }
+
+    // trava botão durante envio
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.dataset.originalText = submitBtn.textContent;
+      submitBtn.textContent = "Enviando...";
+    }
+
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      // tenta ler JSON se existir
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (_) {}
+
+      if (!res.ok) {
+        const msg = data?.message || data?.error || "Falha ao enviar. Tente novamente.";
+        throw new Error(msg);
+      }
+
+      contactForm.reset();
+      showAlert("Sua mensagem foi enviada!", false);
+    } catch (err) {
+      showAlert(err?.message || "Erro ao enviar mensagem.", true);
+      console.error("Contact form error:", err);
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = submitBtn.dataset.originalText || "Enviar";
+      }
+    }
+  });
+
+
 });
 
 
