@@ -2677,3 +2677,288 @@ body.light-theme .modal-link:hover {
   line-height: 1.4;
 }
 
+/* =====================================
+  Responsividade
+  ==================================*/
+
+
+@media screen and (max-widgth: 1600px){
+  .cursor {
+    display: none;
+  };
+
+  .yago-container {
+    max-width: 1075px;
+  }
+
+  .hero-visual {
+    width: 385px;
+    height: 385px;
+  }
+}
+
+/* =========================================================
+   RESPONSIVO (cola no FINAL do CSS)
+   Objetivo: mobile-first sem destruir seu layout desktop
+========================================================= */
+
+/* 1) Tamanhos dinâmicos (Já definidos no :root com clamp) */
+
+/* 2) Containers: evita “layout apertado” e overflow */
+.container,
+.yago-container {
+  width: 100%;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+/* 3) Header: diminui logo e botões no mobile */
+@media (max-width: 768px) {
+  .yago-header {
+    padding: 16px 0;
+  }
+
+  .yago-logo a {
+    font-size: 1.9rem;
+    letter-spacing: -2px;
+  }
+
+  .header-btns {
+    column-gap: 14px;
+  }
+
+  .lets-talk-btn {
+    display: none;
+  }
+
+  .lets-talk-icon {
+    display: block;
+  }
+
+  .yago-main-btn {
+    padding: 10px 18px;
+  }
+
+  .yago-main-btn a {
+    font-size: .95rem;
+  }
+}
+
+/* 4) HERO: vira coluna e reduz texto/visual */
+@media (max-width: 992px) {
+  .hero {
+    min-height: auto;
+    padding-top: 110px;
+    padding-bottom: 40px;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(2.2rem, 6vw, 3.2rem);
+  }
+
+  .hero-text .description {
+    max-width: 620px;
+  }
+
+  .cloud-svg {
+    width: min(320px, 78vw);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .hero-actions .btn,
+  .hero-actions .yago-main-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* 5) PROJECTS grid: Fluid layout */
+.portfolio-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+@media (max-width: 480px) {
+  .portfolio-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* 6) STACK grid: Fluid layout */
+.stack-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.stack-card {
+  width: 100%;
+  max-width: 400px;
+  min-height: 260px;
+  padding: 2rem;
+}
+
+@media (max-width: 480px) {
+  .stack-card {
+    padding: 1.5rem;
+    min-height: auto;
+  }
+}
+
+/* 7) MODAIS: Altura adaptável e scroll suave */
+.portfolio-modal,
+.stack-modal,
+.footer-tech-modal {
+  width: min(94vw, 800px);
+  max-height: 90vh;
+  padding: 2rem;
+  margin: 5vh auto;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+
+  .portfolio-modal,
+  .stack-modal,
+  .footer-tech-modal {
+    padding: 1.5rem;
+    width: 96vw;
+  }
+
+  .modal-title h3 {
+    font-size: 1.4rem;
+  }
+}
+
+/* 8) CONTACT: Layout & Form */
+@media (max-width: 992px) {
+  .contact-container {
+    flex-direction: column;
+    row-gap: 3rem;
+  }
+
+  .contact-form-body {
+    padding: 2.5rem 1.5rem;
+    border-radius: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-form-body {
+    padding: 2rem 1.25rem;
+  }
+
+  .contact-form-body h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .contact-form-body p {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-form-body .input-group input,
+  .contact-form-body .input-group textarea {
+    padding: 1.1rem 1.25rem;
+    font-size: 1rem;
+  }
+
+  .contact-form-body form .send-message {
+    margin-top: 1.5rem;
+  }
+}
+
+/* 9) TIMELINE: Vertical Mobile Reset */
+@media (max-width: 768px) {
+  .timeline::before {
+    display: none;
+  }
+
+  .timeline-line {
+    left: 20px;
+    transform: none;
+  }
+
+  .timeline-item {
+    width: 100%;
+    margin-left: 0 !important;
+    padding: 0 0 3rem 50px;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .timeline-dot {
+    left: 20px;
+    transform: translateX(-50%);
+  }
+
+  .timeline-connector {
+    display: none !important;
+  }
+
+  .timeline-node {
+    margin: 0 0 1rem 0 !important;
+    width: 36px;
+    height: 36px;
+  }
+
+  .timeline-date {
+    position: relative !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin-bottom: 0.5rem;
+    text-align: left !important;
+    display: block;
+  }
+
+  .timeline-card {
+    padding: 1.5rem;
+    width: 100%;
+    transform: none !important;
+    opacity: 1 !important;
+    /* Force visibility on mobile if needed */
+  }
+
+  .timeline-item.active .timeline-card {
+    transform: none !important;
+  }
+}
+
+/* 10) Bottom nav: evita “comer” conteúdo em telas pequenas */
+@media (max-width: 480px) {
+  .bottom-nav .menu {
+    padding: 12px 18px;
+    column-gap: 14px;
+  }
+
+  .bottom-nav.active {
+    bottom: 18px;
+  }
+
+  .to-top-btn.active {
+    right: 18px;
+  }
+}
+
+/* 11) Segurança: mata overflow horizontal chato */
+html,
+body {
+  overflow-x: hidden;
+}
