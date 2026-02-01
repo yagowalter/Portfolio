@@ -1,71 +1,58 @@
-🚀 Portfólio Pessoal na AWS
+# 🚀 Portfólio Pessoal na AWS
 
-Este repositório contém o código e a infraestrutura do meu portfólio pessoal, desenvolvido com foco em arquitetura serverless, automação de deploy e infraestrutura como código (IaC).
+Este repositório contém o código do meu **portfólio pessoal**, desenvolvido com foco em **arquitetura serverless**, automação de deploy e uso de **infraestrutura na AWS**.
 
-O projeto hospeda um site estático com formulário de contato funcional e envio de e-mails utilizando serviços gerenciados da AWS.
+O projeto hospeda um site estático com **formulário de contato funcional** e envio de e-mails utilizando serviços gerenciados.
 
-🌐 Visão Geral
+---
 
-✅ Site estático hospedado na AWS
-✅ Deploy automático a cada commit no GitHub
-✅ Backend serverless para formulário de contato
-✅ Infraestrutura definida como código (IaC)
+## 🌐 Visão Geral
 
-🔗 Site: https://yagowalter.com.br
+✅ Site estático hospedado na AWS  
+✅ Deploy automático a cada commit no GitHub  
+✅ Backend serverless para formulário de contato  
+✅ Infraestrutura provisionada na AWS  
 
-🧰 Serviços AWS Utilizados
+🔗 **Site:** https://yagowalter.com.br
 
-🔹 Amazon S3 – armazenamento dos arquivos do site
-🔹 Amazon CloudFront – CDN para entrega global e HTTPS
-🔹 Amazon Route 53 – gerenciamento de DNS e domínio
-🔹 AWS CloudFormation – definição da infraestrutura como código
-🔹 AWS CodePipeline – deploy automático integrado ao GitHub
-🔹 Amazon API Gateway + AWS Lambda – backend serverless do formulário
-🔹 Amazon SES – envio de e-mails com domínio verificado
+---
 
-🏗️ Infraestrutura (IaC)
+## 🧰 Serviços AWS Utilizados
 
-A infraestrutura do projeto é definida com AWS CloudFormation, permitindo versionamento, reprodutibilidade e automação do ambiente.
+🔹 **Amazon S3** – armazenamento dos arquivos do site  
+🔹 **Amazon CloudFront** – CDN para entrega global e HTTPS  
+🔹 **Amazon Route 53** – gerenciamento de DNS e domínio  
+🔹 **AWS CodePipeline** – deploy automático integrado ao GitHub  
+🔹 **Amazon API Gateway + AWS Lambda** – backend serverless do formulário  
+🔹 **Amazon SES** – envio de e-mails com domínio verificado  
 
-📁 Estrutura do repositório:
+---
 
-/
-├── site/            # HTML, CSS, JS e assets
-├── lambda/          # Função Lambda do formulário
-├── infra/           # Templates CloudFormation
-│   ├── s3.yaml
-│   ├── cloudfront.yaml
-│   ├── api-gateway.yaml
-│   ├── lambda.yaml
-│   └── ses.yaml
-└── README.md
+## 🏗️ Infraestrutura
 
+A infraestrutura do projeto é baseada em **serviços gerenciados da AWS**, priorizando baixo custo, escalabilidade automática e ausência de servidores para manutenção.
 
-📌 Os templates provisionam:
+---
 
-hospedagem estática no S3
+## 📩 Formulário de Contato
 
-distribuição via CloudFront
+📨 O formulário envia os dados para um endpoint do **API Gateway**, que aciona uma **função Lambda** responsável por validar as informações e disparar o e-mail via **Amazon SES**.
 
-endpoint HTTP via API Gateway
+🔐 Comunicação via HTTPS  
+⚙️ Sem servidores dedicados  
 
-execução da função Lambda
+---
 
-envio de e-mails via Amazon SES
+## 🚀 Deploy
 
-📩 Formulário de Contato
+🤖 O deploy é realizado automaticamente pelo **AWS CodePipeline** sempre que há um novo commit no repositório GitHub, atualizando o site hospedado no S3 e distribuído pelo CloudFront.
 
-📨 O formulário envia os dados para um endpoint do API Gateway, que aciona uma função Lambda responsável por validar as informações e disparar o e-mail via Amazon SES.
+---
 
-🔐 Comunicação via HTTPS
-⚙️ Sem servidores dedicados
+## 🎯 Objetivo do Projeto
 
-🚀 Deploy & Automação
+🎓 Consolidar conhecimentos em AWS e arquitetura serverless  
+🧩 Aplicar boas práticas de automação  
+🌍 Criar um portfólio funcional, escalável e de baixo custo  
 
-🤖 O deploy é feito automaticamente pelo AWS CodePipeline sempre que há um novo commit no repositório GitHub, atualizando o conteúdo hospedado no S3 e distribuído pelo CloudFront.
-
-🎯 Objetivo do Projeto
-
-🎓 Consolidar conhecimentos em AWS e arquitetura serverless
-🧩 Aplicar boas práticas de automação e infraestrutura como código
-🌍 Criar um portfólio funcional, escalável e de baixo custo
+---
