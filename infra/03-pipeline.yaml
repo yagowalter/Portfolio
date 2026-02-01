@@ -46,7 +46,7 @@ Resources:
               InputArtifacts: [ { Name: SourceOutput } ]
               Configuration: { ProjectName: !Ref MyBuildProject }
 
-  # Permissoes (IAM)
+  # Permissoes/Roles (IAM)
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
