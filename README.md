@@ -1,70 +1,71 @@
-# Portfólio Pessoal
+🚀 Portfólio Pessoal na AWS
 
-Portfólio pessoal desenvolvido com **Antigravity**, utilizando **prompts precisos** para construir uma interface moderna, responsiva e focada em experiência do usuário.
+Este repositório contém o código e a infraestrutura do meu portfólio pessoal, desenvolvido com foco em arquitetura serverless, automação de deploy e infraestrutura como código (IaC).
 
-O projeto foi publicado na **AWS** com uma arquitetura simples, eficiente e totalmente automatizada, usando **CloudFront**, **Route 53** e **CodePipeline**, garantindo performance, domínio personalizado e deploy contínuo a cada atualização no repositório.
+O projeto hospeda um site estático com formulário de contato funcional e envio de e-mails utilizando serviços gerenciados da AWS.
 
----
+🌐 Visão Geral
 
-## 🔧 Tecnologias e Serviços Utilizados
+✅ Site estático hospedado na AWS
+✅ Deploy automático a cada commit no GitHub
+✅ Backend serverless para formulário de contato
+✅ Infraestrutura definida como código (IaC)
 
-### Frontend
-- HTML5  
-- CSS3  
-- JavaScript  
-- Antigravity (engenharia de prompts e composição visual)
+🔗 Site: https://yagowalter.com.br
 
-### Cloud & DevOps (AWS)
-- **Amazon S3** – armazenamento do site estático  
-- **Amazon CloudFront** – CDN para distribuição global e performance  
-- **Amazon Route 53** – gerenciamento de DNS e domínio  
-- **AWS CodePipeline** – automação de deploy contínuo  
-- **AWS CodeBuild** – build e publicação automatizada  
+🧰 Serviços AWS Utilizados
 
----
+🔹 Amazon S3 – armazenamento dos arquivos do site
+🔹 Amazon CloudFront – CDN para entrega global e HTTPS
+🔹 Amazon Route 53 – gerenciamento de DNS e domínio
+🔹 AWS CloudFormation – definição da infraestrutura como código
+🔹 AWS CodePipeline – deploy automático integrado ao GitHub
+🔹 Amazon API Gateway + AWS Lambda – backend serverless do formulário
+🔹 Amazon SES – envio de e-mails com domínio verificado
 
-## 🚀 Funcionalidades
+🏗️ Infraestrutura (IaC)
 
-- Portfólio pessoal com layout moderno e responsivo  
-- Modal de projetos com descrição detalhada e links externos  
-- Deploy automático a cada alteração no repositório  
-- Domínio customizado gerenciado via Route 53  
-- Distribuição rápida e segura via CloudFront  
+A infraestrutura do projeto é definida com AWS CloudFormation, permitindo versionamento, reprodutibilidade e automação do ambiente.
 
----
+📁 Estrutura do repositório:
 
-## 📂 Estrutura do Repositório
-
-├── infra/ # Arquivos de infraestrutura e testes
-├── web/ # Código do site (HTML, CSS, JS, assets)
-├── buildspec.yml # Configuração do CodeBuild
-└── README.md # Documentação do projeto
+/
+├── site/            # HTML, CSS, JS e assets
+├── lambda/          # Função Lambda do formulário
+├── infra/           # Templates CloudFormation
+│   ├── s3.yaml
+│   ├── cloudfront.yaml
+│   ├── api-gateway.yaml
+│   ├── lambda.yaml
+│   └── ses.yaml
+└── README.md
 
 
----
+📌 Os templates provisionam:
 
-## 🌐 Acesso ao Projeto
+hospedagem estática no S3
 
-- **Site:** https://yagowalter.com.br  
-- **Repositório:** https://github.com/yagowalter/Portifolio  
+distribuição via CloudFront
 
----
+endpoint HTTP via API Gateway
 
-## 🎯 Objetivo do Projeto
+execução da função Lambda
 
-Este portfólio foi criado com o objetivo de:
+envio de e-mails via Amazon SES
 
-- Consolidar conhecimentos em **Cloud Computing na AWS**
-- Aplicar **automação de deploy** em um projeto real
-- Demonstrar habilidades em **frontend**, **infraestrutura** e **DevOps**
-- Servir como vitrine profissional para projetos e estudos
+📩 Formulário de Contato
 
----
+📨 O formulário envia os dados para um endpoint do API Gateway, que aciona uma função Lambda responsável por validar as informações e disparar o e-mail via Amazon SES.
 
-## 📌 Observações
+🔐 Comunicação via HTTPS
+⚙️ Sem servidores dedicados
 
-Este projeto é continuamente evoluído conforme novos estudos e experimentos em cloud, frontend e automação são realizados.
+🚀 Deploy & Automação
 
----
+🤖 O deploy é feito automaticamente pelo AWS CodePipeline sempre que há um novo commit no repositório GitHub, atualizando o conteúdo hospedado no S3 e distribuído pelo CloudFront.
 
-Feito com ☁️ AWS, curiosidade técnica e um leve excesso de commits.
+🎯 Objetivo do Projeto
+
+🎓 Consolidar conhecimentos em AWS e arquitetura serverless
+🧩 Aplicar boas práticas de automação e infraestrutura como código
+🌍 Criar um portfólio funcional, escalável e de baixo custo
