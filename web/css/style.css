@@ -1138,6 +1138,9 @@ body.light-theme .modal-link:hover {
 }
 
 .stack-modal {
+  max-height: min(80vh, 720px);
+  display: flex;
+  flex-direction: column;
   position: relative;
   background: var(--color-03);
   width: 825px;
@@ -1150,6 +1153,18 @@ body.light-theme .modal-link:hover {
   transform: scale(0);
   opacity: 0;
   transition: transform .5s, opacity .3s;
+}
+
+.stack-modal .modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  cursor: pointer;
 }
 
 .stack-modal.active {
@@ -1175,12 +1190,12 @@ body.light-theme .modal-link:hover {
 }
 
 .stack-modal .modal-content {
+  padding: 16px 10px 18px;
   display: flex;
   flex-direction: column;
   row-gap: 25px;
-  max-height: 500px;
-  margin-top: 50px;
-  padding: 10px;
+  max-height: 100%;
+  margin-top: 0;
   overflow-y: auto;
 }
 
@@ -1200,6 +1215,9 @@ body.light-theme .modal-link:hover {
 }
 
 .stack-modal .modal-title {
+  max-height: min(80vh, 720px);
+  display: flex;
+  flex-direction: column;
   max-width: 600px;
   text-align: center;
   margin-left: auto;
