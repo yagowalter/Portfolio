@@ -779,3 +779,262 @@ if (!window.__srInitialized) {
     interval: 200
   });
 }
+
+// ===============================
+// Certificates Carousel (INFINITO + AUTOPLAY + DRAG)
+// ===============================
+(() => {
+  const track = document.querySelector('.certificates-track');
+  const prevBtn = document.querySelector('.carousel-nav.prev');
+  const nextBtn = document.querySelector('.carousel-nav.next');
+  const viewport = document.querySelector('.certificates-carousel'); // wrapper com overflow hidden
+
+  if (!track || !prevBtn || !nextBtn || !viewport) return;
+
+  const ORIGINALS = Array.from(track.querySelectorAll('.cert-card')).map(n => n.cloneNode(true));
+  if (ORIGINALS.length <= 1) {
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'none';
+    return;
+  }
+
+  const GAP_REM = 1.5;
+  const gapPx = () => GAP_REM * parseFloat(getComputedStyle(document.documentElement).fontSize || 16);
+
+  let cardsPerView = 3;
+  let currentIndex = 0;
+  let isAnimating = false;
+
+  // ===== Autoplay config (devagar) =====
+  const AUTOPLAY_DELAY = 3500; // tempo entre passos
+  const RESUME_AFTER_INTERACTION = 3500; // volta depois disso
+  let autoplayTimer = null;
+  let resumeTimer = null;
+
+  function getCardsPerView() {
+    if (window.innerWidth <= 640) return 1;
+    if (window.innerWidth <= 1024) return 2;
+    return 3;
+  }
+
+  function clampCardsPerView() {
+    cardsPerView = Math.min(getCardsPerView(), ORIGINALS.length);
+    cardsPerView = Math.max(1, cardsPerView);
+  }
+
+  function getStepPx() {
+    const first = track.querySelector('.cert-card');
+    if (!first) return 0;
+    return first.getBoundingClientRect().width + gapPx();
+  }
+
+  function setTransform(index, withTransition = true) {
+    const step = getStepPx();
+    track.style.transition = withTransition ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+    track.style.transform = `translateX(-${index * step}px)`;
+  }
+
+  function buildInfinite() {
+    clampCardsPerView();
+
+    track.innerHTML = '';
+
+    const before = ORIGINALS.slice(-cardsPerView).map(n => n.cloneNode(true));
+    const after = ORIGINALS.slice(0, cardsPerView).map(n => n.cloneNode(true));
+
+    before.forEach(n => track.appendChild(n));
+    ORIGINALS.forEach(n => track.appendChild(n.cloneNode(true)));
+    after.forEach(n => track.appendChild(n));
+
+    currentIndex = cardsPerView;
+
+    requestAnimationFrame(() => {
+      setTransform(currentIndex, false);
+      requestAnimationFrame(() => setTransform(currentIndex, true));
+    });
+  }
+
+  function goNext() {
+    if (isAnimating) return;
+    isAnimating = true;
+    currentIndex++;
+    setTransform(currentIndex, true);
+  }
+
+  function goPrev() {
+    if (isAnimating) return;
+    isAnimating = true;
+    currentIndex--;
+    setTransform(currentIndex, true);
+  }
+
+  function handleLoop() {
+    const total = ORIGINALS.length;
+    const firstReal = cardsPerView;
+    const lastReal = cardsPerView + total - 1;
+
+    if (currentIndex < firstReal) {
+      currentIndex = lastReal;
+      setTransform(currentIndex, false);
+      requestAnimationFrame(() => setTransform(currentIndex, true));
+    }
+
+    if (currentIndex > lastReal) {
+      currentIndex = firstReal;
+      setTransform(currentIndex, false);
+      requestAnimationFrame(() => setTransform(currentIndex, true));
+    }
+
+    isAnimating = false;
+  }
+
+  track.addEventListener('transitionend', (e) => {
+    if (e.propertyName !== 'transform') return;
+    handleLoop();
+  });
+
+  // =====================
+  // AUTOPLAY helpers
+  // =====================
+  function stopAutoplay() {
+    clearInterval(autoplayTimer);
+    autoplayTimer = null;
+  }
+
+  function startAutoplay() {
+    if (autoplayTimer) return;
+    autoplayTimer = setInterval(() => {
+      // se o user estiver arrastando/animando, não força
+      if (!isAnimating && !isDragging) goNext();
+    }, AUTOPLAY_DELAY);
+  }
+
+  function pauseThenResume() {
+    stopAutoplay();
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(startAutoplay, RESUME_AFTER_INTERACTION);
+  }
+
+  // =====================
+  // Buttons = interação (pausa)
+  // =====================
+  nextBtn.addEventListener('click', () => {
+    pauseThenResume();
+    goNext();
+  });
+
+  prevBtn.addEventListener('click', () => {
+    pauseThenResume();
+    goPrev();
+  });
+
+  // Pausa no hover (desktop) e em foco (acessibilidade)
+  viewport.addEventListener('mouseenter', stopAutoplay);
+  viewport.addEventListener('mouseleave', () => pauseThenResume());
+  viewport.addEventListener('focusin', stopAutoplay);
+  viewport.addEventListener('focusout', () => pauseThenResume());
+
+  // =====================
+  // DRAG / SWIPE (mouse + touch)
+  // =====================
+  let isDragging = false;
+  let startX = 0;
+  let startTranslatePx = 0;
+  let lastX = 0;
+
+  function getCurrentTranslatePx() {
+    const t = getComputedStyle(track).transform;
+    if (!t || t === 'none') return 0;
+    // matrix(a,b,c,d,tx,ty)
+    const m = t.match(/matrix\((.+)\)/);
+    if (!m) return 0;
+    const parts = m[1].split(',').map(v => parseFloat(v.trim()));
+    return parts[4] || 0;
+  }
+
+  function onDragStart(clientX) {
+    isDragging = true;
+    startX = clientX;
+    lastX = clientX;
+
+    stopAutoplay();
+
+    // tira transição para seguir o dedo/mouse
+    track.style.transition = 'none';
+    startTranslatePx = getCurrentTranslatePx();
+  }
+
+  function onDragMove(clientX) {
+    if (!isDragging) return;
+    lastX = clientX;
+    const dx = clientX - startX;
+    const nextTranslate = startTranslatePx + dx;
+    track.style.transform = `translateX(${nextTranslate}px)`;
+  }
+
+  function onDragEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+
+    const dx = lastX - startX;
+    const step = getStepPx();
+    const threshold = Math.min(90, step * 0.25); // sensível, mas não “nervoso”
+
+    // volta a transição padrão
+    track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+
+    if (Math.abs(dx) > threshold) {
+      // arrastou o suficiente: troca slide
+      if (dx < 0) goNext();
+      else goPrev();
+    } else {
+      // não arrastou o suficiente: volta pro lugar
+      setTransform(currentIndex, true);
+      isAnimating = false;
+    }
+
+    pauseThenResume();
+  }
+
+  // Mouse
+  viewport.addEventListener('mousedown', (e) => {
+    // evita selecionar texto e clicar em links durante drag
+    e.preventDefault();
+    onDragStart(e.clientX);
+  });
+
+  window.addEventListener('mousemove', (e) => onDragMove(e.clientX));
+  window.addEventListener('mouseup', onDragEnd);
+
+  // Touch
+  viewport.addEventListener('touchstart', (e) => {
+    if (!e.touches?.length) return;
+    onDragStart(e.touches[0].clientX);
+  }, { passive: true });
+
+  viewport.addEventListener('touchmove', (e) => {
+    if (!e.touches?.length) return;
+    onDragMove(e.touches[0].clientX);
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', onDragEnd);
+
+  // =====================
+  // Resize + init
+  // =====================
+  let resizeT;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeT);
+    resizeT = setTimeout(() => {
+      buildInfinite();
+      pauseThenResume();
+    }, 150);
+  });
+
+  window.addEventListener('load', () => {
+    buildInfinite();
+    startAutoplay();
+  }, { once: true });
+
+})();
+

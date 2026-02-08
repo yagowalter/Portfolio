@@ -1360,6 +1360,11 @@ body.light-theme .modal-link:hover {
   overflow: hidden;
   width: 100%;
   padding: 1rem 0.5rem;
+  cursor: grab;
+}
+
+.certificates-carousel:active {
+  cursor: grabbing;
 }
 
 .certificates-track {
@@ -1424,6 +1429,7 @@ body.light-theme .modal-link:hover {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: var(--shadow-sm);
+
 }
 
 .cert-card:hover {
