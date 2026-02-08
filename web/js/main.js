@@ -84,14 +84,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-  // Certificates Carousel Logic
-  const track = document.querySelector('.certificates-track');
-  const prevBtn = document.querySelector('.carousel-nav.prev');
-  const nextBtn = document.querySelector('.carousel-nav.next');
-  const cards = document.querySelectorAll('.cert-card');
+  // ===============================
+  // Certificates Carousel (INFINITO) - ROBUSTO
+  // ===============================
+  (() => {
+    const track = document.querySelector('.certificates-track');
+    const prevBtn = document.querySelector('.carousel-nav.prev');
+    const nextBtn = document.querySelector('.carousel-nav.next');
 
-  if (track && prevBtn && nextBtn && cards.length > 0) {
+    if (!track || !prevBtn || !nextBtn) return;
+
+    // pega os originais UMA vez (antes de clonar)
+    const ORIGINALS = Array.from(track.querySelectorAll('.cert-card')).map(n => n.cloneNode(true));
+    if (ORIGINALS.length <= 1) {
+      // se só tem 1, não tem muito o que “carrosselar”
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+      return;
+    }
+
+    const GAP_REM = 1.5; // tem que bater com o gap do CSS (.certificates-track { gap: 1.5rem; })
+    const gapPx = () => GAP_REM * parseFloat(getComputedStyle(document.documentElement).fontSize || 16);
+
+    let cardsPerView = 3;
     let currentIndex = 0;
+    let isAnimating = false;
 
     function getCardsPerView() {
       if (window.innerWidth <= 640) return 1;
@@ -99,45 +116,98 @@ document.addEventListener('DOMContentLoaded', () => {
       return 3;
     }
 
-    function updateCarousel() {
-      const cardWidth = cards[0].offsetWidth;
-      const gap = 1.5 * 16; // 1.5rem gap
-      const moveDistance = currentIndex * (cardWidth + gap);
-      track.style.transform = `translateX(-${moveDistance}px)`;
-
-      // Update button states
-      const maxIndex = Math.max(0, cards.length - getCardsPerView());
-      prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-      prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
-      nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
-      nextBtn.style.pointerEvents = currentIndex >= maxIndex ? 'none' : 'auto';
+    function clampCardsPerView() {
+      cardsPerView = Math.min(getCardsPerView(), ORIGINALS.length);
+      cardsPerView = Math.max(1, cardsPerView);
     }
 
-    nextBtn.addEventListener('click', () => {
-      const maxIndex = Math.max(0, cards.length - getCardsPerView());
-      if (currentIndex < maxIndex) {
-        currentIndex++;
-        updateCarousel();
+    function getStepPx() {
+      const first = track.querySelector('.cert-card');
+      if (!first) return 0;
+      return first.getBoundingClientRect().width + gapPx();
+    }
+
+    function setTransform(index, withTransition = true) {
+      const step = getStepPx();
+      track.style.transition = withTransition ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
+      track.style.transform = `translateX(-${index * step}px)`;
+    }
+
+    function buildInfinite() {
+      clampCardsPerView();
+
+      // reconstrói SEMPRE a partir dos originais
+      track.innerHTML = '';
+
+      const before = ORIGINALS.slice(-cardsPerView).map(n => n.cloneNode(true));
+      const after = ORIGINALS.slice(0, cardsPerView).map(n => n.cloneNode(true));
+
+      before.forEach(n => track.appendChild(n));
+      ORIGINALS.forEach(n => track.appendChild(n.cloneNode(true)));
+      after.forEach(n => track.appendChild(n));
+
+      currentIndex = cardsPerView;
+
+      // posiciona sem animação e depois reativa
+      requestAnimationFrame(() => {
+        setTransform(currentIndex, false);
+        requestAnimationFrame(() => setTransform(currentIndex, true));
+      });
+    }
+
+    function goNext() {
+      if (isAnimating) return;
+      isAnimating = true;
+      currentIndex++;
+      setTransform(currentIndex, true);
+    }
+
+    function goPrev() {
+      if (isAnimating) return;
+      isAnimating = true;
+      currentIndex--;
+      setTransform(currentIndex, true);
+    }
+
+    function handleLoop() {
+      const total = ORIGINALS.length;
+      const firstReal = cardsPerView;
+      const lastReal = cardsPerView + total - 1;
+
+      // caiu nos clones da esquerda
+      if (currentIndex < firstReal) {
+        currentIndex = lastReal;
+        setTransform(currentIndex, false);
+        requestAnimationFrame(() => setTransform(currentIndex, true));
       }
+
+      // caiu nos clones da direita
+      if (currentIndex > lastReal) {
+        currentIndex = firstReal;
+        setTransform(currentIndex, false);
+        requestAnimationFrame(() => setTransform(currentIndex, true));
+      }
+
+      isAnimating = false;
+    }
+
+    nextBtn.addEventListener('click', goNext);
+    prevBtn.addEventListener('click', goPrev);
+
+    track.addEventListener('transitionend', (e) => {
+      if (e.propertyName !== 'transform') return;
+      handleLoop();
     });
 
-    prevBtn.addEventListener('click', () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateCarousel();
-      }
-    });
-
-    // Resize handling
+    let resizeT;
     window.addEventListener('resize', () => {
-      const maxIndex = Math.max(0, cards.length - getCardsPerView());
-      if (currentIndex > maxIndex) currentIndex = maxIndex;
-      updateCarousel();
+      clearTimeout(resizeT);
+      resizeT = setTimeout(buildInfinite, 150);
     });
 
-    // Initial state
-    setTimeout(updateCarousel, 100);
-  }
+    // inicializa depois que layout está pronto (mais confiável que setTimeout solto)
+    window.addEventListener('load', buildInfinite, { once: true });
+  })();
 
 
   // Scroll Down Button
@@ -672,13 +742,14 @@ if (!window.__srInitialized) {
     interval: 400
   });
 
+
   // CONTACT
   ScrollReveal().reveal('.contact-item, .contact-social-links li', {
     origin: 'bottom',
     interval: 300
   });
 
-   ScrollReveal().reveal('.contact-info', {
+  ScrollReveal().reveal('.contact-info', {
     origin: 'top',
     interval: 300,
   });
