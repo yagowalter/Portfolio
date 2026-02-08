@@ -672,12 +672,6 @@ if (!window.__srInitialized) {
     interval: 400
   });
 
-  // CERTIFICADOS
-  ScrollReveal().reveal('.cert-card', {
-    origin: 'bottom',
-    interval: 400
-  });
-
   // CONTACT
   ScrollReveal().reveal('.contact-item, .contact-social-links li', {
     origin: 'bottom',
