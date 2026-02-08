@@ -203,8 +203,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Typing effect (loop)
   const phrases = [
-    "Cloud Engineer Jr",
-    "Mobile & Web Designer"
+    "Cloud Developer Jr",
+    "Web • Cloud • Suporte"
   ];
 
   const typingEl = document.getElementById("typing");
