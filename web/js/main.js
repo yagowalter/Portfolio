@@ -85,128 +85,89 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ===============================
-  // Certificates Carousel (INFINITO) - ROBUSTO
+  // Certificates Tabs
   // ===============================
   (() => {
-    const track = document.querySelector('.certificates-track');
-    const prevBtn = document.querySelector('.carousel-nav.prev');
-    const nextBtn = document.querySelector('.carousel-nav.next');
+    const tabBtns = document.querySelectorAll('.certs-tab-btn');
+    const panels = document.querySelectorAll('.certs-tab-panel');
 
-    if (!track || !prevBtn || !nextBtn) return;
+    if (!tabBtns.length || !panels.length) return;
 
-    // pega os originais UMA vez (antes de clonar)
-    const ORIGINALS = Array.from(track.querySelectorAll('.cert-card')).map(n => n.cloneNode(true));
-    if (ORIGINALS.length <= 1) {
-      // se só tem 1, não tem muito o que “carrosselar”
-      prevBtn.style.display = 'none';
-      nextBtn.style.display = 'none';
-      return;
+    // ---- Show More: Courses ----
+    const COURSES_PER_PAGE = 3;
+    const coursesGrid = document.querySelector('.certs-grid--courses');
+    const showMoreBtn = document.getElementById('courses-show-more');
+    const showMoreWrap = showMoreBtn?.closest('.certs-show-more-wrap');
+
+    function initCoursesPagination() {
+      if (!coursesGrid || !showMoreBtn) return;
+      const allCards = coursesGrid.querySelectorAll('.cert-card--course');
+
+      allCards.forEach((card, i) => {
+        card.classList.remove('cert-hidden', 'cert-reveal');
+        if (i >= COURSES_PER_PAGE) {
+          card.classList.add('cert-hidden');
+        }
+      });
+
+      // Show/hide button
+      if (showMoreWrap) {
+        showMoreWrap.classList.toggle('hidden', allCards.length <= COURSES_PER_PAGE);
+      }
     }
 
-    const GAP_REM = 1.5; // tem que bater com o gap do CSS (.certificates-track { gap: 1.5rem; })
-    const gapPx = () => GAP_REM * parseFloat(getComputedStyle(document.documentElement).fontSize || 16);
+    // Init on load
+    initCoursesPagination();
 
-    let cardsPerView = 3;
-    let currentIndex = 0;
-    let isAnimating = false;
+    // Show More click
+    if (showMoreBtn) {
+      showMoreBtn.addEventListener('click', () => {
+        if (!coursesGrid) return;
+        const hiddenCards = coursesGrid.querySelectorAll('.cert-card--course.cert-hidden');
+        const toReveal = Array.from(hiddenCards).slice(0, COURSES_PER_PAGE);
 
-    function getCardsPerView() {
-      if (window.innerWidth <= 640) return 1;
-      if (window.innerWidth <= 1024) return 2;
-      return 3;
-    }
+        toReveal.forEach((card, i) => {
+          setTimeout(() => {
+            card.classList.remove('cert-hidden');
+            card.classList.add('cert-reveal');
+          }, i * 80); // stagger 80ms
+        });
 
-    function clampCardsPerView() {
-      cardsPerView = Math.min(getCardsPerView(), ORIGINALS.length);
-      cardsPerView = Math.max(1, cardsPerView);
-    }
-
-    function getStepPx() {
-      const first = track.querySelector('.cert-card');
-      if (!first) return 0;
-      return first.getBoundingClientRect().width + gapPx();
-    }
-
-    function setTransform(index, withTransition = true) {
-      const step = getStepPx();
-      track.style.transition = withTransition ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
-      track.style.transform = `translateX(-${index * step}px)`;
-    }
-
-    function buildInfinite() {
-      clampCardsPerView();
-
-      // reconstrói SEMPRE a partir dos originais
-      track.innerHTML = '';
-
-      const before = ORIGINALS.slice(-cardsPerView).map(n => n.cloneNode(true));
-      const after = ORIGINALS.slice(0, cardsPerView).map(n => n.cloneNode(true));
-
-      before.forEach(n => track.appendChild(n));
-      ORIGINALS.forEach(n => track.appendChild(n.cloneNode(true)));
-      after.forEach(n => track.appendChild(n));
-
-      currentIndex = cardsPerView;
-
-      // posiciona sem animação e depois reativa
-      requestAnimationFrame(() => {
-        setTransform(currentIndex, false);
-        requestAnimationFrame(() => setTransform(currentIndex, true));
+        // Hide button when all revealed
+        const remaining = hiddenCards.length - toReveal.length;
+        if (remaining <= 0 && showMoreWrap) {
+          setTimeout(() => {
+            showMoreWrap.classList.add('hidden');
+          }, toReveal.length * 80 + 100);
+        }
       });
     }
 
-    function goNext() {
-      if (isAnimating) return;
-      isAnimating = true;
-      currentIndex++;
-      setTransform(currentIndex, true);
-    }
+    // ---- Tab switching ----
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.dataset.tab;
+        const targetPanel = document.getElementById('panel-' + targetTab);
+        if (!targetPanel || btn.classList.contains('active')) return;
 
-    function goPrev() {
-      if (isAnimating) return;
-      isAnimating = true;
-      currentIndex--;
-      setTransform(currentIndex, true);
-    }
+        // Update tab buttons
+        tabBtns.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
 
-    function handleLoop() {
-      const total = ORIGINALS.length;
-      const firstReal = cardsPerView;
-      const lastReal = cardsPerView + total - 1;
+        // Switch panels: hide all, show target
+        panels.forEach(p => p.classList.remove('active'));
+        targetPanel.classList.add('active');
 
-      // caiu nos clones da esquerda
-      if (currentIndex < firstReal) {
-        currentIndex = lastReal;
-        setTransform(currentIndex, false);
-        requestAnimationFrame(() => setTransform(currentIndex, true));
-      }
-
-      // caiu nos clones da direita
-      if (currentIndex > lastReal) {
-        currentIndex = firstReal;
-        setTransform(currentIndex, false);
-        requestAnimationFrame(() => setTransform(currentIndex, true));
-      }
-
-      isAnimating = false;
-    }
-
-    nextBtn.addEventListener('click', goNext);
-    prevBtn.addEventListener('click', goPrev);
-
-    track.addEventListener('transitionend', (e) => {
-      if (e.propertyName !== 'transform') return;
-      handleLoop();
+        // Reset courses pagination when switching to cursos
+        if (targetTab === 'cursos') {
+          initCoursesPagination();
+        }
+      });
     });
-
-    let resizeT;
-    window.addEventListener('resize', () => {
-      clearTimeout(resizeT);
-      resizeT = setTimeout(buildInfinite, 150);
-    });
-
-    // inicializa depois que layout está pronto (mais confiável que setTimeout solto)
-    window.addEventListener('load', buildInfinite, { once: true });
   })();
 
 
@@ -742,7 +703,6 @@ if (!window.__srInitialized) {
     interval: 400
   });
 
-
   // CONTACT
   ScrollReveal().reveal('.contact-item, .contact-social-links li', {
     origin: 'bottom',
@@ -780,261 +740,4 @@ if (!window.__srInitialized) {
   });
 }
 
-// ===============================
-// Certificates Carousel (INFINITO + AUTOPLAY + DRAG)
-// ===============================
-(() => {
-  const track = document.querySelector('.certificates-track');
-  const prevBtn = document.querySelector('.carousel-nav.prev');
-  const nextBtn = document.querySelector('.carousel-nav.next');
-  const viewport = document.querySelector('.certificates-carousel'); // wrapper com overflow hidden
-
-  if (!track || !prevBtn || !nextBtn || !viewport) return;
-
-  const ORIGINALS = Array.from(track.querySelectorAll('.cert-card')).map(n => n.cloneNode(true));
-  if (ORIGINALS.length <= 1) {
-    prevBtn.style.display = 'none';
-    nextBtn.style.display = 'none';
-    return;
-  }
-
-  const GAP_REM = 1.5;
-  const gapPx = () => GAP_REM * parseFloat(getComputedStyle(document.documentElement).fontSize || 16);
-
-  let cardsPerView = 3;
-  let currentIndex = 0;
-  let isAnimating = false;
-
-  // ===== Autoplay config (devagar) =====
-  const AUTOPLAY_DELAY = 3500; // tempo entre passos
-  const RESUME_AFTER_INTERACTION = 3500; // volta depois disso
-  let autoplayTimer = null;
-  let resumeTimer = null;
-
-  function getCardsPerView() {
-    if (window.innerWidth <= 640) return 1;
-    if (window.innerWidth <= 1024) return 2;
-    return 3;
-  }
-
-  function clampCardsPerView() {
-    cardsPerView = Math.min(getCardsPerView(), ORIGINALS.length);
-    cardsPerView = Math.max(1, cardsPerView);
-  }
-
-  function getStepPx() {
-    const first = track.querySelector('.cert-card');
-    if (!first) return 0;
-    return first.getBoundingClientRect().width + gapPx();
-  }
-
-  function setTransform(index, withTransition = true) {
-    const step = getStepPx();
-    track.style.transition = withTransition ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none';
-    track.style.transform = `translateX(-${index * step}px)`;
-  }
-
-  function buildInfinite() {
-    clampCardsPerView();
-
-    track.innerHTML = '';
-
-    const before = ORIGINALS.slice(-cardsPerView).map(n => n.cloneNode(true));
-    const after = ORIGINALS.slice(0, cardsPerView).map(n => n.cloneNode(true));
-
-    before.forEach(n => track.appendChild(n));
-    ORIGINALS.forEach(n => track.appendChild(n.cloneNode(true)));
-    after.forEach(n => track.appendChild(n));
-
-    currentIndex = cardsPerView;
-
-    requestAnimationFrame(() => {
-      setTransform(currentIndex, false);
-      requestAnimationFrame(() => setTransform(currentIndex, true));
-    });
-  }
-
-  function goNext() {
-    if (isAnimating) return;
-    isAnimating = true;
-    currentIndex++;
-    setTransform(currentIndex, true);
-  }
-
-  function goPrev() {
-    if (isAnimating) return;
-    isAnimating = true;
-    currentIndex--;
-    setTransform(currentIndex, true);
-  }
-
-  function handleLoop() {
-    const total = ORIGINALS.length;
-    const firstReal = cardsPerView;
-    const lastReal = cardsPerView + total - 1;
-
-    if (currentIndex < firstReal) {
-      currentIndex = lastReal;
-      setTransform(currentIndex, false);
-      requestAnimationFrame(() => setTransform(currentIndex, true));
-    }
-
-    if (currentIndex > lastReal) {
-      currentIndex = firstReal;
-      setTransform(currentIndex, false);
-      requestAnimationFrame(() => setTransform(currentIndex, true));
-    }
-
-    isAnimating = false;
-  }
-
-  track.addEventListener('transitionend', (e) => {
-    if (e.propertyName !== 'transform') return;
-    handleLoop();
-  });
-
-  // =====================
-  // AUTOPLAY helpers
-  // =====================
-  function stopAutoplay() {
-    clearInterval(autoplayTimer);
-    autoplayTimer = null;
-  }
-
-  function startAutoplay() {
-    if (autoplayTimer) return;
-    autoplayTimer = setInterval(() => {
-      // se o user estiver arrastando/animando, não força
-      if (!isAnimating && !isDragging) goNext();
-    }, AUTOPLAY_DELAY);
-  }
-
-  function pauseThenResume() {
-    stopAutoplay();
-    clearTimeout(resumeTimer);
-    resumeTimer = setTimeout(startAutoplay, RESUME_AFTER_INTERACTION);
-  }
-
-  // =====================
-  // Buttons = interação (pausa)
-  // =====================
-  nextBtn.addEventListener('click', () => {
-    pauseThenResume();
-    goNext();
-  });
-
-  prevBtn.addEventListener('click', () => {
-    pauseThenResume();
-    goPrev();
-  });
-
-  // Pausa no hover (desktop) e em foco (acessibilidade)
-  viewport.addEventListener('mouseenter', stopAutoplay);
-  viewport.addEventListener('mouseleave', () => pauseThenResume());
-  viewport.addEventListener('focusin', stopAutoplay);
-  viewport.addEventListener('focusout', () => pauseThenResume());
-
-  // =====================
-  // DRAG / SWIPE (mouse + touch)
-  // =====================
-  let isDragging = false;
-  let startX = 0;
-  let startTranslatePx = 0;
-  let lastX = 0;
-
-  function getCurrentTranslatePx() {
-    const t = getComputedStyle(track).transform;
-    if (!t || t === 'none') return 0;
-    // matrix(a,b,c,d,tx,ty)
-    const m = t.match(/matrix\((.+)\)/);
-    if (!m) return 0;
-    const parts = m[1].split(',').map(v => parseFloat(v.trim()));
-    return parts[4] || 0;
-  }
-
-  function onDragStart(clientX) {
-    isDragging = true;
-    startX = clientX;
-    lastX = clientX;
-
-    stopAutoplay();
-
-    // tira transição para seguir o dedo/mouse
-    track.style.transition = 'none';
-    startTranslatePx = getCurrentTranslatePx();
-  }
-
-  function onDragMove(clientX) {
-    if (!isDragging) return;
-    lastX = clientX;
-    const dx = clientX - startX;
-    const nextTranslate = startTranslatePx + dx;
-    track.style.transform = `translateX(${nextTranslate}px)`;
-  }
-
-  function onDragEnd() {
-    if (!isDragging) return;
-    isDragging = false;
-
-    const dx = lastX - startX;
-    const step = getStepPx();
-    const threshold = Math.min(90, step * 0.25); // sensível, mas não “nervoso”
-
-    // volta a transição padrão
-    track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-
-    if (Math.abs(dx) > threshold) {
-      // arrastou o suficiente: troca slide
-      if (dx < 0) goNext();
-      else goPrev();
-    } else {
-      // não arrastou o suficiente: volta pro lugar
-      setTransform(currentIndex, true);
-      isAnimating = false;
-    }
-
-    pauseThenResume();
-  }
-
-  // Mouse
-  viewport.addEventListener('mousedown', (e) => {
-    // evita selecionar texto e clicar em links durante drag
-    e.preventDefault();
-    onDragStart(e.clientX);
-  });
-
-  window.addEventListener('mousemove', (e) => onDragMove(e.clientX));
-  window.addEventListener('mouseup', onDragEnd);
-
-  // Touch
-  viewport.addEventListener('touchstart', (e) => {
-    if (!e.touches?.length) return;
-    onDragStart(e.touches[0].clientX);
-  }, { passive: true });
-
-  viewport.addEventListener('touchmove', (e) => {
-    if (!e.touches?.length) return;
-    onDragMove(e.touches[0].clientX);
-  }, { passive: true });
-
-  viewport.addEventListener('touchend', onDragEnd);
-
-  // =====================
-  // Resize + init
-  // =====================
-  let resizeT;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeT);
-    resizeT = setTimeout(() => {
-      buildInfinite();
-      pauseThenResume();
-    }, 150);
-  });
-
-  window.addEventListener('load', () => {
-    buildInfinite();
-    startAutoplay();
-  }, { once: true });
-
-})();
 
