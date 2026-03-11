@@ -166,6 +166,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (targetTab === 'cursos') {
           initCoursesPagination();
         }
+
+        // Fix ScrollReveal visibility on tab switch
+        if (window.ScrollReveal) {
+          ScrollReveal().sync();
+        }
       });
     });
   })();
@@ -699,6 +704,12 @@ if (!window.__srInitialized) {
 
   // PORTFOLIO (somente o card visível)
   ScrollReveal().reveal('#portfolio .portfolio-card', {
+    origin: 'right',
+    interval: 400
+  });
+
+  // CERTIFICAÇÕES
+  ScrollReveal().reveal('#certificates .cert-card', {
     origin: 'right',
     interval: 400
   });
