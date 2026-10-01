@@ -1,5 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-
+document.addEventListener("DOMContentLoaded", () => {
   // Theme Toggle Logic
   const themeToggleBtn = document.querySelector(".theme-toggle-btn");
   const savedTheme = localStorage.getItem("theme");
@@ -23,23 +22,24 @@ document.addEventListener('DOMContentLoaded', () => {
     applyTheme(isLight ? "dark" : "light");
   });
 
-
-  const mobileBtn = document.querySelector('.mobile-menu-btn');
-  const navLinks = document.querySelector('.nav-links');
+  const mobileBtn = document.querySelector(".mobile-menu-btn");
+  const navLinks = document.querySelector(".nav-links");
 
   if (mobileBtn && navLinks) {
-    mobileBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      const icon = mobileBtn.querySelector('i');
+    mobileBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("active");
+      const icon = mobileBtn.querySelector("i");
       if (!icon) return;
-      icon.className = navLinks.classList.contains('active') ? 'fas fa-times' : 'fas fa-bars';
+      icon.className = navLinks.classList.contains("active")
+        ? "fas fa-times"
+        : "fas fa-bars";
     });
 
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        const icon = mobileBtn.querySelector('i');
-        if (icon) icon.className = 'fas fa-bars';
+    document.querySelectorAll(".nav-links a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+        const icon = mobileBtn.querySelector("i");
+        if (icon) icon.className = "fas fa-bars";
       });
     });
   }
@@ -49,199 +49,145 @@ document.addEventListener('DOMContentLoaded', () => {
   ========================= */
 
   //open/close portfolio modals
-  const portfolioCardsWithModals = document.querySelectorAll(".portfolio-container .card-with-modal");
+  const portfolioCardsWithModals = document.querySelectorAll(
+    ".portfolio-container .card-with-modal",
+  );
 
-  portfolioCardsWithModals.forEach((portfolioCardsWithModals) => {
-    const portfolioCard = portfolioCardsWithModals.querySelector(".portfolio-card");
-    const portfolioBackdrop = portfolioCardsWithModals.querySelector(".portfolio-modal-backdrop");
-    const portfolioModal = portfolioCardsWithModals.querySelector(".portfolio-modal");
-    const modalCloseBtn = portfolioCardsWithModals.querySelector(".modal-close-btn");
+  const closePortfolioModal = (backdrop, modal) => {
+    if (!backdrop || !modal) return;
+    backdrop.classList.remove("active");
+    modal.classList.remove("active");
 
+    setTimeout(() => {
+      backdrop.style.display = "none";
+    }, 400);
+  };
 
-    portfolioCard.addEventListener("click", () => {
+  portfolioCardsWithModals.forEach((cardWithModal) => {
+    const portfolioCard =
+      cardWithModal.querySelector(".portfolio-card");
+    const portfolioBackdrop = cardWithModal.querySelector(
+      ".portfolio-modal-backdrop",
+    );
+    const portfolioModal =
+      cardWithModal.querySelector(".portfolio-modal");
+    const modalCloseBtn =
+      cardWithModal.querySelector(".modal-close-btn");
+
+    portfolioCard?.addEventListener("click", () => {
       portfolioBackdrop.style.display = "flex";
 
       setTimeout(() => {
         portfolioBackdrop.classList.add("active");
-      }, 300);
+      }, 100);
 
       setTimeout(() => {
         portfolioModal.classList.add("active");
-      }, 300);
+      }, 200);
     });
 
-    modalCloseBtn.addEventListener("click", () => {
-      setTimeout(() => {
-        portfolioBackdrop.style.display = "none";
-      }, 500);
+    modalCloseBtn?.addEventListener("click", () => {
+      closePortfolioModal(portfolioBackdrop, portfolioModal);
+    });
 
-      setTimeout(() => {
-        portfolioBackdrop.classList.remove("active");
-        portfolioModal.classList.remove("active");
-      }, 100);
+    // Close on click outside modal content (on the backdrop)
+    portfolioBackdrop?.addEventListener("click", (e) => {
+      if (e.target === portfolioBackdrop) {
+        closePortfolioModal(portfolioBackdrop, portfolioModal);
+      }
     });
   });
 
+  // ESC key listener to close active portfolio modals
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" || e.key === "Esc") {
+      portfolioCardsWithModals.forEach((cardWithModal) => {
+        const portfolioBackdrop = cardWithModal.querySelector(
+          ".portfolio-modal-backdrop",
+        );
+        const portfolioModal =
+          cardWithModal.querySelector(".portfolio-modal");
 
-
-  // ===============================
-  // Certificates Tabs
-  // ===============================
-  (() => {
-    const tabBtns = document.querySelectorAll('.certs-tab-btn');
-    const panels = document.querySelectorAll('.certs-tab-panel');
-
-    if (!tabBtns.length || !panels.length) return;
-
-    // ---- Show More: Courses ----
-    const COURSES_PER_PAGE = 3;
-    const coursesGrid = document.querySelector('.certs-grid--courses');
-    const showMoreBtn = document.getElementById('courses-show-more');
-    const showMoreWrap = showMoreBtn?.closest('.certs-show-more-wrap');
-
-    function initCoursesPagination() {
-      if (!coursesGrid || !showMoreBtn) return;
-      const allCards = coursesGrid.querySelectorAll('.cert-card--course');
-
-      allCards.forEach((card, i) => {
-        card.classList.remove('cert-hidden', 'cert-reveal');
-        if (i >= COURSES_PER_PAGE) {
-          card.classList.add('cert-hidden');
-        }
-      });
-
-      // Show/hide button
-      if (showMoreWrap) {
-        showMoreWrap.classList.toggle('hidden', allCards.length <= COURSES_PER_PAGE);
-      }
-    }
-
-    // Init on load
-    initCoursesPagination();
-
-    // Show More click
-    if (showMoreBtn) {
-      showMoreBtn.addEventListener('click', () => {
-        if (!coursesGrid) return;
-        const hiddenCards = coursesGrid.querySelectorAll('.cert-card--course.cert-hidden');
-        const toReveal = Array.from(hiddenCards).slice(0, COURSES_PER_PAGE);
-
-        toReveal.forEach((card, i) => {
-          setTimeout(() => {
-            card.classList.remove('cert-hidden');
-            card.classList.add('cert-reveal');
-          }, i * 80); // stagger 80ms
-        });
-
-        // Hide button when all revealed
-        const remaining = hiddenCards.length - toReveal.length;
-        if (remaining <= 0 && showMoreWrap) {
-          setTimeout(() => {
-            showMoreWrap.classList.add('hidden');
-          }, toReveal.length * 80 + 100);
+        if (
+          portfolioBackdrop &&
+          (portfolioBackdrop.classList.contains("active") ||
+            portfolioBackdrop.style.display === "flex")
+        ) {
+          closePortfolioModal(portfolioBackdrop, portfolioModal);
         }
       });
     }
-
-    // ---- Tab switching ----
-    tabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const targetTab = btn.dataset.tab;
-        const targetPanel = document.getElementById('panel-' + targetTab);
-        if (!targetPanel || btn.classList.contains('active')) return;
-
-        // Update tab buttons
-        tabBtns.forEach(b => {
-          b.classList.remove('active');
-          b.setAttribute('aria-selected', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-selected', 'true');
-
-        // Switch panels: hide all, show target
-        panels.forEach(p => p.classList.remove('active'));
-        targetPanel.classList.add('active');
-
-        // Reset courses pagination when switching to cursos
-        if (targetTab === 'cursos') {
-          initCoursesPagination();
-        }
-
-        // Fix ScrollReveal visibility on tab switch
-        if (window.ScrollReveal) {
-          ScrollReveal().sync();
-        }
-      });
-    });
-  })();
-
+  });
 
   // Scroll Down Button
-  const scrollDownBtn = document.getElementById('scroll-down-btn');
+  const scrollDownBtn = document.getElementById("scroll-down-btn");
   if (scrollDownBtn) {
-    scrollDownBtn.addEventListener('click', () => {
-      const projectsSection = document.getElementById('footer');
-      if (projectsSection) projectsSection.scrollIntoView({ behavior: 'smooth' });
+    scrollDownBtn.addEventListener("click", () => {
+      const projectsSection = document.getElementById("footer");
+      if (projectsSection)
+        projectsSection.scrollIntoView({ behavior: "smooth" });
     });
   }
 
-  const bottomNavContainer = document.querySelector('.bottom-nav-container');
-  const menuShowBtn = document.querySelector('.menu-show-btn');
-  const menuHideBtn = document.querySelector('.menu-hide-btn');
+  const bottomNavContainer = document.querySelector(".bottom-nav-container");
+  const menuShowBtn = document.querySelector(".menu-show-btn");
+  const menuHideBtn = document.querySelector(".menu-hide-btn");
 
   if (bottomNavContainer && menuShowBtn && menuHideBtn) {
-    menuHideBtn.addEventListener('click', () => {
-      bottomNavContainer.classList.add('closed');
+    menuHideBtn.addEventListener("click", () => {
+      bottomNavContainer.classList.add("closed");
     });
 
-    menuShowBtn.addEventListener('click', () => {
-      bottomNavContainer.classList.remove('closed');
+    menuShowBtn.addEventListener("click", () => {
+      bottomNavContainer.classList.remove("closed");
     });
   }
 
-
   // Hide Bottom Nav when footer appears
-  const footer = document.querySelector('.yago-footer');
+  const footer = document.querySelector(".yago-footer");
   if (footer && bottomNavContainer) {
-    const footerObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) bottomNavContainer.classList.add('hidden-by-footer');
-        else bottomNavContainer.classList.remove('hidden-by-footer');
-      });
-    }, { threshold: 0.15 });
+    const footerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting)
+            bottomNavContainer.classList.add("hidden-by-footer");
+          else bottomNavContainer.classList.remove("hidden-by-footer");
+        });
+      },
+      { threshold: 0.15 },
+    );
 
     footerObserver.observe(footer);
   }
 
   // Scroll Up Button
-  const scrollUpBtn = document.querySelector('.scroll-up-btn');
+  const scrollUpBtn = document.querySelector(".scroll-up-btn");
   if (scrollUpBtn) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 600) scrollUpBtn.classList.add('visible');
-      else scrollUpBtn.classList.remove('visible');
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 600) scrollUpBtn.classList.add("visible");
+      else scrollUpBtn.classList.remove("visible");
     });
 
-    scrollUpBtn.addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollUpBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 
-  const sidebars = document.querySelectorAll('.hero-side-left, .hero-side-right');
+  const sidebars = document.querySelectorAll(
+    ".hero-side-left, .hero-side-right",
+  );
   if (sidebars.length > 0) {
-    window.addEventListener('scroll', () => {
+    window.addEventListener("scroll", () => {
       if (window.scrollY > 200) {
-        sidebars.forEach(s => s.classList.add('hidden-sidebar'));
+        sidebars.forEach((s) => s.classList.add("hidden-sidebar"));
       } else {
-        sidebars.forEach(s => s.classList.remove('hidden-sidebar'));
+        sidebars.forEach((s) => s.classList.remove("hidden-sidebar"));
       }
     });
   }
 
   // Typing effect (loop)
-  const phrases = [
-    "Cloud Developer Jr",
-    "Web • Cloud • Suporte"
-  ];
+  const phrases = ["Rising Software Engineer", "Java • Full Stack • Cloud"];
 
   const typingEl = document.getElementById("typing");
 
@@ -273,32 +219,31 @@ document.addEventListener('DOMContentLoaded', () => {
       if (charIndex === 0) {
         isDeleting = false;
         phraseIndex = (phraseIndex + 1) % phrases.length;
-        setTimeout(() => { }, pauseAfterDeleting);
+        setTimeout(() => {}, pauseAfterDeleting);
       }
     }
 
-    setTimeout(
-      typeLoop,
-      isDeleting ? deletingSpeed : typingSpeed
-    );
+    setTimeout(typeLoop, isDeleting ? deletingSpeed : typingSpeed);
   }
 
   typeLoop();
 
-
   // Experience Timeline (line grows on scroll + cards reveal)
-  const timeline = document.getElementById('experience-timeline');
+  const timeline = document.getElementById("experience-timeline");
 
   if (timeline) {
     // Reveal cards
-    const timelineCards = timeline.querySelectorAll('.timeline-card');
-    const tlObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('in-view');
-      });
-    }, { threshold: 0.25 });
+    const timelineCards = timeline.querySelectorAll(".timeline-card");
+    const tlObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add("in-view");
+        });
+      },
+      { threshold: 0.25 },
+    );
 
-    timelineCards.forEach(card => tlObserver.observe(card));
+    timelineCards.forEach((card) => tlObserver.observe(card));
 
     // Line progress
     let ticking = false;
@@ -326,25 +271,25 @@ document.addEventListener('DOMContentLoaded', () => {
       progress = Math.max(0, Math.min(1, progress));
 
       // Update the height of the fill line
-      timeline.style.setProperty('--line-progress', progress.toFixed(4));
+      timeline.style.setProperty("--line-progress", progress.toFixed(4));
 
       // Calculate the absolute pixel position of the "tip" of the fill line relative to the timeline container top
       const currentFillHeight = progress * rect.height;
 
       // --- Timeline Items Activation Logic ---
-      const timelineItems = timeline.querySelectorAll('.timeline-item');
+      const timelineItems = timeline.querySelectorAll(".timeline-item");
 
-      timelineItems.forEach(item => {
+      timelineItems.forEach((item) => {
         // Calculate item's dot position relative to the timeline container
-        // We assume the dot is centered vertically in the item or at the top. 
+        // We assume the dot is centered vertically in the item or at the top.
         // Based on CSS .timeline-dot has top: 0, so it's at the very top of each item relative container.
         const itemTop = item.offsetTop;
 
         // Add a small offset (e.g. 10px) so it activates just as the line hits the dot center
         if (currentFillHeight >= itemTop + 5) {
-          item.classList.add('active');
+          item.classList.add("active");
         } else {
-          item.classList.remove('active');
+          item.classList.remove("active");
         }
       });
     };
@@ -355,8 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(updateTimelineProgress);
     };
 
-    window.addEventListener('scroll', onScrollOrResize, { passive: true });
-    window.addEventListener('resize', onScrollOrResize);
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
 
     // primeira atualização
     updateTimelineProgress();
@@ -369,7 +314,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const contactAlert = document.querySelector(".contact-form-alert");
   const submitBtn = contactForm?.querySelector(".submit-btn");
 
-  const API_URL = "https://vfb8tr04ke.execute-api.us-east-1.amazonaws.com/contact";
+  const API_URL =
+    "https://vfb8tr04ke.execute-api.us-east-1.amazonaws.com/contact";
 
   const showAlert = (text, isError = false) => {
     if (!contactAlert) return;
@@ -385,10 +331,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // some sozinho depois de uns segundos
     clearTimeout(showAlert._t);
-    showAlert._t = setTimeout(() => {
-      contactAlert.style.opacity = "0";
-      setTimeout(() => (contactAlert.style.display = "none"), 250);
-    }, isError ? 5000 : 3500);
+    showAlert._t = setTimeout(
+      () => {
+        contactAlert.style.opacity = "0";
+        setTimeout(() => (contactAlert.style.display = "none"), 250);
+      },
+      isError ? 5000 : 3500,
+    );
   };
 
   if (contactAlert) {
@@ -407,11 +356,16 @@ document.addEventListener('DOMContentLoaded', () => {
       email: (formData.get("email") || "").toString().trim(),
       subject: (formData.get("subject") || "").toString().trim(),
       message: (formData.get("message") || "").toString().trim(),
-      source: "portfolio" // opcional, só pra você identificar no backend
+      source: "portfolio", // opcional, só pra você identificar no backend
     };
 
     // validação básica (sem frescura)
-    if (!payload.name || !payload.email || !payload.subject || !payload.message) {
+    if (
+      !payload.name ||
+      !payload.email ||
+      !payload.subject ||
+      !payload.message
+    ) {
       showAlert("Preencha todos os campos obrigatórios.", true);
       return;
     }
@@ -427,17 +381,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const res = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       // tenta ler JSON se existir
       let data = null;
       try {
         data = await res.json();
-      } catch (_) { }
+      } catch (_) {}
 
       if (!res.ok) {
-        const msg = data?.message || data?.error || "Falha ao enviar. Tente novamente.";
+        const msg =
+          data?.message || data?.error || "Falha ao enviar. Tente novamente.";
         throw new Error(msg);
       }
 
@@ -453,10 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-
-
 });
-
 
 /* to top btn */
 
@@ -468,7 +420,8 @@ window.addEventListener("scroll", () => {
   //scroll indicator bar
   const scrollIndicatorBar = document.querySelector(".scroll-indicator-bar");
 
-  const pageScroll = document.body.scrollTop || document.documentElement.scrollTop;
+  const pageScroll =
+    document.body.scrollTop || document.documentElement.scrollTop;
   const height =
     document.documentElement.scrollHeight -
     document.documentElement.clientHeight;
@@ -480,32 +433,38 @@ window.addEventListener("scroll", () => {
 /* botton nav menu */
 
 /* bottom nav menu (scrollspy decente) */
-window.addEventListener("scroll", () => {
-  const sections = document.querySelectorAll("main section[id]");
-  const mid = window.scrollY + window.innerHeight * 0.45; // “meio” da viewport (ajustável)
+window.addEventListener(
+  "scroll",
+  () => {
+    const sections = document.querySelectorAll("main section[id]");
+    const mid = window.scrollY + window.innerHeight * 0.45; // “meio” da viewport (ajustável)
 
-  let activeId = null;
+    let activeId = null;
 
-  sections.forEach((section) => {
-    const top = section.offsetTop;
-    const bottom = top + section.offsetHeight;
+    sections.forEach((section) => {
+      const top = section.offsetTop;
+      const bottom = top + section.offsetHeight;
 
-    if (mid >= top && mid < bottom) {
-      activeId = section.id;
-    }
-  });
+      if (mid >= top && mid < bottom) {
+        activeId = section.id;
+      }
+    });
 
-  if (!activeId) return;
+    if (!activeId) return;
 
-  // remove de todos
-  document.querySelectorAll(".bottom-nav .menu a.current")
-    .forEach(a => a.classList.remove("current"));
+    // remove de todos
+    document
+      .querySelectorAll(".bottom-nav .menu a.current")
+      .forEach((a) => a.classList.remove("current"));
 
-  // adiciona no ativo
-  const activeLink = document.querySelector(`.bottom-nav .menu a[href="#${activeId}"]`);
-  activeLink?.classList.add("current");
-}, { passive: true });
-
+    // adiciona no ativo
+    const activeLink = document.querySelector(
+      `.bottom-nav .menu a[href="#${activeId}"]`,
+    );
+    activeLink?.classList.add("current");
+  },
+  { passive: true },
+);
 
 // show bottom nav menu on home
 
@@ -531,7 +490,7 @@ window.addEventListener("scroll", () => {
       bottomNav.classList.add("active");
     }
 
-    clearTimeout(navTimeout)
+    clearTimeout(navTimeout);
     navTimeout = setTimeout(scrollStopped, 3500);
   }
 
@@ -543,10 +502,10 @@ window.addEventListener("scroll", () => {
       menuShowBtn.classList.add("active");
     }
 
-    clearTimeout(navTimeout)
+    clearTimeout(navTimeout);
     navTimeout = setTimeout(scrollStopped, 3500);
   }
-})
+});
 
 // hide bottom nav on click
 
@@ -563,7 +522,6 @@ menuShowBtn.addEventListener("click", () => {
   menuShowBtn.classList.toggle("active");
 });
 
-
 /* ==========================
   shrink header on scrollgi
 ========================== */
@@ -577,11 +535,15 @@ window.addEventListener("scroll", () => {
   Stack modal open/close
   ====================================*/
 
-const stackCardWithModals = document.querySelectorAll(".stack-container .card-with-modal");
+const stackCardWithModals = document.querySelectorAll(
+  ".stack-container .card-with-modal",
+);
 
 stackCardWithModals.forEach((stackCardWithModals) => {
   const stackCard = stackCardWithModals.querySelector(".stack-card");
-  const stackBackDrop = stackCardWithModals.querySelector(".stack-modal-backdrop");
+  const stackBackDrop = stackCardWithModals.querySelector(
+    ".stack-modal-backdrop",
+  );
   const stackModal = stackCardWithModals.querySelector(".stack-modal");
   const modalCloseBtn = stackCardWithModals.querySelector(".modal-close-btn");
 
@@ -597,17 +559,47 @@ stackCardWithModals.forEach((stackCardWithModals) => {
     }, 300);
   });
 
-  modalCloseBtn.addEventListener("click", () => {
-    setTimeout(() => {
-      stackBackDrop.style.display = "none";
-    }, 500);
-
-    setTimeout(() => {
+    const closeStackModal = () => {
       stackBackDrop.classList.remove("active");
       stackModal.classList.remove("active");
-    }, 100);
+      setTimeout(() => {
+        stackBackDrop.style.display = "none";
+      }, 400);
+    };
+
+    modalCloseBtn?.addEventListener("click", closeStackModal);
+
+    // Close on click outside modal content
+    stackBackDrop?.addEventListener("click", (e) => {
+      if (e.target === stackBackDrop) {
+        closeStackModal();
+      }
+    });
   });
-});
+
+  // ESC key listener for stack modals
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" || e.key === "Esc") {
+      stackCardWithModals.forEach((cardWithModal) => {
+        const stackBackDrop = cardWithModal.querySelector(
+          ".stack-modal-backdrop",
+        );
+        const stackModal = cardWithModal.querySelector(".stack-modal");
+
+        if (
+          stackBackDrop &&
+          (stackBackDrop.classList.contains("active") ||
+            stackBackDrop.style.display === "flex")
+        ) {
+          stackBackDrop.classList.remove("active");
+          if (stackModal) stackModal.classList.remove("active");
+          setTimeout(() => {
+            stackBackDrop.style.display = "none";
+          }, 400);
+        }
+      });
+    }
+  });
 
 /* =========================
    Footer Tech Modal (mesmo padrão)
@@ -666,7 +658,6 @@ stackCardWithModals.forEach((stackCardWithModals) => {
   });
 })();
 
-
 /* =========================================
   Scroll reveal JS 
   ======================================*/
@@ -680,75 +671,67 @@ if (!window.__srInitialized) {
 
   ScrollReveal({
     reset: false,
-    distance: '60px',
+    distance: "60px",
     duration: 900,
     delay: 120,
-    easing: 'ease-out'
+    easing: "ease-out",
   });
 
-  ScrollReveal().reveal('.section-title', {
-    origin: 'top',
+  ScrollReveal().reveal(".section-title:not(.section-title--static)", {
+    origin: "top",
     interval: 300,
   });
 
   // HERO
-  ScrollReveal().reveal('.hero-side-left', { origin: 'left', delay: 300 });
-  ScrollReveal().reveal('.hero-side-right', { origin: 'right', delay: 300 });
-  ScrollReveal().reveal('.hero-content', { origin: 'top', delay: 500 });
+  ScrollReveal().reveal(".hero-side-left", { origin: "left", delay: 300 });
+  ScrollReveal().reveal(".hero-side-right", { origin: "right", delay: 300 });
+  ScrollReveal().reveal(".hero-content", { origin: "top", delay: 500 });
 
   // STACK (somente o card visível)
-  ScrollReveal().reveal('#stack .stack-card', {
-    origin: 'bottom',
-    interval: 400
+  ScrollReveal().reveal("#stack .stack-card", {
+    origin: "bottom",
+    interval: 400,
   });
 
   // PORTFOLIO (somente o card visível)
-  ScrollReveal().reveal('#portfolio .portfolio-card', {
-    origin: 'right',
-    interval: 400
-  });
-
-  // CERTIFICAÇÕES
-  ScrollReveal().reveal('#certificates .cert-card', {
-    origin: 'right',
-    interval: 400
+  ScrollReveal().reveal("#portfolio .portfolio-card", {
+    origin: "right",
+    interval: 400,
   });
 
   // CONTACT
-  ScrollReveal().reveal('.contact-item, .contact-social-links li', {
-    origin: 'bottom',
-    interval: 300
-  });
-
-  ScrollReveal().reveal('.contact-info', {
-    origin: 'top',
+  ScrollReveal().reveal(".contact-item, .contact-social-links li", {
+    origin: "bottom",
     interval: 300,
   });
 
-  ScrollReveal().reveal('.contact-form-body', {
-    origin: 'right'
+  ScrollReveal().reveal(".contact-info", {
+    origin: "top",
+    interval: 300,
+  });
+
+  ScrollReveal().reveal(".contact-form-body", {
+    origin: "right",
   });
 
   // FOOTER
-  ScrollReveal().reveal('.footer-menu-item', {
-    origin: 'bottom',
-    interval: 200
+  ScrollReveal().reveal(".footer-menu-item", {
+    origin: "bottom",
+    interval: 200,
   });
 
-  ScrollReveal().reveal('.footer-tech-line', {
-    origin: 'bottom',
-    interval: 200
+  ScrollReveal().reveal(".footer-tech-line", {
+    origin: "bottom",
+    interval: 200,
   });
 
-  ScrollReveal().reveal('.footer-tech-mini', {
-    origin: 'bottom',
-    interval: 200
+  ScrollReveal().reveal(".footer-tech-mini", {
+    origin: "bottom",
+    interval: 200,
   });
 
-  ScrollReveal().reveal('.copy-right', {
-    origin: 'bottom',
-    interval: 200
+  ScrollReveal().reveal(".copy-right", {
+    origin: "bottom",
+    interval: 200,
   });
 }
-
-
