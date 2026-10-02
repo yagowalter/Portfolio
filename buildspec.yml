@@ -15,6 +15,7 @@ phases:
     commands:
       - aws s3 sync dist/ s3://$BUCKET_NAME/ --delete
       - aws cloudfront create-invalidation --distribution-id $DIST_ID --paths "/*"
+
 artifacts:
   base-directory: dist
   files:
