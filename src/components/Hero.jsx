@@ -69,8 +69,8 @@ export function Hero() {
       </div>
       <a
         className="hero-side-right reveal"
-        href="#portfolio"
-        aria-label="Rolar até os projetos"
+        href="#footer"
+        aria-label="Rolar até o rodapé"
       >
         <div className="mouse-icon">
           <div className="mouse-wheel" />

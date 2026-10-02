@@ -640,17 +640,13 @@ section {
 }
 
 .hero-side-right {
-  right: calc(50% - 560px - 80px);
+  right: clamp(10rem, 25vw, 22rem);
   cursor: pointer;
 }
 
 @media (max-width: 1300px) {
   .hero-side-left {
     left: 20px;
-  }
-
-  .hero-side-right {
-    right: 20px;
   }
 }
 
