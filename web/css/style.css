@@ -101,45 +101,6 @@
   --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* ======= Theme Toggle Button Styles ======= */
-.theme-toggle-btn {
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  color: var(--color-01);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.theme-toggle-btn:hover {
-  transform: rotate(15deg);
-}
-
-.theme-toggle-btn svg {
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* In Dark Mode (default): show sun icon, hide moon icon */
-.theme-toggle-btn .sun-icon {
-  opacity: 1;
-  transform: translateY(0) rotate(0);
-}
-
-.theme-toggle-btn .moon-icon {
-  opacity: 0;
-  transform: translateY(20px) rotate(90deg);
-}
-
 body {
   color: var(--color-04);
   background: var(--body-color);
@@ -377,32 +338,6 @@ section {
   color: var(--hover-color);
 }
 
-.theme-btn {
-  position: relative;
-  display: flex;
-  justify-content: end;
-  align-items: center;
-  width: 27px;
-  cursor: pointer;
-}
-
-.theme-btn i {
-  position: absolute;
-  color: var(--color-01);
-  font-size: 1.7rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.theme-btn i:hover {
-  color: var(--hover-color);
-  transform: rotate(-15deg);
-}
-
-.theme-btn .moon-icon {
-  display: none;
-}
-
 /* =========================
    TITLES / BUTTONS
    ========================= */
@@ -638,23 +573,13 @@ section {
   animation: float 6s ease-in-out infinite;
 }
 
-.cloud-svg {
-  width: 350px;
+.hero-image {
+  display: block;
+  width: min(350px, 80vw);
   height: auto;
-  opacity: 0.8;
-  filter: drop-shadow(0 10px 15px rgba(56, 189, 248, 0.2));
-  animation: cloudColorShift 8s ease-in-out infinite;
-}
-
-@keyframes cloudColorShift {
-  0%,
-  100% {
-    filter: drop-shadow(0 10px 15px rgba(56, 189, 248, 0.2)) hue-rotate(0deg);
-  }
-
-  50% {
-    filter: drop-shadow(0 10px 20px rgba(14, 165, 233, 0.3)) hue-rotate(15deg);
-  }
+  object-fit: contain;
+  opacity: 0.95;
+  filter: drop-shadow(0 10px 24px rgba(56, 189, 248, 0.16));
 }
 
 @keyframes float {
@@ -981,15 +906,6 @@ section {
   border-color: var(--primary-color);
   background: var(--primary-light);
   color: var(--color-02);
-}
-
-/* no light theme fica legível e consistente */
-body.light-theme .modal-link {
-  color: var(--text-color);
-}
-
-body.light-theme .modal-link:hover {
-  background: rgba(56, 189, 248, 0.08);
 }
 
 .portfolio-modal {
@@ -2112,14 +2028,6 @@ body.light-theme .modal-link:hover {
   transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s;
   /* Slower, slight delay */
   flex-shrink: 0;
-  margin-right: 1rem;
-  /* Space between node and card */
-}
-
-/* Right alignment specific */
-.timeline-item.right .timeline-node {
-  margin-right: 0;
-  margin-left: 1rem;
 }
 
 .timeline-item.active .timeline-node {
@@ -2949,7 +2857,7 @@ body.light-theme .modal-link:hover {
     margin-bottom: 2rem;
   }
 
-  .cloud-svg {
+  .hero-image {
     width: min(320px, 78vw);
   }
 

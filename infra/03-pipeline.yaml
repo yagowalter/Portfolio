@@ -1,4 +1,4 @@
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Parameters:
   ConnectionArn: { Type: String }
   FullRepositoryId: { Type: String, Description: "Ex: usuario/repositorio" }
@@ -15,7 +15,7 @@ Resources:
       Environment:
         Type: LINUX_CONTAINER
         ComputeType: BUILD_GENERAL1_SMALL
-        Image: aws/codebuild/amazonlinux2-x86_64-standard:4.0
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:5.0
         EnvironmentVariables:
           - { Name: BUCKET_NAME, Value: !Ref S3BucketName }
           - { Name: DIST_ID, Value: !Ref CloudFrontDistId }
@@ -33,17 +33,30 @@ Resources:
         - Name: Source
           Actions:
             - Name: GitHub
-              ActionTypeId: { Category: Source, Owner: AWS, Provider: CodeStarSourceConnection, Version: "1" }
+              ActionTypeId:
+                {
+                  Category: Source,
+                  Owner: AWS,
+                  Provider: CodeStarSourceConnection,
+                  Version: "1",
+                }
               Configuration:
                 ConnectionArn: !Ref ConnectionArn
                 FullRepositoryId: !Ref FullRepositoryId
                 BranchName: main
-              OutputArtifacts: [ { Name: SourceOutput } ]
+              OutputArtifacts: [{ Name: SourceOutput }]
         - Name: Deploy
           Actions:
             - Name: BuildAndDeploy
-              ActionTypeId: { Category: Build, Owner: AWS, Provider: CodeBuild, Version: "1" }
-              InputArtifacts: [ { Name: SourceOutput } ]
+              ActionTypeId:
+                {
+                  Category: Build,
+                  Owner: AWS,
+                  Provider: CodeBuild,
+                  Version: "1",
+                }
+              InputArtifacts: [{ Name: SourceOutput }]
+              OutputArtifacts: [{ Name: BuildOutput }]
               Configuration: { ProjectName: !Ref MyBuildProject }
 
   # Permissoes/Roles (IAM)
@@ -52,7 +65,14 @@ Resources:
     Properties:
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
-        Statement: [ { Effect: Allow, Principal: { Service: codebuild.amazonaws.com }, Action: "sts:AssumeRole" } ]
+        Statement:
+          [
+            {
+              Effect: Allow,
+              Principal: { Service: codebuild.amazonaws.com },
+              Action: "sts:AssumeRole",
+            },
+          ]
       Policies:
         - PolicyName: CodeBuildAccess
           PolicyDocument:
@@ -74,13 +94,25 @@ Resources:
     Properties:
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
-        Statement: [ { Effect: Allow, Principal: { Service: codepipeline.amazonaws.com }, Action: "sts:AssumeRole" } ]
+        Statement:
+          [
+            {
+              Effect: Allow,
+              Principal: { Service: codepipeline.amazonaws.com },
+              Action: "sts:AssumeRole",
+            },
+          ]
       Policies:
         - PolicyName: PipelineAccess
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
               - Effect: Allow
-                Action: [ "codestar-connections:UseConnection", "codebuild:StartBuild", "codebuild:BatchGetBuilds", "s3:*" ]
+                Action:
+                  [
+                    "codestar-connections:UseConnection",
+                    "codebuild:StartBuild",
+                    "codebuild:BatchGetBuilds",
+                    "s3:*",
+                  ]
                 Resource: "*"
-              
