@@ -1,12 +1,15 @@
 version: 0.2
+
 phases:
   install:
     runtime-versions:
-      nodejs: 18
+      nodejs: 20 # Usar Node 20 (ou 18) nativo do CodeBuild
     commands:
+      - echo Instalando dependencias...
       - npm install
   build:
     commands:
+      - echo Iniciando o build do React...
       - npm run build
   post_build:
     commands:
