@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20 # Ou 18, mas apenas isso! Sem comandos manuais embaixo.
+      nodejs: 20
     commands:
       - echo Instalando dependencias...
       - npm install
