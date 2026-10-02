@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 20 # Usar Node 20 (ou 18) nativo do CodeBuild
+      nodejs: 20 # Ou 18, mas apenas isso! Sem comandos manuais embaixo.
     commands:
       - echo Instalando dependencias...
       - npm install
